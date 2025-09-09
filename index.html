@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TabSSH - Modern SSH Client for Android</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="TabSSH is an open-source SSH client for Android with tabbed interface, SFTP support, and modern UI. Secure, privacy-focused, and developer-friendly.">
+  <meta name="keywords" content="SSH, Android, terminal, open source, mobile, secure, tabssh, SFTP, port forwarding">
+  <meta name="author" content="TabSSH Team">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="TabSSH - Modern SSH Client for Android">
+  <meta property="og:description" content="Open-source SSH client for Android with tabbed interface, SFTP support, and modern UI.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/tabssh/assets/main/icons/opengraph.png">
+  <meta property="og:url" content="https://tabssh.github.io">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TabSSH - Modern SSH Client for Android">
+  <meta name="twitter:description" content="Open-source SSH client for Android with tabbed interface">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/tabssh/assets/main/icons/twitter.png">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Theme Detection -->
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Modern SSH Client for Android</h1>
+          <p class="hero-subtitle">
+            Open-source, secure, and beautiful. TabSSH brings desktop-class SSH 
+            functionality to your Android device with a true tabbed interface.
+          </p>
+          <div class="hero-actions">
+            <a href="download.html" class="btn btn-primary btn-lg">Download Now</a>
+            <a href="https://github.com/TabSSH/android" class="btn btn-secondary btn-lg">
+              View on GitHub
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/android.png" alt="TabSSH on Android device" 
+               loading="lazy" width="400" height="600">
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Why Choose TabSSH?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🗂️</div>
+            <h3>True Tabbed Interface</h3>
+            <p>Browser-style tabs for multiple SSH sessions. Switch between connections instantly without losing context.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🔐</div>
+            <h3>Enterprise-Grade Security</h3>
+            <p>Hardware-backed encryption, biometric authentication, multiple key formats (RSA, ECDSA, Ed25519), and secure storage policies.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">📁</div>
+            <h3>Dual-Pane SFTP Manager</h3>
+            <p>Professional file manager with resume support, batch transfers, permission preservation, and progress tracking.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Advanced Tunneling</h3>
+            <p>Local, remote, and dynamic port forwarding with SOCKS proxy support. Full SSH config import including ProxyJump.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>VT100/ANSI Terminal</h3>
+            <p>Full terminal emulation with 256-color support, Unicode handling, and tmux-compatible keyboard shortcuts.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>12 Built-in Themes</h3>
+            <p>Dracula, Monokai, Nord, Solarized, Gruvbox, and more. WCAG accessibility compliance with custom theme support.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🔓</div>
+            <h3>Open Source</h3>
+            <p>Fully open-source under MIT license. Transparent development with community contributions welcome.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Privacy First</h3>
+            <p>No tracking, no ads, no data collection. Your connections and credentials stay on your device.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">♿</div>
+            <h3>Accessibility</h3>
+            <p>Full screen reader support, high contrast themes, keyboard navigation, and WCAG 2.1 AA compliance.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">⚙️</div>
+            <h3>SSH Config Import</h3>
+            <p>Import your existing ~/.ssh/config with full support for ProxyJump, IdentityFile, and advanced directives.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">💾</div>
+            <h3>Session Persistence</h3>
+            <p>Automatic tab restoration, scrollback preservation, and seamless reconnection after app restarts.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🔑</div>
+            <h3>Key Management</h3>
+            <p>Generate, import, and manage SSH keys with OpenSSH, PuTTY, and PKCS#8 format support plus QR code import.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download">
+      <div class="container">
+        <h2 class="section-title">Download TabSSH</h2>
+        <div class="download-grid">
+          <div class="download-option">
+            <h3>Latest Release</h3>
+            <p>Stable build • Multiple architectures</p>
+            <span class="badge">v1.0.0</span>
+            <div style="margin-top: var(--space-4);">
+              <a href="download.html" class="btn btn-primary">Download Now</a>
+            </div>
+            <p style="font-size: var(--font-size-sm); margin-top: var(--space-2); color: var(--text-secondary);">
+              ARM64, ARM, and x86_64 builds available
+            </p>
+          </div>
+          
+          <div class="download-option">
+            <h3>All Releases</h3>
+            <p>View changelogs and download specific versions</p>
+            <span class="badge">GitHub</span>
+            <div style="margin-top: var(--space-4);">
+              <a href="https://github.com/TabSSH/android/releases" class="btn btn-secondary">
+                Browse Releases
+              </a>
+            </div>
+            <p style="font-size: var(--font-size-sm); margin-top: var(--space-2); color: var(--text-secondary);">
+              Includes beta and development builds
+            </p>
+          </div>
+          
+          <div class="download-option">
+            <h3>Coming Soon</h3>
+            <p>Additional distribution channels</p>
+            <span class="badge">Future</span>
+            <div style="margin-top: var(--space-4);">
+              <div class="btn btn-secondary" style="opacity: 0.6; cursor: not-allowed;">
+                F-Droid & Play Store
+              </div>
+            </div>
+            <p style="font-size: var(--font-size-sm); margin-top: var(--space-2); color: var(--text-secondary);">
+              Working on additional distribution
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technical Specs Section -->
+    <section class="features" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <h2 class="section-title">Technical Specifications</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-8); margin-bottom: var(--space-12);">
+          <div class="card">
+            <h3>🔐 Security Features</h3>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>Android Keystore integration</li>
+              <li>Hardware-backed encryption</li>
+              <li>Biometric authentication</li>
+              <li>Host key verification</li>
+              <li>Certificate validation</li>
+              <li>Configurable security policies</li>
+            </ul>
+          </div>
+          
+          <div class="card">
+            <h3>🚀 Protocol Support</h3>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>SSH 2.0 with modern algorithms</li>
+              <li>SFTP with resume support</li>
+              <li>Local/Remote/Dynamic forwarding</li>
+              <li>SOCKS proxy support</li>
+              <li>ProxyJump and ProxyCommand</li>
+              <li>Compression and keep-alive</li>
+            </ul>
+          </div>
+          
+          <div class="card">
+            <h3>🎨 User Interface</h3>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>Material Design 3 interface</li>
+              <li>12 built-in terminal themes</li>
+              <li>Custom theme support</li>
+              <li>Responsive design</li>
+              <li>Dark/Light mode support</li>
+              <li>Accessibility features</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="features" style="background-color: var(--bg-primary);">
+      <div class="container">
+        <h2 class="section-title">Enterprise-Ready SSH Client</h2>
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+          <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+            TabSSH is built by developers, for developers. Whether you're managing production servers, 
+            developing on remote systems, or need secure mobile access to your infrastructure, 
+            TabSSH provides enterprise-grade features in a mobile-friendly package.
+          </p>
+          
+          <div class="hero-actions" style="justify-content: center;">
+            <a href="docs.html" class="btn btn-primary">Get Started</a>
+            <a href="docs/features.html" class="btn btn-secondary">Explore Features</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>TabSSH</h3>
+          <p>Modern SSH client for Android with tabbed interface. Open-source and privacy-focused.</p>
+          <div class="footer-social">
+            <a href="https://github.com/TabSSH" aria-label="GitHub Organization">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="download.html">Download</a></li>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="docs/features.html">Features</a></li>
+            <li><a href="https://github.com/TabSSH/android/releases">Releases</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/TabSSH/android">GitHub</a></li>
+            <li><a href="contributing.html">Contributing</a></li>
+            <li><a href="https://github.com/TabSSH/android/issues">Issues</a></li>
+            <li><a href="https://github.com/TabSSH/android/discussions">Discussions</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="security.html">Security</a></li>
+            <li><a href="https://github.com/TabSSH/android/blob/main/LICENSE">License</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 TabSSH. Open-source software under MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>

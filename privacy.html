@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - TabSSH</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="TabSSH's privacy policy - learn how we protect your data and why we collect no personal information. Complete transparency about our privacy practices.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Theme Detection -->
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <header style="text-align: center; margin-bottom: var(--space-12);">
+          <h1>Privacy Policy</h1>
+          <p style="font-size: var(--font-size-lg); color: var(--text-secondary);">
+            Your privacy is our priority. Here's exactly what we do (and don't do) with your data.
+          </p>
+        </header>
+
+        <div class="alert alert-success" style="margin-bottom: var(--space-8);">
+          <strong>TL;DR:</strong> TabSSH doesn't collect, store, or transmit any of your personal data. Everything stays on your device.
+        </div>
+
+        <div style="max-width: 70ch; margin: 0 auto;">
+          <h2>Our Privacy Promise</h2>
+          <p>TabSSH is built with privacy as a fundamental principle, not an afterthought. We believe your SSH connections, server credentials, and usage patterns are private and should remain under your control.</p>
+
+          <h2>What Information We Don't Collect</h2>
+          <p><strong>We collect zero personal information.</strong> This includes:</p>
+          <ul>
+            <li>📱 <strong>Device Information:</strong> No device IDs, hardware specs, or system information</li>
+            <li>🌐 <strong>Usage Analytics:</strong> No app usage statistics, feature usage, or behavioral tracking</li>
+            <li>🔐 <strong>SSH Credentials:</strong> No usernames, passwords, SSH keys, or connection details</li>
+            <li>📊 <strong>Connection Data:</strong> No server addresses, connection logs, or command history</li>
+            <li>📍 <strong>Location Data:</strong> No GPS coordinates, IP addresses, or network information</li>
+            <li>🆔 <strong>Personal Identifiers:</strong> No names, email addresses, phone numbers, or account data</li>
+          </ul>
+
+          <h2>Open Source Transparency</h2>
+          <p>TabSSH is completely open source, which means:</p>
+          <ul>
+            <li><strong>Auditable Code:</strong> Anyone can review our source code to verify our privacy claims</li>
+            <li><strong>No Hidden Features:</strong> No secret data collection or tracking mechanisms</li>
+            <li><strong>Community Oversight:</strong> The open source community helps ensure we maintain our privacy standards</li>
+          </ul>
+
+          <h2>Contact Us</h2>
+          <p>If you have questions about this privacy policy:</p>
+          <ul>
+            <li><strong>GitHub Discussions:</strong> <a href="https://github.com/TabSSH/android/discussions">Community Q&A</a></li>
+            <li><strong>Issues:</strong> <a href="https://github.com/TabSSH/android/issues">Report concerns</a></li>
+            <li><strong>Source Code:</strong> <a href="https://github.com/TabSSH/android">Review the code</a></li>
+          </ul>
+        </div>
+
+        <hr style="margin: var(--space-12) 0; border: none; height: 1px; background-color: var(--border);">
+
+        <div style="text-align: center; color: var(--text-secondary); font-size: var(--font-size-sm);">
+          <p><strong>Last Updated:</strong> January 15, 2024</p>
+          <p>This policy is effective immediately and applies to all versions of TabSSH.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 TabSSH. Open-source software under MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>

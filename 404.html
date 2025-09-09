@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found - TabSSH</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="The page you're looking for doesn't exist. Navigate back to TabSSH documentation or homepage.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Theme Detection -->
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div style="padding: var(--space-20) 0; text-align: center;">
+      <div class="container container-sm">
+        <div style="font-size: 8rem; font-weight: var(--font-weight-bold); color: var(--primary-500); margin-bottom: var(--space-4);">
+          404
+        </div>
+        
+        <h1 style="margin-bottom: var(--space-4);">Page Not Found</h1>
+        
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        
+        <div class="hero-actions" style="justify-content: center; margin-bottom: var(--space-12);">
+          <a href="index.html" class="btn btn-primary">Go Home</a>
+          <a href="docs.html" class="btn btn-secondary">Browse Docs</a>
+        </div>
+        
+        <div style="background-color: var(--bg-secondary); padding: var(--space-8); border-radius: 12px;">
+          <h3 style="margin-bottom: var(--space-4);">Looking for something specific?</h3>
+          <ul style="list-style: none; padding: 0; text-align: left; display: inline-block;">
+            <li style="margin-bottom: var(--space-2);">
+              <a href="download.html">📱 Download TabSSH</a>
+            </li>
+            <li style="margin-bottom: var(--space-2);">
+              <a href="docs.html">📚 Documentation</a>
+            </li>
+            <li style="margin-bottom: var(--space-2);">
+              <a href="privacy.html">🔒 Privacy Policy</a>
+            </li>
+            <li style="margin-bottom: var(--space-2);">
+              <a href="security.html">🛡️ Security Information</a>
+            </li>
+            <li style="margin-bottom: var(--space-2);">
+              <a href="contributing.html">🤝 Contributing Guide</a>
+            </li>
+            <li>
+              <a href="https://github.com/TabSSH/android">💻 Source Code</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 TabSSH. Open-source software under MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - TabSSH</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="Complete documentation for TabSSH - the modern SSH client for Android. Learn how to get started, explore features, and master advanced functionality.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Theme Detection -->
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container">
+        <header style="text-align: center; margin-bottom: var(--space-12);">
+          <h1>TabSSH Documentation</h1>
+          <p style="font-size: var(--font-size-lg); color: var(--text-secondary);">
+            Complete guide to using TabSSH - the modern SSH client for Android
+          </p>
+        </header>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-8);">
+          <!-- Getting Started -->
+          <div class="card">
+            <h3>🚀 Getting Started</h3>
+            <p>New to TabSSH? Start here to get up and running quickly.</p>
+            <ul style="font-size: var(--font-size-sm);">
+              <li><a href="docs/installation.html">Installation Guide</a></li>
+              <li><a href="docs/first-connection.html">First Connection</a></li>
+              <li><a href="docs/basic-usage.html">Basic Usage</a></li>
+            </ul>
+            <div style="margin-top: var(--space-4);">
+              <a href="docs/getting-started.html" class="btn btn-primary">Get Started</a>
+            </div>
+          </div>
+
+          <!-- Core Features -->
+          <div class="card">
+            <h3>⚡ Core Features</h3>
+            <p>Explore TabSSH's key capabilities and advanced functionality.</p>
+            <ul style="font-size: var(--font-size-sm);">
+              <li><a href="docs/tabbed-interface.html">Tabbed Interface</a></li>
+              <li><a href="docs/sftp-manager.html">SFTP File Manager</a></li>
+              <li><a href="docs/ssh-keys.html">SSH Key Management</a></li>
+              <li><a href="docs/port-forwarding.html">Port Forwarding</a></li>
+            </ul>
+            <div style="margin-top: var(--space-4);">
+              <a href="docs/features.html" class="btn btn-secondary">All Features</a>
+            </div>
+          </div>
+
+          <!-- Advanced Topics -->
+          <div class="card">
+            <h3>🔧 Advanced</h3>
+            <p>Advanced configuration and troubleshooting guides.</p>
+            <ul style="font-size: var(--font-size-sm);">
+              <li><a href="docs/ssh-config.html">SSH Config Import</a></li>
+              <li><a href="docs/security.html">Security Best Practices</a></li>
+              <li><a href="docs/themes.html">Themes & Customization</a></li>
+              <li><a href="docs/troubleshooting.html">Troubleshooting</a></li>
+            </ul>
+            <div style="margin-top: var(--space-4);">
+              <a href="docs/architecture.html" class="btn btn-secondary">Technical Details</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-16);">
+          <h2>What's New in TabSSH</h2>
+          <div class="card" style="max-width: 600px; margin: var(--space-8) auto 0;">
+            <h3>Version 1.0.0 - Initial Release</h3>
+            <ul style="text-align: left; font-size: var(--font-size-sm);">
+              <li>🗂️ True tabbed interface for multiple sessions</li>
+              <li>📁 Built-in SFTP file manager with dual-pane view</li>
+              <li>🔐 Advanced SSH key management (RSA, ECDSA, Ed25519)</li>
+              <li>🌐 Local, remote, and dynamic port forwarding</li>
+              <li>🎨 12 built-in themes with accessibility compliance</li>
+              <li>🛡️ Hardware-backed encryption and biometric auth</li>
+              <li>⚙️ Full SSH config import with ProxyJump support</li>
+              <li>♿ Complete accessibility and screen reader support</li>
+            </ul>
+            
+            <div style="margin-top: var(--space-6);">
+              <a href="https://github.com/TabSSH/android/releases" class="btn btn-primary">View Release Notes</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <h2>Need Help?</h2>
+          <p>Can't find what you're looking for? Get help from the community.</p>
+          
+          <div class="hero-actions" style="justify-content: center; margin-top: var(--space-6);">
+            <a href="https://github.com/TabSSH/android/discussions" class="btn btn-primary">Community Support</a>
+            <a href="https://github.com/TabSSH/android/issues" class="btn btn-secondary">Report Issue</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>TabSSH</h3>
+          <p>Modern SSH client for Android with tabbed interface. Open-source and privacy-focused.</p>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="download.html">Download</a></li>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="https://github.com/TabSSH/android/releases">Releases</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/TabSSH/android">GitHub</a></li>
+            <li><a href="contributing.html">Contributing</a></li>
+            <li><a href="https://github.com/TabSSH/android/issues">Issues</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="security.html">Security</a></li>
+            <li><a href="https://github.com/TabSSH/android/blob/main/LICENSE">License</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 TabSSH. Open-source software under MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>

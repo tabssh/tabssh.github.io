@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//root/Projects/github/tabssh/android/**)",
+      "Read(//root/Projects/github/tabssh/**)",
+      "Bash(chmod:*)",
+      "Bash(git clone:*)",
+      "Read(//tmp/tabssh-assets/**)",
+      "Bash(bundle install:*)",
+      "Bash(docker build:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

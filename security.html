@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security - TabSSH</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="Learn about TabSSH's security features, best practices, and how we protect your SSH connections and credentials on Android.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <!-- Theme Detection -->
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <header style="text-align: center; margin-bottom: var(--space-12);">
+          <h1>Security</h1>
+          <p style="font-size: var(--font-size-lg); color: var(--text-secondary);">
+            Built with security as a foundation. Learn how TabSSH protects your connections and credentials.
+          </p>
+        </header>
+
+        <div style="max-width: 70ch; margin: 0 auto;">
+          <h2>🔐 Security Features</h2>
+          
+          <div class="card">
+            <h3>Hardware-Backed Encryption</h3>
+            <ul>
+              <li><strong>Android Keystore:</strong> Hardware-backed key storage when available</li>
+              <li><strong>Secure Element:</strong> Keys stored in secure hardware on supported devices</li>
+              <li><strong>Biometric Protection:</strong> Fingerprint/face unlock for key access</li>
+              <li><strong>Encrypted Storage:</strong> All credentials encrypted at rest</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>SSH Protocol Security</h3>
+            <ul>
+              <li><strong>Modern Algorithms:</strong> Support for latest SSH protocols</li>
+              <li><strong>Host Key Verification:</strong> Prevents man-in-the-middle attacks</li>
+              <li><strong>Multiple Key Types:</strong> RSA, ECDSA, Ed25519 support</li>
+              <li><strong>Certificate Validation:</strong> X.509 certificate support</li>
+            </ul>
+          </div>
+
+          <h2>🛡️ Best Practices</h2>
+          <ul>
+            <li><strong>Use SSH Keys:</strong> Prefer key authentication over passwords</li>
+            <li><strong>Verify Host Keys:</strong> Always verify fingerprints on first connection</li>
+            <li><strong>Keep Updated:</strong> Update TabSSH regularly for security patches</li>
+            <li><strong>Strong Passphrases:</strong> Protect SSH keys with strong passphrases</li>
+          </ul>
+
+          <h2>🚨 Security Issues</h2>
+          <p>Found a security vulnerability? Please report it responsibly:</p>
+          <ul>
+            <li><strong>GitHub Security:</strong> Use GitHub's private vulnerability reporting</li>
+            <li><strong>No Public Issues:</strong> Don't create public issues for security bugs</li>
+            <li><strong>Provide Details:</strong> Include reproduction steps and impact assessment</li>
+          </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <h2>Questions About Security?</h2>
+          <p>Security is complex. If you have questions or concerns, we're here to help.</p>
+          
+          <div class="hero-actions" style="justify-content: center; margin-top: var(--space-6);">
+            <a href="https://github.com/TabSSH/android/discussions" class="btn btn-primary">Security Discussions</a>
+            <a href="docs.html" class="btn btn-secondary">Documentation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 TabSSH. Open-source software under MIT License.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="js/main.js"></script>
+</body>
+</html>
