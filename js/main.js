@@ -158,6 +158,51 @@
       });
   }
   
+  // Check F-Droid availability
+  function initFDroidCheck() {
+    const FDROID_API = 'https://f-droid.org/api/v1/packages/io.github.tabssh';
+    
+    fetch(FDROID_API)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Not available on F-Droid yet');
+      })
+      .then(data => {
+        console.log('TabSSH is available on F-Droid!');
+        
+        // Enable F-Droid links and update "Coming Soon" sections
+        document.querySelectorAll('.fdroid-coming-soon').forEach(element => {
+          element.innerHTML = `
+            <h4>🏪 F-Droid <span class="badge" style="background-color: var(--success); color: white;">Available!</span></h4>
+            <p style="font-size: var(--font-size-sm);">
+              Now available on F-Droid for automatic updates and verified open-source builds.
+            </p>
+            <div style="margin-top: var(--space-4);">
+              <a href="https://f-droid.org/packages/io.github.tabssh" class="btn btn-primary">
+                Get on F-Droid
+              </a>
+            </div>
+          `;
+        });
+        
+        // Update download instructions to mention F-Droid as preferred
+        const downloadInstructions = document.querySelector('.download-instructions');
+        if (downloadInstructions) {
+          downloadInstructions.innerHTML = `
+            <div class="alert alert-success">
+              <strong>Now Available!</strong> TabSSH is now available on F-Droid as the recommended installation method.
+            </div>
+          ` + downloadInstructions.innerHTML;
+        }
+      })
+      .catch(error => {
+        console.log('F-Droid not yet available:', error.message);
+        // Keep "Coming Soon" status
+      });
+  }
+  
   // Initialize everything
   function init() {
     initMobileMenu();
@@ -165,6 +210,7 @@
     initSmoothScrolling();
     initAccessibility();
     initVersionFetching();
+    initFDroidCheck();
     
     console.log('TabSSH website loaded successfully');
   }

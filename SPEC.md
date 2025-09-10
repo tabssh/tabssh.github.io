@@ -263,7 +263,7 @@ collections:
       <div class="download-option">
         <h3>F-Droid</h3>
         <p>Recommended • Open-source app store</p>
-        <a href="https://f-droid.org/packages/com.tabssh" class="download-btn">
+        <a href="https://f-droid.org/packages/io.github.tabssh" class="download-btn">
           <img src="/assets/images/badges/get-it-on-fdroid.png" 
                alt="Get it on F-Droid" width="180" height="60">
         </a>
