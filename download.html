@@ -65,22 +65,19 @@
             </div>
             
             <div class="alert alert-info">
-              <strong>Release Naming:</strong> Files follow the pattern <code>tabssh-android-{arch}.apk</code> where arch is your device architecture.
+              <strong>Release Naming:</strong> Files follow the pattern <code>tabssh-android-{arch}-{version}.apk</code> where arch is your device architecture.
             </div>
             
             <div style="margin: var(--space-6) 0;">
               <h4>Choose Your Architecture:</h4>
               <div style="display: grid; gap: var(--space-3); margin-top: var(--space-3);">
-                <a href="https://github.com/TabSSH/android/releases/download/v1.0.0/tabssh-android-arm64.apk" 
-                   class="btn btn-primary" download>
+                <a href="#" data-arch="arm64" class="download-link btn btn-primary" download>
                   📱 ARM64 (Most Android devices)
                 </a>
-                <a href="https://github.com/TabSSH/android/releases/download/v1.0.0/tabssh-android-arm.apk" 
-                   class="btn btn-secondary" download>
+                <a href="#" data-arch="arm" class="download-link btn btn-secondary" download>
                   📱 ARM (Older Android devices)
                 </a>
-                <a href="https://github.com/TabSSH/android/releases/download/v1.0.0/tabssh-android-x86_64.apk" 
-                   class="btn btn-secondary" download>
+                <a href="#" data-arch="x86_64" class="download-link btn btn-secondary" download>
                   💻 x86_64 (Android x86 emulators)
                 </a>
               </div>

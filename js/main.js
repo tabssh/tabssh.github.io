@@ -132,13 +132,15 @@
           badge.textContent = version;
         });
         
-        // Update download links with correct version
-        const downloadLinks = document.querySelectorAll('a[href*="releases/download"]');
+        // Build download URLs dynamically with new naming scheme: tabssh-{os}-{arch}-{version}
+        const downloadLinks = document.querySelectorAll('.download-link[data-arch]');
         downloadLinks.forEach(link => {
-          const href = link.getAttribute('href');
-          // Replace version in download URLs
-          const newHref = href.replace(/\/v[\d.]+\//, `/${version}/`);
-          link.setAttribute('href', newHref);
+          const arch = link.getAttribute('data-arch');
+          if (arch) {
+            const downloadUrl = `https://github.com/TabSSH/android/releases/download/${version}/tabssh-android-${arch}-${version}.apk`;
+            link.setAttribute('href', downloadUrl);
+            console.log(`Updated ${arch} download link:`, downloadUrl);
+          }
         });
         
         // Update release date displays
