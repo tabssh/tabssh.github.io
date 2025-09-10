@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture - TabSSH Documentation</title>
+  <meta name="description" content="Technical architecture and implementation details of TabSSH SSH client for Android.">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="../index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="../docs.html">Docs</a></li>
+          <li><a href="../download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Architecture & Technical Details</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Deep dive into TabSSH's technical architecture and engineering decisions.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🏗️ Application Architecture</h2>
+            <h3>MVVM Pattern</h3>
+            <ul>
+              <li><strong>Model:</strong> Data layer with Repository pattern</li>
+              <li><strong>View:</strong> Activities, Fragments, custom Views</li>
+              <li><strong>ViewModel:</strong> Business logic with LiveData</li>
+            </ul>
+            
+            <h3>Modular Structure</h3>
+            <pre><code>app/src/main/java/com/tabssh/
+├── ui/          # User interface components
+├── ssh/         # SSH connectivity
+├── terminal/    # Terminal emulation
+├── crypto/      # Key management
+├── storage/     # Data persistence
+├── themes/      # Theme system
+├── accessibility/ # Accessibility features
+└── network/     # Network utilities</code></pre>
+          </div>
+
+          <div class="card">
+            <h2>🔐 Security Architecture</h2>
+            <h3>Credential Storage</h3>
+            <ul>
+              <li><strong>Android Keystore:</strong> Hardware-backed encryption</li>
+              <li><strong>Storage Levels:</strong> Configurable security policies</li>
+              <li><strong>Biometric Auth:</strong> Fingerprint/face unlock</li>
+              <li><strong>Secure Memory:</strong> Sensitive data cleared immediately</li>
+            </ul>
+            
+            <h3>Key Management</h3>
+            <ul>
+              <li>OpenSSH, RSA, PKCS#8, PuTTY format support</li>
+              <li>Auto-detection of key formats</li>
+              <li>QR code import capability</li>
+              <li>Secure generation using Android crypto providers</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🖥️ Terminal Emulation</h2>
+            <h3>VT100/ANSI Implementation</h3>
+            <ul>
+              <li>Complete escape sequence support</li>
+              <li>256-color terminal support</li>
+              <li>Unicode and UTF-8 handling</li>
+              <li>Configurable scrollback buffer</li>
+              <li>xterm-256color compatibility</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📱 Mobile Optimization</h2>
+            <h3>Android Integration</h3>
+            <ul>
+              <li>Intent handling for SSH URLs</li>
+              <li>App shortcuts for quick connections</li>
+              <li>Quick Settings tile support</li>
+              <li>Background operation with battery optimization</li>
+            </ul>
+            
+            <h3>Performance</h3>
+            <ul>
+              <li>Efficient memory management</li>
+              <li>Connection pooling</li>
+              <li>60 FPS terminal rendering</li>
+              <li>Network compression support</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
+          <a href="https://github.com/TabSSH/android" class="btn btn-secondary">View Source Code</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

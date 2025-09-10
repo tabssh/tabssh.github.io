@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started - TabSSH Documentation</title>
+  <meta name="description" content="Step-by-step guide to download, install, and set up TabSSH on your Android device.">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="../index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="../docs.html">Docs</a></li>
+          <li><a href="../download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Getting Started with TabSSH</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Download, install, and connect to your first server in minutes.
+        </p>
+
+        <h2>Installation</h2>
+        <div class="card">
+          <h3>GitHub Releases (Primary Method)</h3>
+          <ol>
+            <li>Visit our <a href="../download.html">download page</a> for the latest release</li>
+            <li>Choose your device architecture (ARM64 for most devices)</li>
+            <li>Download the APK (filename: tabssh-android-{arch}.apk)</li>
+            <li>Enable "Install from unknown sources" in Android settings</li>
+            <li>Install the APK and launch TabSSH</li>
+          </ol>
+        </div>
+
+        <h2>First Connection</h2>
+        <div class="card">
+          <h3>Quick Connect</h3>
+          <ol>
+            <li>Tap the "+" button in TabSSH</li>
+            <li>Enter your server details (host, port, username)</li>
+            <li>Choose authentication (password or SSH key)</li>
+            <li>Tap "Connect"</li>
+          </ol>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
+          <a href="features.html" class="btn btn-secondary">Explore Features</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

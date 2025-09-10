@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features Overview - TabSSH Documentation</title>
+  <meta name="description" content="Comprehensive overview of TabSSH features including tabbed interface, SFTP support, SSH key management, and more.">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="../index.html">
+            <img src="https://raw.githubusercontent.com/tabssh/assets/main/icons/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="../docs.html">Docs</a></li>
+          <li><a href="../download.html">Download</a></li>
+          <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Toggle theme">
+          <span class="sr-only">Toggle dark mode</span>
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>TabSSH Features</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Enterprise-grade SSH functionality designed for Android devices.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🗂️ Tabbed Interface</h2>
+            <ul>
+              <li>Browser-style tabs for multiple SSH sessions</li>
+              <li>Visual connection status indicators</li>
+              <li>Drag and drop to reorder tabs</li>
+              <li>Session persistence across app restarts</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📁 SFTP File Manager</h2>
+            <ul>
+              <li>Dual-pane interface (local and remote)</li>
+              <li>Drag and drop file transfers</li>
+              <li>Resume interrupted transfers</li>
+              <li>Batch file operations</li>
+              <li>Permission and timestamp preservation</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🔐 SSH Key Management</h2>
+            <ul>
+              <li>Support for RSA, ECDSA, Ed25519 keys</li>
+              <li>Import from OpenSSH, PuTTY, PKCS#8 formats</li>
+              <li>Hardware-backed secure storage</li>
+              <li>QR code import capability</li>
+              <li>Biometric authentication protection</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🌐 Port Forwarding</h2>
+            <ul>
+              <li>Local port forwarding (-L)</li>
+              <li>Remote port forwarding (-R)</li>
+              <li>Dynamic port forwarding (-D) with SOCKS proxy</li>
+              <li>Multiple concurrent tunnels</li>
+              <li>Real-time transfer statistics</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>⚙️ SSH Configuration</h2>
+            <ul>
+              <li>Full ~/.ssh/config import support</li>
+              <li>ProxyJump and ProxyCommand</li>
+              <li>Host-specific settings and patterns</li>
+              <li>Connection profiles with rich metadata</li>
+              <li>Advanced SSH directives support</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🎨 Themes & Accessibility</h2>
+            <ul>
+              <li>12 built-in terminal themes (Dracula, Nord, Solarized, etc.)</li>
+              <li>Custom theme support with validation</li>
+              <li>WCAG 2.1 AA accessibility compliance</li>
+              <li>Screen reader support with TalkBack integration</li>
+              <li>High contrast modes and large text support</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
+          <a href="architecture.html" class="btn btn-secondary">Technical Architecture</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

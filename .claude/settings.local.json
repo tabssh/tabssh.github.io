@@ -7,7 +7,9 @@
       "Bash(git clone:*)",
       "Read(//tmp/tabssh-assets/**)",
       "Bash(bundle install:*)",
-      "Bash(docker build:*)"
+      "Bash(docker build:*)",
+      "Bash(mkdir:*)",
+      "Bash(sed:*)"
     ],
     "deny": [],
     "ask": []
