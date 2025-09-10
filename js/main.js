@@ -160,18 +160,50 @@
       });
   }
   
-  // Check Google Play Store availability
+  // Check Google Play Store availability with proper error detection
   function initPlayStoreCheck() {
-    // Google Play Store doesn't have a direct API, but we can check if the app page exists
     const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=io.github.tabssh';
     
-    // Use a proxy service or check method that works with CORS
-    fetch(PLAY_STORE_URL, { 
-      method: 'HEAD', 
-      mode: 'no-cors' 
-    })
-      .then(() => {
-        console.log('TabSSH appears to be available on Google Play Store!');
+    // Use a CORS proxy service that can actually fetch the content
+    const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(PLAY_STORE_URL)}`;
+    
+    fetch(PROXY_URL)
+      .then(response => response.json())
+      .then(data => {
+        const content = data.contents;
+        
+        // Check for specific error indicators in the HTML content
+        const notFoundIndicators = [
+          "We're sorry, the requested URL was not found",
+          "Item not found",
+          "This app is unavailable",
+          "Not found",
+          "Error 404"
+        ];
+        
+        const hasError = notFoundIndicators.some(indicator => 
+          content.toLowerCase().includes(indicator.toLowerCase())
+        );
+        
+        // Check for positive indicators that the app exists
+        const appIndicators = [
+          '"TabSSH"',
+          'id="io.github.tabssh"',
+          'application-name',
+          'Install',
+          'Download'
+        ];
+        
+        const hasApp = appIndicators.some(indicator => 
+          content.toLowerCase().includes(indicator.toLowerCase())
+        );
+        
+        if (hasError || !hasApp) {
+          console.log('Play Store: App not found (404 or error page detected)');
+          throw new Error('App not available on Play Store');
+        }
+        
+        console.log('TabSSH is available on Google Play Store!');
         
         // Update "Coming Soon" sections for Play Store
         document.querySelectorAll('.playstore-coming-soon').forEach(element => {
@@ -189,44 +221,17 @@
         });
       })
       .catch(error => {
-        console.log('Google Play Store not yet available');
+        console.log('Google Play Store not yet available:', error.message);
         // Keep "Coming Soon" status
-      });
-  }
-  
-  // Alternative Play Store check using a different approach
-  function checkPlayStoreAvailability() {
-    // Create a hidden iframe to test if the Play Store page exists
-    const iframe = document.createElement('iframe');
-    iframe.style.display = 'none';
-    iframe.src = 'https://play.google.com/store/apps/details?id=io.github.tabssh';
-    
-    iframe.onload = function() {
-      console.log('Play Store page loaded - app may be available');
-      // Enable Play Store download
-      document.querySelectorAll('.playstore-coming-soon').forEach(element => {
-        const badge = document.createElement('span');
-        badge.className = 'badge';
-        badge.style.cssText = 'background-color: var(--success); color: white; margin-left: var(--space-2);';
-        badge.textContent = 'Available!';
         
-        const heading = element.querySelector('h4');
-        if (heading) {
-          heading.appendChild(badge);
-        }
+        // Add a note that it's actively being worked on
+        document.querySelectorAll('.playstore-coming-soon').forEach(element => {
+          const note = document.createElement('p');
+          note.style.cssText = 'font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-2); font-style: italic;';
+          note.textContent = 'Status checked automatically - will update when published';
+          element.appendChild(note);
+        });
       });
-    };
-    
-    iframe.onerror = function() {
-      console.log('Play Store page not found - app not yet available');
-    };
-    
-    document.body.appendChild(iframe);
-    
-    // Remove the test iframe after a short delay
-    setTimeout(() => {
-      document.body.removeChild(iframe);
-    }, 3000);
   }
   
   // Check F-Droid availability
