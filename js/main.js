@@ -160,6 +160,75 @@
       });
   }
   
+  // Check Google Play Store availability
+  function initPlayStoreCheck() {
+    // Google Play Store doesn't have a direct API, but we can check if the app page exists
+    const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=io.github.tabssh';
+    
+    // Use a proxy service or check method that works with CORS
+    fetch(PLAY_STORE_URL, { 
+      method: 'HEAD', 
+      mode: 'no-cors' 
+    })
+      .then(() => {
+        console.log('TabSSH appears to be available on Google Play Store!');
+        
+        // Update "Coming Soon" sections for Play Store
+        document.querySelectorAll('.playstore-coming-soon').forEach(element => {
+          element.innerHTML = `
+            <h4>🤖 Google Play Store <span class="badge" style="background-color: var(--success); color: white;">Available!</span></h4>
+            <p style="font-size: var(--font-size-sm);">
+              Now available on Google Play Store for easy installation and automatic updates.
+            </p>
+            <div style="margin-top: var(--space-4);">
+              <a href="${PLAY_STORE_URL}" class="btn btn-primary">
+                Get on Google Play
+              </a>
+            </div>
+          `;
+        });
+      })
+      .catch(error => {
+        console.log('Google Play Store not yet available');
+        // Keep "Coming Soon" status
+      });
+  }
+  
+  // Alternative Play Store check using a different approach
+  function checkPlayStoreAvailability() {
+    // Create a hidden iframe to test if the Play Store page exists
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = 'https://play.google.com/store/apps/details?id=io.github.tabssh';
+    
+    iframe.onload = function() {
+      console.log('Play Store page loaded - app may be available');
+      // Enable Play Store download
+      document.querySelectorAll('.playstore-coming-soon').forEach(element => {
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.style.cssText = 'background-color: var(--success); color: white; margin-left: var(--space-2);';
+        badge.textContent = 'Available!';
+        
+        const heading = element.querySelector('h4');
+        if (heading) {
+          heading.appendChild(badge);
+        }
+      });
+    };
+    
+    iframe.onerror = function() {
+      console.log('Play Store page not found - app not yet available');
+    };
+    
+    document.body.appendChild(iframe);
+    
+    // Remove the test iframe after a short delay
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+    }, 3000);
+  }
+  
   // Check F-Droid availability
   function initFDroidCheck() {
     const FDROID_API = 'https://f-droid.org/api/v1/packages/io.github.tabssh';
@@ -213,6 +282,7 @@
     initAccessibility();
     initVersionFetching();
     initFDroidCheck();
+    initPlayStoreCheck();
     
     console.log('TabSSH website loaded successfully');
   }
