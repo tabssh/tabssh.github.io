@@ -110,12 +110,61 @@
     console.log('Mobile menu initialized');
   }
   
+  // Fetch latest release version from GitHub API
+  function initVersionFetching() {
+    const API_URL = 'https://api.github.com/repos/TabSSH/android/releases/latest';
+    
+    fetch(API_URL)
+      .then(response => response.json())
+      .then(data => {
+        const version = data.tag_name || 'v1.0.0';
+        const releaseDate = new Date(data.published_at).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long', 
+          day: 'numeric'
+        });
+        
+        console.log('Latest version:', version);
+        console.log('Release date:', releaseDate);
+        
+        // Update all version badges
+        document.querySelectorAll('.version-badge').forEach(badge => {
+          badge.textContent = version;
+        });
+        
+        // Update download links with correct version
+        const downloadLinks = document.querySelectorAll('a[href*="releases/download"]');
+        downloadLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          // Replace version in download URLs
+          const newHref = href.replace(/\/v[\d.]+\//, `/${version}/`);
+          link.setAttribute('href', newHref);
+        });
+        
+        // Update release date displays
+        document.querySelectorAll('.release-date').forEach(dateElement => {
+          dateElement.textContent = `Released: ${releaseDate}`;
+        });
+        
+        // Update "Latest Version" text
+        document.querySelectorAll('.latest-version').forEach(element => {
+          element.innerHTML = `<strong>Latest Version:</strong> <span class="badge version-badge">${version}</span>`;
+        });
+        
+      })
+      .catch(error => {
+        console.warn('Could not fetch latest version:', error);
+        console.log('Using fallback version v1.0.0');
+      });
+  }
+  
   // Initialize everything
   function init() {
     initMobileMenu();
     initDownloadDetection();
     initSmoothScrolling();
     initAccessibility();
+    initVersionFetching();
     
     console.log('TabSSH website loaded successfully');
   }
