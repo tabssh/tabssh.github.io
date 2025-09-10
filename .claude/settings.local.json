@@ -10,7 +10,11 @@
       "Bash(docker build:*)",
       "Bash(mkdir:*)",
       "Bash(sed:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(for file in /root/Projects/github/tabssh/tabssh.github.io/{docs,download,contributing,privacy,security,404}.html)",
+      "Bash(do)",
+      "Bash(done)",
+      "Bash(for:*)"
     ],
     "deny": [],
     "ask": []

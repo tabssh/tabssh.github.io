@@ -65,8 +65,54 @@
     document.head.appendChild(style);
   }
   
+  // Mobile menu functionality
+  function initMobileMenu() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.mobile-nav');
+    
+    if (!toggle || !menu) {
+      return; // No mobile menu on this page
+    }
+    
+    function toggleMenu() {
+      const isActive = menu.classList.contains('active');
+      if (isActive) {
+        menu.classList.remove('active');
+        toggle.setAttribute('aria-label', 'Open mobile menu');
+        toggle.textContent = '☰';
+      } else {
+        menu.classList.add('active');
+        toggle.setAttribute('aria-label', 'Close mobile menu');
+        toggle.textContent = '✕';
+      }
+    }
+    
+    function closeMenu() {
+      menu.classList.remove('active');
+      toggle.setAttribute('aria-label', 'Open mobile menu');
+      toggle.textContent = '☰';
+    }
+    
+    toggle.addEventListener('click', toggleMenu);
+    
+    // Close menu when clicking a link
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+        closeMenu();
+      }
+    });
+    
+    console.log('Mobile menu initialized');
+  }
+  
   // Initialize everything
   function init() {
+    initMobileMenu();
     initDownloadDetection();
     initSmoothScrolling();
     initAccessibility();
