@@ -7,37 +7,50 @@
     const button = document.querySelector('.theme-toggle');
     const icon = document.querySelector('.theme-icon');
     
+    console.log('Looking for theme toggle elements...');
+    console.log('Button found:', !!button);
+    console.log('Icon found:', !!icon);
+    
     if (!button || !icon) {
-      console.warn('Theme toggle elements not found');
+      console.error('Theme toggle elements not found!');
+      console.log('Available buttons:', document.querySelectorAll('button'));
+      console.log('Available .theme-icon:', document.querySelectorAll('.theme-icon'));
       return;
     }
     
     function updateButton() {
       const isDark = document.documentElement.classList.contains('dark');
+      console.log('Updating button, isDark:', isDark);
       icon.textContent = isDark ? '☀️' : '🌙';
       button.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
     }
     
     function toggleTheme() {
       const isDark = document.documentElement.classList.contains('dark');
+      console.log('Toggle clicked! Current state:', isDark ? 'dark' : 'light');
+      console.log('HTML element:', document.documentElement);
+      console.log('Current classes before toggle:', document.documentElement.className);
       
       if (isDark) {
         document.documentElement.classList.remove('dark');
         localStorage.setItem('theme', 'light');
-        console.log('Switched to light theme');
+        console.log('Removed dark class, set storage to light');
       } else {
         document.documentElement.classList.add('dark');
         localStorage.setItem('theme', 'dark');
-        console.log('Switched to dark theme');
+        console.log('Added dark class, set storage to dark');
       }
       
+      console.log('Classes after toggle:', document.documentElement.className);
       updateButton();
     }
     
     button.addEventListener('click', toggleTheme);
     updateButton();
     
-    console.log('Theme toggle initialized');
+    console.log('Theme toggle fully initialized');
+    console.log('Current localStorage theme:', localStorage.getItem('theme'));
+    console.log('Current HTML classes:', document.documentElement.className);
   }
   
   // Download detection

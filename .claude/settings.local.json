@@ -9,7 +9,8 @@
       "Bash(bundle install:*)",
       "Bash(docker build:*)",
       "Bash(mkdir:*)",
-      "Bash(sed:*)"
+      "Bash(sed:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

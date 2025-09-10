@@ -72,18 +72,64 @@
   }
 }
 
-html.dark {
-  --bg-primary: #1a1b26;
-  --bg-secondary: #24283b;
-  --text-primary: #c0caf5;
-  --text-secondary: #a9b1d6;
-  --border: #414868;
-  --shadow: rgba(0, 0, 0, 0.6);
-  --primary-500: #7aa2f7;
-  --primary-700: #bb9af7;
-  --success: #9ece6a;
-  --warning: #e0af68;
-  --error: #f7768e;
+html.dark,
+html.dark:root,
+.dark,
+.dark:root {
+  --bg-primary: #1a1b26 !important;
+  --bg-secondary: #24283b !important;
+  --text-primary: #c0caf5 !important;
+  --text-secondary: #a9b1d6 !important;
+  --border: #414868 !important;
+  --shadow: rgba(0, 0, 0, 0.6) !important;
+  --primary-500: #7aa2f7 !important;
+  --primary-700: #bb9af7 !important;
+  --success: #9ece6a !important;
+  --warning: #e0af68 !important;
+  --error: #f7768e !important;
+}
+
+/* Force dark theme on body and key elements */
+html.dark body,
+.dark body {
+  background-color: #1a1b26 !important;
+  color: #c0caf5 !important;
+}
+
+html.dark .site-header,
+.dark .site-header {
+  background-color: #1a1b26 !important;
+  border-bottom-color: #414868 !important;
+}
+
+html.dark .hero,
+.dark .hero {
+  background: linear-gradient(135deg, #1a1b26 0%, #24283b 100%) !important;
+}
+
+html.dark .card,
+html.dark .feature-card,
+html.dark .download-option,
+.dark .card,
+.dark .feature-card,
+.dark .download-option {
+  background-color: #24283b !important;
+  border-color: #414868 !important;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6,
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #c0caf5 !important;
 }
 
 /* Reset and Base Styles */
