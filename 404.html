@@ -14,18 +14,6 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/main.css">
   
-  <!-- Theme Detection -->
-  <script>
-    (function() {
-      const isDarkStored = localStorage.getItem('theme') === 'dark';
-      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
-      
-      if (shouldUseDark) {
-        document.documentElement.classList.add('dark');
-      }
-    })();
-  </script>
 </head>
 <body>
   <!-- Header -->
@@ -43,10 +31,6 @@
           <li><a href="download.html">Download</a></li>
           <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
-        <button class="theme-toggle" aria-label="Toggle theme">
-          <span class="sr-only">Toggle dark mode</span>
-          <span class="theme-icon">🌙</span>
-        </button>
       </div>
     </nav>
   </header>
