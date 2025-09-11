@@ -14,7 +14,11 @@
       "Bash(for file in /root/Projects/github/tabssh/tabssh.github.io/{docs,download,contributing,privacy,security,404}.html)",
       "Bash(do)",
       "Bash(done)",
-      "Bash(for:*)"
+      "Bash(for:*)",
+      "Bash(if ! grep -q \"mobile-menu-toggle\" \"$file\")",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(fi)"
     ],
     "deny": [],
     "ask": []
