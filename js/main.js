@@ -1,59 +1,60 @@
 // TabSSH Website JavaScript
-(function() {
+(function () {
   'use strict';
-  
+
   // Download detection for better UX
   function initDownloadDetection() {
     const userAgent = navigator.userAgent;
     const isAndroid = /Android/i.test(userAgent);
-    
+
     if (isAndroid) {
       console.log('🎉 Android device detected!');
-      
+
       // Add Android-specific messaging
       const downloadOptions = document.querySelectorAll('.download-option');
-      downloadOptions.forEach(option => {
+      downloadOptions.forEach((option) => {
         const title = option.querySelector('h3');
         if (title && title.textContent.includes('Latest Release')) {
           const badge = document.createElement('span');
           badge.className = 'badge';
-          badge.style.cssText = 'background-color: var(--success); color: white; margin-left: var(--space-2);';
+          badge.style.cssText =
+            'background-color: var(--success); color: white; margin-left: var(--space-2);';
           badge.textContent = 'Perfect for your device!';
           title.appendChild(badge);
         }
       });
     }
   }
-  
+
   // Smooth scrolling for anchor links
   function initSmoothScrolling() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
           e.preventDefault();
           target.scrollIntoView({
             behavior: 'smooth',
-            block: 'start'
+            block: 'start',
           });
         }
       });
     });
   }
-  
+
   // Accessibility improvements
   function initAccessibility() {
     // Add keyboard navigation support
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Tab') {
         document.body.classList.add('keyboard-navigation');
       }
     });
-    
-    document.addEventListener('mousedown', function() {
+
+    document.addEventListener('mousedown', function () {
       document.body.classList.remove('keyboard-navigation');
     });
-    
+
     // Add focus styles for keyboard navigation
     const style = document.createElement('style');
     style.textContent = `
@@ -64,16 +65,16 @@
     `;
     document.head.appendChild(style);
   }
-  
+
   // Mobile menu functionality
   function initMobileMenu() {
     const toggle = document.querySelector('.mobile-menu-toggle');
     const menu = document.querySelector('.mobile-nav');
-    
+
     if (!toggle || !menu) {
       return; // No mobile menu on this page
     }
-    
+
     function toggleMenu() {
       const isActive = menu.classList.contains('active');
       if (isActive) {
@@ -86,128 +87,138 @@
         toggle.textContent = '✕';
       }
     }
-    
+
     function closeMenu() {
       menu.classList.remove('active');
       toggle.setAttribute('aria-label', 'Open mobile menu');
       toggle.textContent = '☰';
     }
-    
+
     toggle.addEventListener('click', toggleMenu);
-    
+
     // Close menu when clicking a link
-    menu.querySelectorAll('a').forEach(link => {
+    menu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', closeMenu);
     });
-    
+
     // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       if (!toggle.contains(e.target) && !menu.contains(e.target)) {
         closeMenu();
       }
     });
-    
+
     console.log('Mobile menu initialized');
   }
-  
+
   // Fetch latest release version from GitHub API
   function initVersionFetching() {
-    const API_URL = 'https://api.github.com/repos/TabSSH/android/releases/latest';
-    
+    const API_URL =
+      'https://api.github.com/repos/TabSSH/android/releases/latest';
+
     fetch(API_URL)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const version = data.tag_name || 'v1.0.0';
-        const releaseDate = new Date(data.published_at).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long', 
-          day: 'numeric'
-        });
-        
+        const releaseDate = new Date(data.published_at).toLocaleDateString(
+          'en-US',
+          {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }
+        );
+
         console.log('Latest version:', version);
         console.log('Release date:', releaseDate);
-        
+
         // Update all version badges
-        document.querySelectorAll('.version-badge').forEach(badge => {
+        document.querySelectorAll('.version-badge').forEach((badge) => {
           badge.textContent = version;
         });
-        
-        // Build download URLs dynamically with new naming scheme: tabssh-{os}-{arch}-{version}
-        const downloadLinks = document.querySelectorAll('.download-link[data-arch]');
-        downloadLinks.forEach(link => {
+
+        // Build download URLs dynamically with new naming scheme: tabssh-{arch}
+        const downloadLinks = document.querySelectorAll(
+          '.download-link[data-arch]'
+        );
+        downloadLinks.forEach((link) => {
           const arch = link.getAttribute('data-arch');
           if (arch) {
-            const downloadUrl = `https://github.com/TabSSH/android/releases/download/${version}/tabssh-android-${arch}-${version}.apk`;
+            const downloadUrl = `https://github.com/TabSSH/android/releases/download/${version}/tabssh-${arch}.apk`;
             link.setAttribute('href', downloadUrl);
             console.log(`Updated ${arch} download link:`, downloadUrl);
           }
         });
-        
+
         // Update release date displays
-        document.querySelectorAll('.release-date').forEach(dateElement => {
+        document.querySelectorAll('.release-date').forEach((dateElement) => {
           dateElement.textContent = `Released: ${releaseDate}`;
         });
-        
+
         // Update "Latest Version" text
-        document.querySelectorAll('.latest-version').forEach(element => {
+        document.querySelectorAll('.latest-version').forEach((element) => {
           element.innerHTML = `<strong>Latest Version:</strong> <span class="badge version-badge">${version}</span>`;
         });
-        
       })
-      .catch(error => {
+      .catch((error) => {
         console.warn('Could not fetch latest version:', error);
         console.log('Using fallback version v1.0.0');
       });
   }
-  
+
   // Check Google Play Store availability with proper error detection
   function initPlayStoreCheck() {
-    const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=io.github.tabssh';
-    
+    const PLAY_STORE_URL =
+      'https://play.google.com/store/apps/details?id=io.github.tabssh';
+
     // Use a CORS proxy service that can actually fetch the content
-    const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(PLAY_STORE_URL)}`;
-    
+    const PROXY_URL = `https://api.allorigins.win/get?url=${encodeURIComponent(
+      PLAY_STORE_URL
+    )}`;
+
     fetch(PROXY_URL)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         const content = data.contents;
-        
+
         // Check for specific error indicators in the HTML content
         const notFoundIndicators = [
           "We're sorry, the requested URL was not found",
-          "Item not found",
-          "This app is unavailable",
-          "Not found",
-          "Error 404"
+          'Item not found',
+          'This app is unavailable',
+          'Not found',
+          'Error 404',
         ];
-        
-        const hasError = notFoundIndicators.some(indicator => 
+
+        const hasError = notFoundIndicators.some((indicator) =>
           content.toLowerCase().includes(indicator.toLowerCase())
         );
-        
+
         // Check for positive indicators that the app exists
         const appIndicators = [
           '"TabSSH"',
           'id="io.github.tabssh"',
           'application-name',
           'Install',
-          'Download'
+          'Download',
         ];
-        
-        const hasApp = appIndicators.some(indicator => 
+
+        const hasApp = appIndicators.some((indicator) =>
           content.toLowerCase().includes(indicator.toLowerCase())
         );
-        
+
         if (hasError || !hasApp) {
           console.log('Play Store: App not found (404 or error page detected)');
           throw new Error('App not available on Play Store');
         }
-        
+
         console.log('TabSSH is available on Google Play Store!');
-        
+
         // Update "Coming Soon" sections for Play Store
-        document.querySelectorAll('.playstore-coming-soon').forEach(element => {
-          element.innerHTML = `
+        document
+          .querySelectorAll('.playstore-coming-soon')
+          .forEach((element) => {
+            element.innerHTML = `
             <h4>🤖 Google Play Store <span class="badge" style="background-color: var(--success); color: white;">Available!</span></h4>
             <p style="font-size: var(--font-size-sm);">
               Now available on Google Play Store for easy installation and automatic updates.
@@ -218,38 +229,42 @@
               </a>
             </div>
           `;
-        });
+          });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('Google Play Store not yet available:', error.message);
         // Keep "Coming Soon" status
-        
+
         // Add a note that it's actively being worked on
-        document.querySelectorAll('.playstore-coming-soon').forEach(element => {
-          const note = document.createElement('p');
-          note.style.cssText = 'font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-2); font-style: italic;';
-          note.textContent = 'Status checked automatically - will update when published';
-          element.appendChild(note);
-        });
+        document
+          .querySelectorAll('.playstore-coming-soon')
+          .forEach((element) => {
+            const note = document.createElement('p');
+            note.style.cssText =
+              'font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-2); font-style: italic;';
+            note.textContent =
+              'Status checked automatically - will update when published';
+            element.appendChild(note);
+          });
       });
   }
-  
+
   // Check F-Droid availability
   function initFDroidCheck() {
     const FDROID_API = 'https://f-droid.org/api/v1/packages/io.github.tabssh';
-    
+
     fetch(FDROID_API)
-      .then(response => {
+      .then((response) => {
         if (response.ok) {
           return response.json();
         }
         throw new Error('Not available on F-Droid yet');
       })
-      .then(data => {
+      .then((data) => {
         console.log('TabSSH is available on F-Droid!');
-        
+
         // Enable F-Droid links and update "Coming Soon" sections
-        document.querySelectorAll('.fdroid-coming-soon').forEach(element => {
+        document.querySelectorAll('.fdroid-coming-soon').forEach((element) => {
           element.innerHTML = `
             <h4>🏪 F-Droid <span class="badge" style="background-color: var(--success); color: white;">Available!</span></h4>
             <p style="font-size: var(--font-size-sm);">
@@ -262,23 +277,26 @@
             </div>
           `;
         });
-        
+
         // Update download instructions to mention F-Droid as preferred
-        const downloadInstructions = document.querySelector('.download-instructions');
+        const downloadInstructions = document.querySelector(
+          '.download-instructions'
+        );
         if (downloadInstructions) {
-          downloadInstructions.innerHTML = `
+          downloadInstructions.innerHTML =
+            `
             <div class="alert alert-success">
               <strong>Now Available!</strong> TabSSH is now available on F-Droid as the recommended installation method.
             </div>
           ` + downloadInstructions.innerHTML;
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('F-Droid not yet available:', error.message);
         // Keep "Coming Soon" status
       });
   }
-  
+
   // Initialize everything
   function init() {
     initMobileMenu();
@@ -288,10 +306,10 @@
     initVersionFetching();
     initFDroidCheck();
     initPlayStoreCheck();
-    
+
     console.log('TabSSH website loaded successfully');
   }
-  
+
   // Wait for DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
