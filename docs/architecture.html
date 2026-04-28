@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Architecture - TabSSH Documentation</title>
-  <meta name="description" content="Technical architecture and implementation details of TabSSH SSH client for Android.">
+  <meta name="description" content="Technical architecture of TabSSH — Android (Kotlin, MVVM, Room) and Desktop (Rust, egui, russh) — engineering decisions, security model, and module layout.">
   <link rel="icon" type="image/png" href="../images/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,10 +55,17 @@
   <main>
     <div style="padding: var(--space-12) 0;">
       <div class="container container-md">
-        <h1>Architecture & Technical Details</h1>
-        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
-          Deep dive into TabSSH's technical architecture and engineering decisions.
+        <h1>Architecture &amp; Technical Details</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-4);">
+          Deep dive into TabSSH's technical architecture and engineering decisions across both clients.
         </p>
+        <div class="alert alert-info" style="margin-bottom: var(--space-8);">
+          TabSSH ships as two separate codebases sharing the same data model and security stance.
+          <strong>Android</strong> (<a href="https://github.com/TabSSH/android">tabssh/android</a>) — Kotlin, MVVM, Room, JSch — <em>beta, bug-fix phase</em>.
+          <strong>Desktop</strong> (<a href="https://github.com/tabssh/desktop">tabssh/desktop</a>) — Rust, egui, russh, async-tokio — <em>v0.1.0 in development, ~50% complete</em>.
+        </div>
+
+        <h2 style="margin-top: var(--space-8);">📱 Android Architecture <span class="platform-pill mobile-only">📱 Mobile</span></h2>
 
         <div style="display: grid; gap: var(--space-8);">
           <div class="card">
@@ -147,7 +154,7 @@
               <li>Quick Settings tile support</li>
               <li>Background operation with battery optimization</li>
             </ul>
-            
+
             <h3>Performance</h3>
             <ul>
               <li>Efficient memory management</li>
@@ -158,9 +165,119 @@
           </div>
         </div>
 
+        <h2 style="margin-top: var(--space-16);">💻 Desktop Architecture <span class="platform-pill desktop-only">💻 Desktop</span></h2>
+        <p style="margin-bottom: var(--space-4);">
+          Single static Rust binary, async I/O on Tokio, egui for the UI, <code>russh</code> for the SSH transport, OS keychain for credential storage. <strong>Currently v0.1.0 in active development</strong> — the items below are wired into Cargo but not all are user-facing yet (per the comparison table in <a href="https://github.com/tabssh/desktop/blob/main/CLAUDE.md">desktop/CLAUDE.md</a>).
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🏗️ Application Architecture</h2>
+            <h3>Async-First, egui Immediate Mode</h3>
+            <ul>
+              <li><strong>Runtime:</strong> Tokio multi-threaded executor; SSH I/O on a worker pool, UI on the main thread</li>
+              <li><strong>UI:</strong> <code>egui</code> + <code>eframe</code> 0.25 (immediate-mode, pure Rust, no native widget toolkit dependency)</li>
+              <li><strong>Cross-thread state:</strong> <code>Arc&lt;Mutex&lt;…&gt;&gt;</code> for shared session state; channel-based events for UI updates</li>
+              <li><strong>Single binary:</strong> static linking, <code>panic = "abort"</code> + LTO + <code>strip</code> in release for ~8–14 MB output</li>
+            </ul>
+
+            <h3>Module Structure</h3>
+            <pre><code>src/
+├── app.rs          # Top-level egui App impl + window state
+├── main.rs         # Entry — env_logger init, eframe::run_native
+├── lib.rs          # Library boundary for tests + benches
+├── ssh/            # russh client, auth, channel multiplexing
+├── sftp/           # russh-sftp wrapper, transfer queue
+├── terminal/       # vte parser + grid + scrollback
+├── ui/             # egui panels, dialogs, tab strip, palettes
+├── config/         # ~/.ssh/config (ssh2-config), TabSSH settings (TOML)
+├── storage/        # rusqlite — connections, history, snippets
+├── crypto/         # AES-256-GCM, PBKDF2 for sync blob
+├── platform/       # OS-specific paths, tray hooks, keychain glue
+├── bin/            # Optional ancillary binaries
+└── utils/          # Logging, error types, helpers</code></pre>
+          </div>
+
+          <div class="card">
+            <h2>🦀 Core Crates</h2>
+            <ul>
+              <li><strong>SSH transport:</strong> <code>russh</code> 0.40 + <code>russh-keys</code> 0.40 — pure-Rust SSH 2.0, no JNI</li>
+              <li><strong>SFTP:</strong> <code>russh-sftp</code> 2.0 (wired; UI surface in progress)</li>
+              <li><strong>Terminal:</strong> <code>vte</code> 0.13 — VT/xterm parser; grid + scrollback implemented in <code>terminal/</code></li>
+              <li><strong>UI:</strong> <code>eframe</code> + <code>egui</code> 0.25 with <code>egui_extras</code> for image rendering</li>
+              <li><strong>Storage:</strong> <code>rusqlite</code> 0.30 (bundled SQLite, no system dep)</li>
+              <li><strong>SSH config:</strong> <code>ssh2-config</code> for round-trip <code>~/.ssh/config</code> parsing (planned wiring)</li>
+              <li><strong>Async:</strong> <code>tokio</code> 1.35 with <code>full</code> features, <code>async-trait</code> for the channel interface</li>
+              <li><strong>Path expansion:</strong> <code>shellexpand</code> for <code>~</code> + env-var resolution</li>
+              <li><strong>Errors:</strong> <code>anyhow</code> at the boundary, <code>thiserror</code> for typed module errors</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🔐 Security Architecture</h2>
+            <h3>Credential Storage</h3>
+            <ul>
+              <li><strong>OS Keychain:</strong> <code>keyring</code> 2.1 abstracts macOS Keychain / Windows Credential Manager / Linux Secret Service behind a single API</li>
+              <li><strong>macOS-specific:</strong> <code>security-framework</code> 2.9 for direct Keychain interop where the generic crate isn't enough</li>
+              <li><strong>Windows-specific:</strong> <code>windows</code> 0.52 with <code>Win32_Security_Credentials</code> features</li>
+              <li><strong>At-rest crypto:</strong> AES-256-GCM via the <code>aes-gcm</code> crate, PBKDF2 (100k) for the sync-blob KDF — same parameters as the Android side, so encrypted blobs round-trip</li>
+            </ul>
+
+            <h3>Memory Safety</h3>
+            <ul>
+              <li>Rust compile-time guarantees eliminate the buffer-overflow / use-after-free class entirely</li>
+              <li><code>panic = "abort"</code> in release: a panic terminates the process rather than unwinding through unsafe state</li>
+              <li>No <code>unsafe</code> blocks in the app layer (Crypto / FFI crates are reviewed dependencies)</li>
+            </ul>
+
+            <h3>Crash Handling</h3>
+            <ul>
+              <li>Custom panic hook writes a backtrace + thread name to the OS state directory:
+                <code>~/.local/state/tabssh/crashes/</code> (Linux), <code>~/Library/Logs/tabssh/</code> (macOS), <code>%LOCALAPPDATA%\tabssh\crashes\</code> (Windows)</li>
+              <li>No "ANR watchdog" equivalent — desktop relies on the OS process monitor</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🖥️ Terminal Emulation</h2>
+            <ul>
+              <li><strong>Parser:</strong> <code>vte</code> 0.13 — same parser used by Alacritty/wezterm; full VT100/xterm-256color escape coverage</li>
+              <li><strong>Grid:</strong> custom row/column buffer with double-width / wide-char handling; scrollback implemented in-tree</li>
+              <li><strong>Renderer:</strong> egui draws the grid as a textured glyph atlas; native font rendering at any size</li>
+              <li><strong>24-bit colour:</strong> supported (matches mobile after Wave 4)</li>
+              <li><strong>Unicode:</strong> full UTF-8; <code>unicode-width</code>-style accounting in the grid</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🐳 Build &amp; Distribution</h2>
+            <ul>
+              <li><strong>Docker-first:</strong> all builds happen via <code>make build</code> in containers — no local Rust toolchain assumed</li>
+              <li><strong>Targets:</strong> Linux amd64/arm64, macOS amd64/arm64, Windows amd64/arm64, FreeBSD amd64/arm64, OpenBSD amd64/arm64, NetBSD amd64 — 11 binaries per release</li>
+              <li><strong>Static linking:</strong> Linux uses musl targets; macOS / Windows / BSD use their default static toolchains</li>
+              <li><strong>Asset naming:</strong> <code>tabssh-{os}-{arch}</code> (with <code>.exe</code> on Windows) — matches the <code>PLATFORMS</code> regex in this site's <code>js/main.js</code></li>
+              <li><strong>Binary size:</strong> ~8–14 MB after LTO + <code>strip</code></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🧪 Current Status</h2>
+            <ul>
+              <li>✅ <strong>Working today:</strong> SSH connect / auth (password, public key, keyboard-interactive), terminal I/O via russh + vte, basic UI with tab strip, <code>~/.ssh/</code> direct read</li>
+              <li>🚧 <strong>In progress:</strong> SFTP UI surface, OS keychain wiring, theme system (JSON format shared with mobile), port forwarding, command palette</li>
+              <li>📋 <strong>Planned:</strong> Mosh client in pure Rust (avoid the cross-compile dance the Android app does for <code>libmosh-client.so</code>), X11 forwarding via <code>x11rb</code>, hypervisor support, sync</li>
+              <li>❌ <strong>Won't ship:</strong> on-screen keyboard, swipe gestures, foldable layouts (mobile-only patterns)</li>
+            </ul>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary);">
+              Authoritative status lives in <a href="https://github.com/tabssh/desktop/blob/main/CLAUDE.md">desktop/CLAUDE.md</a> — when in doubt, that's the source of truth, not this page.
+            </p>
+          </div>
+        </div>
+
         <div style="text-align: center; margin-top: var(--space-12);">
           <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
-          <a href="https://github.com/TabSSH/android" class="btn btn-secondary">View Source Code</a>
+          <a href="https://github.com/TabSSH/android" class="btn btn-secondary">Android Source</a>
+          <a href="https://github.com/tabssh/desktop" class="btn btn-secondary">Desktop Source</a>
         </div>
       </div>
     </div>
