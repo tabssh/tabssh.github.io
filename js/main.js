@@ -111,23 +111,61 @@
     console.log('Mobile menu initialized');
   }
 
-  // Fetch all releases and split into Latest Stable + Development.
-  //
-  // An "app release" is one that has at least one tabssh-*.apk asset; this
-  // automatically excludes the monthly Mosh-binary releases (mosh-1.4.0 etc.)
-  // which only ship libmosh-client.so files. Each download URL comes straight
-  // from the API's `browser_download_url`, so we never construct URLs from a
-  // hardcoded version or asset name — promoting a build from prerelease to
-  // stable just lights up the page on the next load with no code changes.
-  function initVersionFetching() {
-    const API_URL = 'https://api.github.com/repos/TabSSH/android/releases';
-    const APK_RE = /^tabssh-.*\.apk$/i;
+  // Each platform has its own GitHub repo and asset-naming convention.
+  // We fetch both, classify into stable/dev, and populate the matching
+  // [data-release-section="..."] containers in download.html. Adding a third
+  // platform later is just another entry in this array — no other JS edits.
+  const PLATFORMS = [
+    {
+      // Android APKs from TabSSH/android. Excludes the monthly mosh-1.4.0
+      // releases (those have no tabssh-*.apk assets, so they fail isApp).
+      repo: 'TabSSH/android',
+      sectionPrefix: 'mobile',
+      isApp: (asset) => /^tabssh-.*\.apk$/i.test(asset.name),
+      assetRegex: (arch) =>
+        new RegExp(`^tabssh-${escapeRegex(arch)}(-dev)?\\.apk$`, 'i'),
+    },
+    {
+      // Desktop binaries from tabssh/desktop. Asset names are
+      // tabssh-{os}-{arch} with optional .exe on Windows. The app-asset
+      // regex pins to the supported OS list so unrelated artifacts (a
+      // signed source tarball, a checksum file) don't accidentally count
+      // a release as an "app release".
+      repo: 'tabssh/desktop',
+      sectionPrefix: 'desktop',
+      isApp: (asset) =>
+        /^tabssh-(linux|macos|windows|freebsd|openbsd|netbsd)-(amd64|arm64)(\.exe)?$/i.test(
+          asset.name
+        ),
+      assetRegex: (arch) =>
+        new RegExp(`^tabssh-${escapeRegex(arch)}(\\.exe)?$`, 'i'),
+    },
+  ];
 
-    fetch(API_URL)
+  function escapeRegex(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  // Fetch every configured platform's releases and populate stable + dev
+  // sections for each. Each download URL comes straight from the API's
+  // `browser_download_url`, so we never construct URLs from a hardcoded
+  // version or asset name — promoting a build from prerelease to stable
+  // just lights up the page on the next load with no code changes.
+  function initVersionFetching() {
+    PLATFORMS.forEach(fetchPlatformReleases);
+  }
+
+  function fetchPlatformReleases(platform) {
+    const apiUrl = `https://api.github.com/repos/${platform.repo}/releases`;
+
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((releases) => {
         if (!Array.isArray(releases)) {
-          console.warn('Releases API did not return an array:', releases);
+          console.warn(
+            `Releases API for ${platform.repo} did not return an array:`,
+            releases
+          );
           return;
         }
 
@@ -135,28 +173,40 @@
           (r) =>
             r &&
             Array.isArray(r.assets) &&
-            r.assets.some((a) => APK_RE.test(a.name))
+            r.assets.some(platform.isApp)
         );
 
         const latestStable = appReleases.find((r) => !r.prerelease) || null;
         const latestDev = appReleases.find((r) => r.prerelease) || null;
 
-        console.log('Latest stable release:', latestStable && latestStable.tag_name);
-        console.log('Latest dev release:', latestDev && latestDev.tag_name);
+        console.log(
+          `[${platform.sectionPrefix}] stable:`,
+          latestStable && latestStable.tag_name,
+          `dev:`,
+          latestDev && latestDev.tag_name
+        );
 
-        populateReleaseSection('stable', latestStable);
-        populateReleaseSection('dev', latestDev);
+        populateReleaseSection(
+          `${platform.sectionPrefix}-stable`,
+          latestStable,
+          platform
+        );
+        populateReleaseSection(
+          `${platform.sectionPrefix}-dev`,
+          latestDev,
+          platform
+        );
       })
       .catch((error) => {
-        console.warn('Could not fetch releases:', error);
+        console.warn(`Could not fetch ${platform.repo} releases:`, error);
       });
   }
 
-  // Populate one release section ("stable" or "dev") with data from a
-  // GitHub release object. If `release` is null, the section keeps its
-  // default state (empty-state visible, real-content hidden) — see
-  // download.html `[data-release-section]` containers.
-  function populateReleaseSection(sectionName, release) {
+  // Populate one release section with data from a GitHub release object.
+  // If `release` is null, the section keeps its default state (empty-state
+  // visible, real-content hidden) — see download.html
+  // `[data-release-section]` containers.
+  function populateReleaseSection(sectionName, release, platform) {
     const root = document.querySelector(
       `[data-release-section="${sectionName}"]`
     );
@@ -173,8 +223,8 @@
     if (realContent) realContent.removeAttribute('hidden');
 
     // Version badge — show release name if it's distinct from the tag,
-    // otherwise just the tag. Dev release comes through as tag="development",
-    // name="1.0.0-8d267f6", so prefer the name when it's set + different.
+    // otherwise just the tag. Dev releases often have tag="development"
+    // and name="1.0.0-8d267f6", so prefer the name when it's set + different.
     const versionLabel =
       release.name && release.name !== release.tag_name
         ? release.name
@@ -195,19 +245,19 @@
     }
 
     // Download buttons — match each [data-arch] to a real asset by name.
-    // Accepts both `tabssh-{arch}.apk` (stable) and `tabssh-{arch}-dev.apk`
-    // (development), so dev/prod dual-naming works without HTML duplication.
+    // Asset-naming rules differ per platform (.apk for Android,
+    // tabssh-{os}-{arch}[.exe] for Desktop), so the regex factory comes
+    // from the platform config.
     root.querySelectorAll('a[data-arch]').forEach((link) => {
       const arch = link.getAttribute('data-arch');
       if (!arch) return;
-      const escaped = arch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const re = new RegExp(`^tabssh-${escaped}(-dev)?\\.apk$`, 'i');
+      const re = platform.assetRegex(arch);
       const asset = release.assets.find((a) => re.test(a.name));
       if (asset && asset.browser_download_url) {
         link.setAttribute('href', asset.browser_download_url);
         link.removeAttribute('hidden');
       } else {
-        // Hide buttons whose ABI isn't shipped in this release.
+        // Hide buttons whose architecture isn't shipped in this release.
         link.setAttribute('hidden', '');
       }
     });

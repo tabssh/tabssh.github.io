@@ -89,8 +89,13 @@
             </p>
           </header>
 
-          <div class="download-grid" style="margin-bottom: var(--space-16)">
-            <div class="download-option" data-release-section="stable">
+          <h2 style="margin-top: var(--space-4); margin-bottom: var(--space-2);">📱 Android (Mobile)</h2>
+          <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
+            Phones and tablets. ARM64, ARM v7, x86_64 emulator. Minimum Android 7.0.
+          </p>
+
+          <div class="download-grid" style="margin-bottom: var(--space-12)">
+            <div class="download-option" data-release-section="mobile-stable">
               <h2>Latest Release <span class="badge">Stable</span></h2>
 
               <div data-empty-state>
@@ -206,7 +211,7 @@
               </div>
             </div>
 
-            <div class="download-option" data-release-section="dev">
+            <div class="download-option" data-release-section="mobile-dev">
               <h2>Development <span class="badge">Pre-release</span></h2>
 
               <div data-empty-state>
@@ -281,43 +286,201 @@
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="download-option">
-              <h2>All Releases</h2>
-              <p>
-                Browse all versions including pre-releases, view changelogs, and
-                download specific versions.
-              </p>
+          <h2 style="margin-top: var(--space-12); margin-bottom: var(--space-2);">💻 Desktop</h2>
+          <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
+            Single static Rust binary, zero runtime dependencies. Native <code>~/.ssh/</code> access, OS keychain integration, full crate ecosystem (russh, alacritty_terminal, native Mosh + X11). Linux, macOS, Windows, FreeBSD, OpenBSD, NetBSD — amd64 + arm64.
+          </p>
 
-              <div style="margin: var(--space-4) 0">
-                <a
-                  href="https://github.com/TabSSH/android/releases"
-                  class="btn btn-primary"
-                >
-                  View All Releases on GitHub
-                </a>
+          <div class="download-grid" style="margin-bottom: var(--space-12)">
+            <div class="download-option" data-release-section="desktop-stable">
+              <h2>Latest Release <span class="badge">Stable</span></h2>
+
+              <div data-empty-state>
+                <div class="alert alert-info">
+                  <strong>No stable desktop release yet.</strong> Desktop builds are still pre-release — see <strong>Development</strong> below.
+                </div>
               </div>
 
-              <div style="margin-top: var(--space-4)">
-                <h4>What's Included:</h4>
-                <ul style="font-size: var(--font-size-sm)">
-                  <li>Detailed release notes and changelogs</li>
-                  <li>Multiple architecture builds</li>
-                  <li>SHA256 checksums for verification</li>
-                  <li>GPG signatures for security</li>
-                  <li>Beta and development releases</li>
-                </ul>
+              <div data-real-content hidden>
+                <p>
+                  Static binaries — drop them in your <code>$PATH</code> and run. No installer required.
+                </p>
+
+                <div style="margin: var(--space-4) 0">
+                  <div
+                    class="latest-version"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      flex-wrap: wrap;
+                      gap: var(--space-3);
+                      margin-bottom: var(--space-3);
+                    "
+                  >
+                    <strong>Latest Version:</strong>
+                    <span class="badge version-badge"></span>
+                    <span class="release-date" style="font-size: var(--font-size-sm); color: var(--text-secondary);"></span>
+                  </div>
+                </div>
+
+                <div class="alert alert-info">
+                  <strong>File naming:</strong> <code>tabssh-{os}-{arch}</code> (e.g. <code>tabssh-linux-amd64</code>, <code>tabssh-macos-arm64</code>, <code>tabssh-windows-amd64.exe</code>).
+                </div>
+
+                <div style="margin: var(--space-6) 0">
+                  <h4>Choose Your Platform:</h4>
+                  <div
+                    style="
+                      display: grid;
+                      gap: var(--space-3);
+                      margin-top: var(--space-3);
+                    "
+                  >
+                    <a href="#" data-arch="linux-amd64" class="download-link btn btn-primary" download>
+                      🐧 Linux x86_64
+                    </a>
+                    <a href="#" data-arch="linux-arm64" class="download-link btn btn-secondary" download>
+                      🐧 Linux ARM64 (Raspberry Pi, ARM servers)
+                    </a>
+                    <a href="#" data-arch="macos-arm64" class="download-link btn btn-secondary" download>
+                      🍎 macOS Apple Silicon (M1/M2/M3/M4)
+                    </a>
+                    <a href="#" data-arch="macos-amd64" class="download-link btn btn-secondary" download>
+                      🍎 macOS Intel
+                    </a>
+                    <a href="#" data-arch="windows-amd64" class="download-link btn btn-secondary" download>
+                      🪟 Windows x86_64
+                    </a>
+                  </div>
+                </div>
+
+                <div class="alert alert-info">
+                  <strong>Linux / macOS / BSD:</strong> <code>chmod +x tabssh-linux-amd64 &amp;&amp; ./tabssh-linux-amd64</code>. Drop into <code>~/.local/bin/</code> for system-wide access.
+                </div>
+
+                <details style="margin-top: var(--space-4)">
+                  <summary style="cursor: pointer; font-weight: var(--font-weight-medium);">
+                    BSD &amp; other architectures
+                  </summary>
+                  <div style="margin-top: var(--space-3); font-size: var(--font-size-sm); display: grid; gap: var(--space-2);">
+                    <a href="#" data-arch="windows-arm64" class="download-link btn btn-secondary" download>🪟 Windows ARM64</a>
+                    <a href="#" data-arch="freebsd-amd64" class="download-link btn btn-secondary" download>😈 FreeBSD x86_64</a>
+                    <a href="#" data-arch="freebsd-arm64" class="download-link btn btn-secondary" download>😈 FreeBSD ARM64</a>
+                    <a href="#" data-arch="openbsd-amd64" class="download-link btn btn-secondary" download>🐡 OpenBSD x86_64</a>
+                    <a href="#" data-arch="openbsd-arm64" class="download-link btn btn-secondary" download>🐡 OpenBSD ARM64</a>
+                    <a href="#" data-arch="netbsd-amd64" class="download-link btn btn-secondary" download>🚩 NetBSD x86_64</a>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="download-option" data-release-section="desktop-dev">
+              <h2>Development <span class="badge">Pre-release</span></h2>
+
+              <div data-empty-state>
+                <div class="alert alert-info">
+                  No desktop development builds currently published. Source is at <a href="https://github.com/tabssh/desktop">tabssh/desktop</a>.
+                </div>
+              </div>
+
+              <div data-real-content hidden>
+                <p>
+                  Latest development build of TabSSH Desktop. May be unstable or feature-incomplete.
+                </p>
+
+                <div style="margin: var(--space-4) 0">
+                  <div
+                    class="latest-version"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      flex-wrap: wrap;
+                      gap: var(--space-3);
+                      margin-bottom: var(--space-3);
+                    "
+                  >
+                    <strong>Build:</strong>
+                    <span class="badge version-badge"></span>
+                    <span class="release-date" style="font-size: var(--font-size-sm); color: var(--text-secondary);"></span>
+                  </div>
+                </div>
+
+                <div style="margin: var(--space-6) 0">
+                  <h4>Choose Your Platform:</h4>
+                  <div
+                    style="
+                      display: grid;
+                      gap: var(--space-3);
+                      margin-top: var(--space-3);
+                    "
+                  >
+                    <a href="#" data-arch="linux-amd64" class="download-link btn btn-primary" download>🐧 Linux x86_64</a>
+                    <a href="#" data-arch="linux-arm64" class="download-link btn btn-secondary" download>🐧 Linux ARM64</a>
+                    <a href="#" data-arch="macos-arm64" class="download-link btn btn-secondary" download>🍎 macOS Apple Silicon</a>
+                    <a href="#" data-arch="macos-amd64" class="download-link btn btn-secondary" download>🍎 macOS Intel</a>
+                    <a href="#" data-arch="windows-amd64" class="download-link btn btn-secondary" download>🪟 Windows x86_64</a>
+                  </div>
+                </div>
+
+                <details style="margin-top: var(--space-4)">
+                  <summary style="cursor: pointer; font-weight: var(--font-weight-medium);">
+                    BSD &amp; other architectures
+                  </summary>
+                  <div style="margin-top: var(--space-3); font-size: var(--font-size-sm); display: grid; gap: var(--space-2);">
+                    <a href="#" data-arch="windows-arm64" class="download-link btn btn-secondary" download>🪟 Windows ARM64</a>
+                    <a href="#" data-arch="freebsd-amd64" class="download-link btn btn-secondary" download>😈 FreeBSD x86_64</a>
+                    <a href="#" data-arch="freebsd-arm64" class="download-link btn btn-secondary" download>😈 FreeBSD ARM64</a>
+                    <a href="#" data-arch="openbsd-amd64" class="download-link btn btn-secondary" download>🐡 OpenBSD x86_64</a>
+                    <a href="#" data-arch="openbsd-arm64" class="download-link btn btn-secondary" download>🐡 OpenBSD ARM64</a>
+                    <a href="#" data-arch="netbsd-amd64" class="download-link btn btn-secondary" download>🚩 NetBSD x86_64</a>
+                  </div>
+                </details>
+
+                <div class="alert alert-warning">
+                  <strong>Pre-release:</strong> Use stable for production once it ships.
+                </div>
               </div>
             </div>
           </div>
 
+          <div class="card" style="margin-bottom: var(--space-12);">
+            <h2>All Releases</h2>
+            <p>
+              Browse changelogs, pre-releases, checksums, signatures, and download specific older versions.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin: var(--space-4) 0;">
+              <a href="https://github.com/TabSSH/android/releases" class="btn btn-primary">
+                📱 Android Releases
+              </a>
+              <a href="https://github.com/tabssh/desktop/releases" class="btn btn-primary">
+                💻 Desktop Releases
+              </a>
+            </div>
+
+            <div style="margin-top: var(--space-4)">
+              <h4>What's Included:</h4>
+              <ul style="font-size: var(--font-size-sm)">
+                <li>Detailed release notes and changelogs</li>
+                <li>Multiple architecture builds</li>
+                <li>SHA256 checksums for verification</li>
+                <li>Beta and development pre-releases</li>
+              </ul>
+            </div>
+          </div>
+
           <div class="card" style="margin-bottom: var(--space-12)">
-            <h2>Coming Soon</h2>
+            <h2>Coming Soon — Distribution Channels</h2>
+
+            <h3 style="margin-top: var(--space-6);">📱 Android</h3>
             <div
               style="
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
                 gap: var(--space-6);
+                margin-top: var(--space-3);
               "
             >
               <div class="fdroid-coming-soon">
@@ -327,13 +490,7 @@
                   <code>io.github.tabssh</code> for automatic updates and
                   verified open-source builds.
                 </p>
-                <p
-                  style="
-                    font-size: var(--font-size-xs);
-                    color: var(--text-secondary);
-                    margin-top: var(--space-2);
-                  "
-                >
+                <p style="font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-2);">
                   <strong>Future URL:</strong>
                   https://f-droid.org/packages/io.github.tabssh
                 </p>
@@ -342,17 +499,48 @@
               <div class="playstore-coming-soon">
                 <h4>🤖 Google Play Store</h4>
                 <p style="font-size: var(--font-size-sm)">
-                  Play Store distribution is being evaluated for broader
-                  accessibility.
+                  Play Store distribution is being evaluated for broader accessibility.
                 </p>
-                <p
-                  style="
-                    font-size: var(--font-size-xs);
-                    color: var(--text-secondary);
-                    margin-top: var(--space-2);
-                  "
-                >
+                <p style="font-size: var(--font-size-xs); color: var(--text-secondary); margin-top: var(--space-2);">
                   <strong>Package ID:</strong> io.github.tabssh
+                </p>
+              </div>
+            </div>
+
+            <h3 style="margin-top: var(--space-8);">💻 Desktop</h3>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: var(--space-6);
+                margin-top: var(--space-3);
+              "
+            >
+              <div>
+                <h4>🐧 Linux Packages</h4>
+                <p style="font-size: var(--font-size-sm)">
+                  Native packages on the way: <code>.deb</code> (Debian/Ubuntu), <code>.rpm</code> (Fedora/RHEL), AUR (Arch), AppImage (universal), Flatpak, Snap.
+                </p>
+              </div>
+
+              <div>
+                <h4>🍎 macOS</h4>
+                <p style="font-size: var(--font-size-sm)">
+                  <code>.dmg</code> drag-and-drop installer, plus <code>brew install tabssh</code> via Homebrew (planned). MacPorts coming.
+                </p>
+              </div>
+
+              <div>
+                <h4>🪟 Windows</h4>
+                <p style="font-size: var(--font-size-sm)">
+                  <code>.msi</code> installer, plus WinGet (<code>winget install tabssh</code>), Scoop, and Chocolatey (planned).
+                </p>
+              </div>
+
+              <div>
+                <h4>😈 BSD</h4>
+                <p style="font-size: var(--font-size-sm)">
+                  FreeBSD <code>pkg</code> + ports tree, OpenBSD packages, NetBSD <code>pkgsrc</code>.
                 </p>
               </div>
             </div>
@@ -360,15 +548,11 @@
 
           <div class="card">
             <h2>System Requirements</h2>
-            <div
-              style="
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: var(--space-4);
-              "
-            >
+
+            <h3 style="margin-top: var(--space-6);">📱 Android</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-top: var(--space-3);">
               <div>
-                <h4>Minimum Requirements</h4>
+                <h4>Minimum</h4>
                 <ul style="font-size: var(--font-size-sm)">
                   <li>Android 7.0 (API level 24)</li>
                   <li>50 MB free storage</li>
@@ -382,11 +566,59 @@
                 <ul style="font-size: var(--font-size-sm)">
                   <li>Android 10.0 or later</li>
                   <li>100 MB free storage</li>
-                  <li>Hardware keyboard support</li>
-                  <li>Landscape orientation support</li>
+                  <li>Hardware keyboard (optional)</li>
+                  <li>Landscape orientation</li>
                 </ul>
               </div>
             </div>
+
+            <h3 style="margin-top: var(--space-8);">💻 Desktop</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-top: var(--space-3);">
+              <div>
+                <h4>🐧 Linux</h4>
+                <ul style="font-size: var(--font-size-sm)">
+                  <li>Any modern Linux (kernel 3.2+)</li>
+                  <li>x86_64 or aarch64</li>
+                  <li>~15 MB disk space</li>
+                  <li>Statically linked — no glibc / libc dep</li>
+                  <li>X11 or Wayland for GUI; CLI mode runs anywhere</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>🍎 macOS</h4>
+                <ul style="font-size: var(--font-size-sm)">
+                  <li>macOS 11 (Big Sur) or later</li>
+                  <li>Intel x86_64 or Apple Silicon (M1+)</li>
+                  <li>~15 MB disk space</li>
+                  <li>Native Keychain integration</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>🪟 Windows</h4>
+                <ul style="font-size: var(--font-size-sm)">
+                  <li>Windows 10 or later</li>
+                  <li>x86_64 or ARM64</li>
+                  <li>~15 MB disk space</li>
+                  <li>Native Credential Manager integration</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>😈 BSD</h4>
+                <ul style="font-size: var(--font-size-sm)">
+                  <li>FreeBSD 13+, OpenBSD 7+, NetBSD 9+</li>
+                  <li>x86_64 or aarch64 (FreeBSD/OpenBSD)</li>
+                  <li>~10 MB disk space</li>
+                  <li>Statically linked</li>
+                </ul>
+              </div>
+            </div>
+
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-top: var(--space-6);">
+              <strong>Both platforms:</strong> zero telemetry, zero analytics, no Google Play Services dependency on Android. Open source under MIT.
+            </p>
           </div>
 
           <div style="text-align: center; margin-top: var(--space-12)">
