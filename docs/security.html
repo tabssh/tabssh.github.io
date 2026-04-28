@@ -51,9 +51,12 @@
     <div style="padding: var(--space-12) 0;">
       <div class="container container-md">
         <h1>Security Best Practices</h1>
-        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-4);">
           How to use TabSSH securely. For the mechanism-level details (Keystore, AES-256-GCM, FLAG_SECURE, etc.) see the top-level <a href="../security.html">Security page</a> and the <a href="architecture.html">Architecture doc</a>.
         </p>
+        <div class="alert alert-info" style="margin-bottom: var(--space-8);">
+          <strong>Mobile + Desktop:</strong> the principles below apply to both clients. Mobile-specific mechanisms (Android Keystore, FLAG_SECURE, app-lock) are noted inline; desktop counterparts (OS keychain, system lock) follow the same security stance.
+        </div>
 
         <div style="display: grid; gap: var(--space-8);">
           <div class="card">

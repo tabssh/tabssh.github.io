@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TabSSH - Modern SSH Client for Android</title>
-  
+  <title>TabSSH - Modern SSH Client for Android &amp; Desktop</title>
+
   <!-- SEO Meta Tags -->
-  <meta name="description" content="TabSSH is an open-source SSH client for Android with tabbed interface, SFTP support, and modern UI. Secure, privacy-focused, and developer-friendly.">
-  <meta name="keywords" content="SSH, Android, terminal, open source, mobile, secure, tabssh, SFTP, port forwarding">
+  <meta name="description" content="TabSSH is an open-source SSH client family for Android, Linux, macOS, Windows, and BSD — with a tabbed interface, SFTP, hypervisor management, and 23 themes shared across mobile and desktop.">
+  <meta name="keywords" content="SSH, Android, Linux, macOS, Windows, BSD, terminal, open source, mobile, desktop, secure, tabssh, SFTP, port forwarding, mosh">
   <meta name="author" content="TabSSH Team">
-  
+
   <!-- Open Graph -->
-  <meta property="og:title" content="TabSSH - Modern SSH Client for Android">
-  <meta property="og:description" content="Open-source SSH client for Android with tabbed interface, SFTP support, and modern UI.">
+  <meta property="og:title" content="TabSSH - Modern SSH Client for Android &amp; Desktop">
+  <meta property="og:description" content="Open-source SSH client with tabbed interface, SFTP, hypervisor management. For Android (mobile) and Linux/macOS/Windows/BSD (desktop).">
   <meta property="og:image" content="https://raw.githubusercontent.com/tabssh/assets/main/icons/opengraph.png">
   <meta property="og:url" content="https://tabssh.github.io">
   <meta property="og:type" content="website">
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TabSSH - Modern SSH Client for Android">
-  <meta name="twitter:description" content="Open-source SSH client for Android with tabbed interface">
+  <meta name="twitter:title" content="TabSSH - Modern SSH Client for Android &amp; Desktop">
+  <meta name="twitter:description" content="Open-source SSH client for Android, Linux, macOS, Windows, and BSD">
   <meta name="twitter:image" content="https://raw.githubusercontent.com/tabssh/assets/main/icons/twitter.png">
   
   <!-- Favicons -->
@@ -72,10 +72,11 @@
     <section class="hero">
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">Modern SSH Client for Android</h1>
+          <h1 class="hero-title">Modern SSH Client</h1>
           <p class="hero-subtitle">
-            Open-source, secure, and beautiful. TabSSH brings desktop-class SSH 
-            functionality to your Android device with a true tabbed interface.
+            Open-source, secure, and beautiful — for your phone <em>and</em> your laptop.
+            TabSSH brings true browser-style tabs, full VT100 terminal emulation, and
+            hypervisor management to Android, Linux, macOS, Windows, and BSD.
           </p>
           <div class="hero-actions">
             <a href="download.html" class="btn btn-primary btn-lg">Download Now</a>
@@ -189,7 +190,7 @@
           <div class="feature-card">
             <div class="feature-icon">☁️</div>
             <h3>Sync Without Google</h3>
-            <p>Cloud sync runs through Android's Storage Access Framework — Google Drive, Dropbox, OneDrive, Nextcloud, local storage, anything. AES-256-GCM with PBKDF2. Works perfectly on de-Googled ROMs.</p>
+            <p>Mobile syncs through Android's Storage Access Framework — Google Drive, Dropbox, OneDrive, Nextcloud, local storage, anything. Desktop watches a folder synced by your existing client (Nextcloud, Syncthing, rclone). The encrypted AES-256-GCM blob is interchangeable across phone and laptop.</p>
           </div>
 
           <div class="feature-card">
@@ -202,6 +203,24 @@
             <div class="feature-icon">🔌</div>
             <h3>Cloud Host Import</h3>
             <p>Pull in your droplets and instances from DigitalOcean, Hetzner, Linode, and Vultr with an explicit token. No telemetry, no auto-discovery — opt-in only.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📂</div>
+            <h3>Native ~/.ssh/ Access <span class="platform-pill desktop-only">💻 Desktop</span></h3>
+            <p>The desktop client reads your existing <code>~/.ssh/config</code>, keys, and known_hosts directly — no import step. Add a host on the command line, see it in TabSSH instantly.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">⌨️</div>
+            <h3>CLI Mode <span class="platform-pill desktop-only">💻 Desktop</span></h3>
+            <p>Launch a session straight from your shell: <code>tabssh user@host</code>. No GUI step. Pipes naturally into <code>.desktop</code> files, shell aliases, and tmux integrations.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📌</div>
+            <h3>System Tray + Auto-Launch <span class="platform-pill desktop-only">💻 Desktop</span></h3>
+            <p>Connect on login, manage your tabs from the tray, never lose a session to an app close. (Coming with v0.1.)</p>
           </div>
         </div>
       </div>
@@ -262,6 +281,8 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-8); margin-bottom: var(--space-12);">
           <div class="card">
             <h3>🔐 Security Features</h3>
+
+            <h4 style="margin-top: var(--space-3);">📱 Mobile</h4>
             <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
               <li>Android Keystore (hardware-backed)</li>
               <li>AES-256-GCM credential encryption</li>
@@ -271,10 +292,22 @@
               <li>OpenSSH user certificates (Wave 2.2)</li>
               <li>Crash + ANR capture in debug builds</li>
             </ul>
+
+            <h4 style="margin-top: var(--space-4);">💻 Desktop</h4>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>OS keychain (macOS Keychain / Windows Credential Manager / Linux Secret Service)</li>
+              <li>AES-256-GCM credential encryption</li>
+              <li>Same host key TOFU + MITM detection</li>
+              <li>panic-handler crash reporter</li>
+              <li>Memory safety: Rust compile-time guarantees</li>
+              <li>OpenSSH user certificates (when shipped)</li>
+            </ul>
           </div>
 
           <div class="card">
             <h3>🚀 Protocol Support</h3>
+
+            <h4 style="margin-top: var(--space-3);">📱 Mobile</h4>
             <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
               <li>SSH 2.0 (JSch 2.27 — rsa-sha2-512 ready)</li>
               <li>Mosh with native per-arch binaries</li>
@@ -284,10 +317,21 @@
               <li>SOCKS proxy + ProxyJump cascading</li>
               <li>X11 forwarding for graphical apps</li>
             </ul>
+
+            <h4 style="margin-top: var(--space-4);">💻 Desktop</h4>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>SSH 2.0 via <code>russh</code> (pure Rust, no JNI)</li>
+              <li>Mosh client implementation in pure Rust (planned)</li>
+              <li>Telnet + SFTP + port forwarding (when shipped)</li>
+              <li>Native X11 forwarding via <code>x11rb</code></li>
+              <li><code>ssh2-config</code> for <code>~/.ssh/config</code> round-trip</li>
+            </ul>
           </div>
 
           <div class="card">
             <h3>🎨 User Interface</h3>
+
+            <h4 style="margin-top: var(--space-3);">📱 Mobile</h4>
             <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
               <li>Material Design 3 (DayNight)</li>
               <li>23 built-in terminal themes + GUI editor</li>
@@ -297,7 +341,42 @@
               <li>Customisable 1-5 row on-screen keyboard</li>
               <li>Long-press context menus, command palette (Ctrl+K), quick switcher (Ctrl+J)</li>
             </ul>
+
+            <h4 style="margin-top: var(--space-4);">💻 Desktop</h4>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>egui (immediate-mode, pure Rust)</li>
+              <li>Multi-window</li>
+              <li>Real keyboard shortcuts (Ctrl+Tab, Ctrl+W, Ctrl+T, Ctrl+K palette, Ctrl+J switcher, Ctrl+R history)</li>
+              <li>Native font rendering at any size</li>
+              <li>Same 23 themes — JSON format shared with mobile</li>
+            </ul>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two Clients section -->
+    <section class="features" style="background-color: var(--bg-secondary);">
+      <div class="container">
+        <h2 class="section-title">Two Clients, One Design Language</h2>
+        <div style="max-width: 800px; margin: 0 auto;">
+          <p style="font-size: var(--font-size-lg);">
+            TabSSH ships as two separate apps — an Android client built in Kotlin
+            and a desktop client built in Rust. They share the same data model
+            (encrypted sync blobs are interchangeable), the same theme JSON
+            format, and the same security stance — but each is built for its
+            platform's strengths.
+          </p>
+          <p>
+            <strong>Mobile</strong> ships first and is feature-complete for SSH,
+            SFTP, hypervisor management, and 23 built-in themes.
+            <strong>Desktop</strong> is in active development —
+            <a href="https://github.com/tabssh/desktop">tabssh/desktop</a>
+            on GitHub for current status. The encrypted sync format is
+            designed so a profile pair-imported on mobile becomes available on
+            desktop automatically (see the
+            <a href="https://github.com/tabssh/android/blob/main/QR_PAIRING.md">QR Pairing design doc</a>).
+          </p>
         </div>
       </div>
     </section>
@@ -328,7 +407,7 @@
       <div class="footer-content">
         <div class="footer-section">
           <h3>TabSSH</h3>
-          <p>Modern SSH client for Android with tabbed interface. Open-source and privacy-focused.</p>
+          <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
           <div class="footer-social">
             <a href="https://github.com/TabSSH" aria-label="GitHub Organization">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

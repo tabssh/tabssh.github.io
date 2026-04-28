@@ -63,7 +63,19 @@
 
         <div style="max-width: 70ch; margin: 0 auto;">
           <h2>🔐 Security Features</h2>
-          
+
+          <div class="card">
+            <h3>Two Clients, Same Stance</h3>
+            <p>The threat model and the user-facing security guarantees are identical
+               across mobile and desktop. The implementation mechanisms differ where
+               the OS provides better primitives.</p>
+            <ul>
+              <li><strong>Mobile:</strong> Android Keystore + Biometric/PIN + FLAG_SECURE</li>
+              <li><strong>Desktop:</strong> OS Keychain + system lock + panic-handler crash capture</li>
+              <li><strong>Both:</strong> AES-256-GCM stored credentials, host-key TOFU + MITM detection, OpenSSH user certs (Wave 2.2 / desktop port pending), MIT license, zero telemetry, zero analytics.</li>
+            </ul>
+          </div>
+
           <div class="card">
             <h3>Hardware-Backed Encryption</h3>
             <ul>

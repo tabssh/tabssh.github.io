@@ -80,6 +80,14 @@
             <li>🆔 <strong>Personal Identifiers:</strong> No names, email addresses, phone numbers, or account data</li>
           </ul>
 
+          <h2>Same Privacy Promise on Both Platforms</h2>
+          <p>Both <strong>TabSSH Mobile</strong> (Android) and <strong>TabSSH Desktop</strong> (Linux/macOS/Windows/BSD) make the same zero-data-collection commitment. The mechanisms differ slightly per platform:</p>
+          <ul>
+            <li><strong>Mobile:</strong> No analytics SDKs, no crash-reporter SaaS. Encryption uses Android Keystore. Sync via Storage Access Framework — you pick the storage app.</li>
+            <li><strong>Desktop:</strong> No telemetry libraries, no analytics endpoints. Encryption uses the OS keychain (macOS Keychain, Windows Credential Manager, Linux Secret Service). Sync via filesystem watch + your existing sync app (Nextcloud client, Syncthing, rclone, etc.).</li>
+            <li><strong>Both:</strong> Open-source, MIT-licensed, auditable. The encrypted sync format is identical, so a sync blob written by mobile decrypts on desktop and vice versa (when desktop sync ships).</li>
+          </ul>
+
           <h2>No Google Services Dependency</h2>
           <p>TabSSH does not require Google Play Services or any other Google component.</p>
           <ul>

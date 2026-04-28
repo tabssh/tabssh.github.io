@@ -1,6 +1,6 @@
 # TabSSH Website
 
-Static website for TabSSH - the modern SSH client for Android.
+Static website for the **TabSSH client family** — the open-source SSH client for Android (mobile) and Linux/macOS/Windows/BSD (desktop).
 
 ## 🌐 Live Site
 

@@ -58,13 +58,11 @@
         <div style="display: grid; gap: var(--space-8);">
           <div class="card">
             <h2>📥 Import ~/.ssh/config</h2>
-            <p>Already have a curated SSH config on your laptop? Drop it on your phone and import.</p>
-            <ol>
-              <li>Get the <code>~/.ssh/config</code> file onto your phone (e.g. via SAF, sync app, or just copy-paste the contents).</li>
-              <li>In TabSSH → menu → <strong>Import SSH Config</strong>.</li>
-              <li>TabSSH parses the file and shows a preview of every <code>Host</code> stanza.</li>
-              <li>Tick the ones you want; tap Import.</li>
-            </ol>
+            <p>Already have a curated SSH config? TabSSH parses it directly.</p>
+            <ul>
+              <li><strong>Desktop:</strong> reads <code>~/.ssh/config</code> in place — no import step. Edit it with <code>vim</code> as you always have, TabSSH picks up changes on next launch.</li>
+              <li><strong>Mobile:</strong> get the <code>~/.ssh/config</code> file onto the device (SAF, sync app, paste). In TabSSH → menu → <strong>Import SSH Config</strong>. TabSSH shows a preview of every <code>Host</code> stanza; tick the ones you want and tap Import.</li>
+            </ul>
             <p>Supported directives include:</p>
             <ul>
               <li><code>Host</code> + host patterns / wildcards</li>
