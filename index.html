@@ -110,8 +110,8 @@
           
           <div class="feature-card">
             <div class="feature-icon">📁</div>
-            <h3>Dual-Pane SFTP Manager</h3>
-            <p>Professional file manager with resume support, batch transfers, permission preservation, and progress tracking.</p>
+            <h3>Dual-Pane SFTP Browser</h3>
+            <p>Side-by-side local + remote file browser. Multi-file selection, batch transfers with resume, recursive folder upload/download, chmod editing, and tap-to-edit text files in-app.</p>
           </div>
           
           <div class="feature-card">
@@ -128,8 +128,8 @@
           
           <div class="feature-card">
             <div class="feature-icon">🎨</div>
-            <h3>12 Built-in Themes</h3>
-            <p>Dracula, Monokai, Nord, Solarized, Gruvbox, and more. WCAG accessibility compliance with custom theme support.</p>
+            <h3>23 Built-in Themes + Editor</h3>
+            <p>Dracula, Monokai, Nord, Solarized, Gruvbox, Tokyo Night, Catppuccin, Rosé Pine, Everforest, Kanagawa, Cobalt2, and more. Built-in GUI theme editor for full customisation.</p>
           </div>
           
           <div class="feature-card">
@@ -164,8 +164,44 @@
           
           <div class="feature-card">
             <div class="feature-icon">🔑</div>
-            <h3>Key Management</h3>
-            <p>Generate, import, and manage SSH keys with OpenSSH, PuTTY, and PKCS#8 format support plus QR code import.</p>
+            <h3>Universal Key Management</h3>
+            <p>Generate, import, and manage SSH keys in OpenSSH, PEM, PKCS#8, and PuTTY formats. RSA, ECDSA, Ed25519, and DSA. OpenSSH user certificate auth supported.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Hypervisor Management</h3>
+            <p>Manage VMs on Proxmox VE, XCP-ng, Xen Orchestra (with real-time WebSocket updates), and VMware ESXi/vCenter. Power, snapshot, and backup operations from your phone — no other Android SSH client offers this.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🖥️</div>
+            <h3>VM Serial Console</h3>
+            <p>Connect to VMs that have no network — straight through your hypervisor's serial console. Perfect for troubleshooting boot issues or watching an OS install.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📡</div>
+            <h3>Mosh + X11 Forwarding</h3>
+            <p>Mobile Shell with native binaries shipped per-architecture for unstable connections and roaming. X11 forwarding for graphical apps. Telnet for legacy gear.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">☁️</div>
+            <h3>Sync Without Google</h3>
+            <p>Cloud sync runs through Android's Storage Access Framework — Google Drive, Dropbox, OneDrive, Nextcloud, local storage, anything. AES-256-GCM with PBKDF2. Works perfectly on de-Googled ROMs.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h3>Snippets, Identities & Workspaces</h3>
+            <p>Reusable command snippets with variable prompts. Reusable credential identities. Workspaces save groups of tabs to re-open with one tap. Cluster broadcast types one keystroke into many sessions.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🔌</div>
+            <h3>Cloud Host Import</h3>
+            <p>Pull in your droplets and instances from DigitalOcean, Hetzner, Linode, and Vultr with an explicit token. No telemetry, no auto-discovery — opt-in only.</p>
           </div>
         </div>
       </div>
@@ -178,13 +214,13 @@
         <div class="download-grid">
           <div class="download-option">
             <h3>Latest Release</h3>
-            <p>Stable build • Multiple architectures</p>
-            <span class="badge version-badge">v1.0.0</span>
+            <p>Stable + development builds for every Android architecture</p>
+            <span class="badge">GitHub Releases</span>
             <div style="margin-top: var(--space-4);">
-              <a href="download.html" class="btn btn-primary">Download Now</a>
+              <a href="download.html" class="btn btn-primary">Go to Downloads</a>
             </div>
             <p style="font-size: var(--font-size-sm); margin-top: var(--space-2); color: var(--text-secondary);">
-              ARM64, ARM, and x86_64 builds available
+              ARM64, ARM v7, and x86_64 builds available
             </p>
           </div>
           
@@ -227,36 +263,39 @@
           <div class="card">
             <h3>🔐 Security Features</h3>
             <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
-              <li>Android Keystore integration</li>
-              <li>Hardware-backed encryption</li>
-              <li>Biometric authentication</li>
-              <li>Host key verification</li>
-              <li>Certificate validation</li>
-              <li>Configurable security policies</li>
+              <li>Android Keystore (hardware-backed)</li>
+              <li>AES-256-GCM credential encryption</li>
+              <li>Biometric + PIN code app lock</li>
+              <li>Host key TOFU + MITM detection</li>
+              <li>Screenshot protection (FLAG_SECURE)</li>
+              <li>OpenSSH user certificates (Wave 2.2)</li>
+              <li>Crash + ANR capture in debug builds</li>
             </ul>
           </div>
-          
+
           <div class="card">
             <h3>🚀 Protocol Support</h3>
             <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
-              <li>SSH 2.0 with modern algorithms</li>
-              <li>SFTP with resume support</li>
-              <li>Local/Remote/Dynamic forwarding</li>
-              <li>SOCKS proxy support</li>
-              <li>ProxyJump and ProxyCommand</li>
-              <li>Compression and keep-alive</li>
+              <li>SSH 2.0 (JSch 2.27 — rsa-sha2-512 ready)</li>
+              <li>Mosh with native per-arch binaries</li>
+              <li>Telnet (RFC 854)</li>
+              <li>SFTP with resume + recursive folders</li>
+              <li>Local / Remote / Dynamic forwarding</li>
+              <li>SOCKS proxy + ProxyJump cascading</li>
+              <li>X11 forwarding for graphical apps</li>
             </ul>
           </div>
-          
+
           <div class="card">
             <h3>🎨 User Interface</h3>
             <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
-              <li>Material Design 3 interface</li>
-              <li>12 built-in terminal themes</li>
-              <li>Custom theme support</li>
-              <li>Responsive design</li>
-              <li>Dark/Light mode support</li>
-              <li>Accessibility features</li>
+              <li>Material Design 3 (DayNight)</li>
+              <li>23 built-in terminal themes + GUI editor</li>
+              <li>Browser-style swipe-between tabs</li>
+              <li>Split-view multi-pane terminal</li>
+              <li>Foldable book-mode + tablet sw720dp layouts</li>
+              <li>Customisable 1-5 row on-screen keyboard</li>
+              <li>Long-press context menus, command palette (Ctrl+K), quick switcher (Ctrl+J)</li>
             </ul>
           </div>
         </div>
@@ -331,7 +370,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2024 TabSSH. <a href="license.html">Website: MIT License</a> | <a href="https://github.com/TabSSH/android/blob/main/LICENSE.md">App License</a></p>
+        <p>&copy; 2024-2026 TabSSH. <a href="license.html">Website: MIT License</a> | <a href="https://github.com/TabSSH/android/blob/main/LICENSE.md">App License</a></p>
       </div>
     </div>
   </footer>

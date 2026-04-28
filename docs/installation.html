@@ -69,7 +69,7 @@
               </div>
               
               <div style="background-color: var(--bg-secondary); padding: var(--space-4); border-radius: 8px;">
-                <h4>📱 ARM</h4>
+                <h4>📱 ARM v7</h4>
                 <ul style="font-size: var(--font-size-sm); margin: 0;">
                   <li>Older Android devices</li>
                   <li>Pre-2015 smartphones</li>
@@ -91,14 +91,17 @@
             <ol>
               <li><strong>Visit:</strong> <a href="../download.html">Download page</a></li>
               <li><strong>Select:</strong> Choose your architecture (ARM64 recommended)</li>
-              <li><strong>Download:</strong> File named <code>tabssh-android-{arch}-{version}.apk</code></li>
+              <li><strong>Download:</strong> File named <code>tabssh-{arch}.apk</code> for stable, or <code>tabssh-{arch}-dev.apk</code> for development builds</li>
               <li><strong>Enable:</strong> Settings → Security → Install unknown apps → Enable for browser</li>
               <li><strong>Install:</strong> Tap downloaded file and confirm installation</li>
               <li><strong>Launch:</strong> Open TabSSH from app drawer</li>
             </ol>
 
             <div class="alert alert-info">
-              <strong>Security:</strong> All APKs are signed and checksummed. Verify on GitHub releases page.
+              <strong>Security:</strong> All APKs are signed and checksummed. Verify on the GitHub releases page (<code>checksums-dev.sha256</code> ships alongside dev builds).
+            </div>
+            <div class="alert alert-warning" style="margin-top: var(--space-3);">
+              <strong>Upgrading from a different signing key?</strong> Uninstall the old APK first — Android refuses installs that change signing certificate.
             </div>
           </div>
 

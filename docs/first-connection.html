@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>first-connection - TabSSH Documentation</title>
+  <title>Your First Connection - TabSSH Documentation</title>
+  <meta name="description" content="Make your first SSH connection in TabSSH — Quick Connect for one-off sessions, full connection profiles, and how host-key verification works.">
   <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
-  
+
   <script>
     (function() {
       const isDarkStored = localStorage.getItem('theme') === 'dark';
       const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
-      
-      if (shouldUseDark) {
-        document.documentElement.classList.add('dark');
-      }
+      if (shouldUseDark) document.documentElement.classList.add('dark');
     })();
   </script>
 </head>
@@ -34,6 +35,14 @@
           <li><a href="../download.html">Download</a></li>
           <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="../docs.html">Docs</a></li>
+            <li><a href="../download.html">Download</a></li>
+            <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
       </div>
     </nav>
   </header>
@@ -41,11 +50,94 @@
   <main>
     <div style="padding: var(--space-12) 0;">
       <div class="container container-md">
-        <h1>first-connection</h1>
-        <p>This documentation page is coming soon. For now, check out our comprehensive <a href="features.html">Features Overview</a> or <a href="getting-started.html">Getting Started</a> guide.</p>
-        <div style="margin-top: var(--space-8);">
-          <a href="../docs.html" class="btn btn-primary">Back to Docs</a>
-          <a href="features.html" class="btn btn-secondary">Features Overview</a>
+        <h1>Your First Connection</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Two ways to connect: a one-off Quick Connect, or a saved profile you'll re-use.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🚀 Quick Connect (no save)</h2>
+            <p>Best for one-off SSH sessions you don't want to keep around.</p>
+            <ol>
+              <li>Open the toolbar menu and tap <strong>Quick Connect</strong></li>
+              <li>Type <code>user@host</code> (e.g. <code>root@10.0.0.5</code> or <code>alice@example.com:2222</code>)</li>
+              <li>Tap <strong>Connect</strong></li>
+            </ol>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary);">
+              Quick Connect creates a temporary connection profile that's discarded when you close the tab. If the host fingerprint is unknown you'll see the host-key prompt described below — same as a saved-profile connect.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>💾 Save a Connection Profile</h2>
+            <p>The way you'll connect 99% of the time. Saves to TabSSH's encrypted local database.</p>
+            <ol>
+              <li>From the home screen, tap the <strong>+</strong> floating button</li>
+              <li>Fill in the basics:
+                <ul>
+                  <li><strong>Name:</strong> a friendly label (shown in the connections list and tab strip)</li>
+                  <li><strong>Host:</strong> hostname or IP</li>
+                  <li><strong>Port:</strong> defaults to <code>22</code></li>
+                  <li><strong>Username:</strong> defaults to <code>root</code></li>
+                  <li><strong>Auth type:</strong> Password, SSH key, or Keyboard-interactive (2FA prompts)</li>
+                </ul>
+              </li>
+              <li>Optional but useful:
+                <ul>
+                  <li><strong>Save password</strong> — encrypted with the hardware-backed Android Keystore</li>
+                  <li><strong>SSH key</strong> — pick one you've already imported, or generate a new one inline</li>
+                  <li><strong>Color tag</strong> (Wave 3.1) — mark prod / staging / lab so it's obvious in the tab strip</li>
+                  <li><strong>Group</strong> — drop the host into a folder</li>
+                  <li><strong>Identity</strong> — link a reusable credential profile (one set of credentials, many hosts)</li>
+                  <li><strong>Jump host</strong> — chain through a bastion (ProxyJump cascading)</li>
+                  <li><strong>Env vars</strong> (Wave 1.2) — multi-line <code>KEY=value</code> pairs</li>
+                  <li><strong>Post-connect script</strong> — runs once the shell is ready</li>
+                  <li><strong>Terminal type</strong> — defaults to <code>xterm-256color</code></li>
+                  <li><strong>Compression / Keep-alive</strong> — useful on flaky networks</li>
+                  <li><strong>Mosh / X11 / Agent forwarding</strong> — toggle as needed</li>
+                </ul>
+              </li>
+              <li>Tap <strong>Save</strong>. The profile appears in your connections list — tap it to connect.</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <h2>🔐 First-Time Host Key Prompt</h2>
+            <p>When you connect to a host TabSSH has never seen, it shows the server's host-key fingerprint and asks how to handle it.</p>
+            <ul>
+              <li><strong>SHA-256 fingerprint</strong> — the cryptographic identity of the server. Match it against what your admin gave you, or against what a desktop SSH client you trust shows.</li>
+              <li><strong>Visual fingerprint (emoji)</strong> — a deterministic emoji rendering of the same fingerprint, easier for the eye to spot-check on a phone.</li>
+              <li>Three options:
+                <ul>
+                  <li><strong>Accept Once</strong> — connect this time only; you'll be prompted again next time</li>
+                  <li><strong>Accept Always</strong> — store the key in TabSSH's known-hosts and trust it on future connects</li>
+                  <li><strong>Reject</strong> — abort the connection</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="alert alert-warning">
+              <strong>"Host key changed"</strong> on a host you've already accepted is the MITM warning. Treat it as a possible attack until proven otherwise (a server reinstall is the usual benign explanation). Verify with the admin before clicking Accept.
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>👀 What You See After Connecting</h2>
+            <ul>
+              <li>A new tab appears in the strip with your connection's name (or color tag)</li>
+              <li>The terminal renders with your selected theme (defaults to system)</li>
+              <li>A foreground-service notification keeps the connection alive when TabSSH is in the background — tap to disconnect</li>
+              <li>Volume keys adjust font size on the fly (toggleable in Settings → Terminal)</li>
+              <li>Long-press a URL in the output to <strong>Open</strong> / <strong>Copy</strong> it</li>
+              <li>Long-press text to copy to clipboard</li>
+              <li>If the connection drops, the tab shows a <strong>Reconnect</strong> button — no need to re-launch from the connection list</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
+          <a href="basic-usage.html" class="btn btn-secondary">Basic Usage →</a>
         </div>
       </div>
     </div>

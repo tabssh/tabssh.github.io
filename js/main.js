@@ -111,59 +111,106 @@
     console.log('Mobile menu initialized');
   }
 
-  // Fetch latest release version from GitHub API
+  // Fetch all releases and split into Latest Stable + Development.
+  //
+  // An "app release" is one that has at least one tabssh-*.apk asset; this
+  // automatically excludes the monthly Mosh-binary releases (mosh-1.4.0 etc.)
+  // which only ship libmosh-client.so files. Each download URL comes straight
+  // from the API's `browser_download_url`, so we never construct URLs from a
+  // hardcoded version or asset name — promoting a build from prerelease to
+  // stable just lights up the page on the next load with no code changes.
   function initVersionFetching() {
-    const API_URL =
-      'https://api.github.com/repos/TabSSH/android/releases/latest';
+    const API_URL = 'https://api.github.com/repos/TabSSH/android/releases';
+    const APK_RE = /^tabssh-.*\.apk$/i;
 
     fetch(API_URL)
       .then((response) => response.json())
-      .then((data) => {
-        const version = data.tag_name || 'v1.0.0';
-        const releaseDate = new Date(data.published_at).toLocaleDateString(
-          'en-US',
-          {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }
+      .then((releases) => {
+        if (!Array.isArray(releases)) {
+          console.warn('Releases API did not return an array:', releases);
+          return;
+        }
+
+        const appReleases = releases.filter(
+          (r) =>
+            r &&
+            Array.isArray(r.assets) &&
+            r.assets.some((a) => APK_RE.test(a.name))
         );
 
-        console.log('Latest version:', version);
-        console.log('Release date:', releaseDate);
+        const latestStable = appReleases.find((r) => !r.prerelease) || null;
+        const latestDev = appReleases.find((r) => r.prerelease) || null;
 
-        // Update all version badges
-        document.querySelectorAll('.version-badge').forEach((badge) => {
-          badge.textContent = version;
-        });
+        console.log('Latest stable release:', latestStable && latestStable.tag_name);
+        console.log('Latest dev release:', latestDev && latestDev.tag_name);
 
-        // Build download URLs dynamically with new naming scheme: tabssh-{arch}
-        const downloadLinks = document.querySelectorAll(
-          '.download-link[data-arch]'
-        );
-        downloadLinks.forEach((link) => {
-          const arch = link.getAttribute('data-arch');
-          if (arch) {
-            const downloadUrl = `https://github.com/TabSSH/android/releases/download/${version}/tabssh-${arch}.apk`;
-            link.setAttribute('href', downloadUrl);
-            console.log(`Updated ${arch} download link:`, downloadUrl);
-          }
-        });
-
-        // Update release date displays
-        document.querySelectorAll('.release-date').forEach((dateElement) => {
-          dateElement.textContent = `Released: ${releaseDate}`;
-        });
-
-        // Update "Latest Version" text
-        document.querySelectorAll('.latest-version').forEach((element) => {
-          element.innerHTML = `<strong>Latest Version:</strong> <span class="badge version-badge">${version}</span>`;
-        });
+        populateReleaseSection('stable', latestStable);
+        populateReleaseSection('dev', latestDev);
       })
       .catch((error) => {
-        console.warn('Could not fetch latest version:', error);
-        console.log('Using fallback version v1.0.0');
+        console.warn('Could not fetch releases:', error);
       });
+  }
+
+  // Populate one release section ("stable" or "dev") with data from a
+  // GitHub release object. If `release` is null, the section keeps its
+  // default state (empty-state visible, real-content hidden) — see
+  // download.html `[data-release-section]` containers.
+  function populateReleaseSection(sectionName, release) {
+    const root = document.querySelector(
+      `[data-release-section="${sectionName}"]`
+    );
+    if (!root) return;
+
+    if (!release) {
+      // Keep default state: empty-state visible, real-content hidden.
+      return;
+    }
+
+    const emptyState = root.querySelector('[data-empty-state]');
+    const realContent = root.querySelector('[data-real-content]');
+    if (emptyState) emptyState.setAttribute('hidden', '');
+    if (realContent) realContent.removeAttribute('hidden');
+
+    // Version badge — show release name if it's distinct from the tag,
+    // otherwise just the tag. Dev release comes through as tag="development",
+    // name="1.0.0-8d267f6", so prefer the name when it's set + different.
+    const versionLabel =
+      release.name && release.name !== release.tag_name
+        ? release.name
+        : release.tag_name;
+    root.querySelectorAll('.version-badge').forEach((badge) => {
+      badge.textContent = versionLabel;
+    });
+
+    // Release date
+    if (release.published_at) {
+      const releaseDate = new Date(release.published_at).toLocaleDateString(
+        'en-US',
+        { year: 'numeric', month: 'long', day: 'numeric' }
+      );
+      root.querySelectorAll('.release-date').forEach((el) => {
+        el.textContent = `Released: ${releaseDate}`;
+      });
+    }
+
+    // Download buttons — match each [data-arch] to a real asset by name.
+    // Accepts both `tabssh-{arch}.apk` (stable) and `tabssh-{arch}-dev.apk`
+    // (development), so dev/prod dual-naming works without HTML duplication.
+    root.querySelectorAll('a[data-arch]').forEach((link) => {
+      const arch = link.getAttribute('data-arch');
+      if (!arch) return;
+      const escaped = arch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`^tabssh-${escaped}(-dev)?\\.apk$`, 'i');
+      const asset = release.assets.find((a) => re.test(a.name));
+      if (asset && asset.browser_download_url) {
+        link.setAttribute('href', asset.browser_download_url);
+        link.removeAttribute('hidden');
+      } else {
+        // Hide buttons whose ABI isn't shipped in this release.
+        link.setAttribute('hidden', '');
+      }
+    });
   }
 
   // Check Google Play Store availability with proper error detection

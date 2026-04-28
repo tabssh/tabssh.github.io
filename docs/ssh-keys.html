@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ssh-keys - TabSSH Documentation</title>
+  <title>SSH Key Management - TabSSH Documentation</title>
+  <meta name="description" content="Universal SSH key support in TabSSH — OpenSSH, PEM, PKCS#8, PuTTY formats; RSA, ECDSA, Ed25519, DSA; in-app generation, encrypted storage, OpenSSH user certificates.">
   <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
-  
+
   <script>
     (function() {
       const isDarkStored = localStorage.getItem('theme') === 'dark';
       const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
-      
-      if (shouldUseDark) {
-        document.documentElement.classList.add('dark');
-      }
+      if (shouldUseDark) document.documentElement.classList.add('dark');
     })();
   </script>
 </head>
@@ -34,6 +35,14 @@
           <li><a href="../download.html">Download</a></li>
           <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="../docs.html">Docs</a></li>
+            <li><a href="../download.html">Download</a></li>
+            <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
       </div>
     </nav>
   </header>
@@ -41,11 +50,89 @@
   <main>
     <div style="padding: var(--space-12) 0;">
       <div class="container container-md">
-        <h1>ssh-keys</h1>
-        <p>This documentation page is coming soon. For now, check out our comprehensive <a href="features.html">Features Overview</a> or <a href="getting-started.html">Getting Started</a> guide.</p>
-        <div style="margin-top: var(--space-8);">
-          <a href="../docs.html" class="btn btn-primary">Back to Docs</a>
-          <a href="features.html" class="btn btn-secondary">Features Overview</a>
+        <h1>SSH Key Management</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Universal key parser, in-app generation, hardware-backed storage. Use the keys you already have, or make new ones in the app.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🔑 Supported Key Types</h2>
+            <ul>
+              <li><strong>RSA</strong> — 2048, 3072, 4096-bit</li>
+              <li><strong>ECDSA</strong> — NIST P-256, P-384, P-521</li>
+              <li><strong>Ed25519</strong> — modern elliptic curve, recommended for new keys</li>
+              <li><strong>DSA</strong> — legacy support for old hosts</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📥 Supported Import Formats</h2>
+            <p>TabSSH ships a universal SSH key parser (<code>SSHKeyParser</code>, ~850 lines) with auto-format detection.</p>
+            <ul>
+              <li><strong>OpenSSH</strong> — modern <code>openssh-key-v1</code> format (default for <code>ssh-keygen</code>)</li>
+              <li><strong>PEM (PKCS#1)</strong> — traditional <code>-----BEGIN RSA PRIVATE KEY-----</code> format</li>
+              <li><strong>PKCS#8</strong> — universal format, encrypted or unencrypted</li>
+              <li><strong>PuTTY v2 / v3</strong> — <code>.ppk</code> format from PuTTY / WinSCP</li>
+            </ul>
+            <p>Encrypted keys (passphrase-protected) are supported across all formats. You'll be prompted for the passphrase on import.</p>
+          </div>
+
+          <div class="card">
+            <h2>📂 Importing a Key</h2>
+            <p>From the connections list → menu → <strong>Manage Keys</strong> (opens <code>KeyManagementActivity</code>):</p>
+            <ol>
+              <li><strong>Import from file</strong> — picks a key file via Android's Storage Access Framework. TabSSH resolves the real filename via <code>DISPLAY_NAME</code> (so you don't end up with <code>msf:1000003152</code> as the key name) and asks you to confirm the label.</li>
+              <li><strong>Paste a key</strong> — paste OpenSSH/PEM text directly into a dialog, then name it.</li>
+              <li><strong>Generate a new key pair</strong> — pick the type and size; passphrase optional but recommended.</li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <h2>⚙️ Generating a Key In-App</h2>
+            <ul>
+              <li>Pick the type: RSA / ECDSA / Ed25519 / DSA</li>
+              <li>For RSA: pick the bit size (2048 / 3072 / 4096)</li>
+              <li>For ECDSA: pick the curve (P-256 / P-384 / P-521)</li>
+              <li>Add an optional passphrase (encrypts the private key on disk)</li>
+              <li>The activity shows the public key for you to copy and add to <code>~/.ssh/authorized_keys</code> on the server</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📜 OpenSSH User Certificates (Wave 2.2)</h2>
+            <p>Beyond raw keys, TabSSH supports OpenSSH user certificate authentication — the kind generated by <code>ssh-keygen -s</code> against a CA.</p>
+            <ul>
+              <li>Each <code>StoredKey</code> can carry an optional <code>certificate</code> field (the <code>*-cert.pub</code> line).</li>
+              <li>Useful for fleets where servers trust a CA instead of individual user keys.</li>
+              <li>This is OpenSSH cert-format — <em>not</em> X.509.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🔐 How TabSSH Stores Keys</h2>
+            <ul>
+              <li>Private key bytes are AES-256-GCM encrypted in <code>SharedPreferences</code> via the Android Keystore.</li>
+              <li>The Keystore key is hardware-backed on supported devices (most modern phones have a TEE / secure element).</li>
+              <li>Optional biometric unlock gates access on top of that.</li>
+              <li>The Room database stores only metadata: name, type, fingerprint, comment, optional certificate. The private bytes are never in the DB.</li>
+              <li>SHA-256 fingerprints are computed on import and shown wherever a key is referenced.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📤 Exporting a Key</h2>
+            <ul>
+              <li>From the key management screen → long-press a key → <strong>Export Public Key</strong>.</li>
+              <li>Public key is shown in OpenSSH <code>authorized_keys</code> format — copy and paste straight into your server.</li>
+              <li>Private-key export is also available (PEM or OpenSSH format) for migration. You'll need the passphrase if the key was encrypted.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
+          <a href="ssh-config.html" class="btn btn-secondary">SSH Config →</a>
         </div>
       </div>
     </div>

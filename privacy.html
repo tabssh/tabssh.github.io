@@ -80,6 +80,16 @@
             <li>🆔 <strong>Personal Identifiers:</strong> No names, email addresses, phone numbers, or account data</li>
           </ul>
 
+          <h2>No Google Services Dependency</h2>
+          <p>TabSSH does not require Google Play Services or any other Google component.</p>
+          <ul>
+            <li><strong>Cloud sync uses Storage Access Framework (SAF):</strong> when you turn sync on, you pick whichever storage provider you already have installed (Nextcloud, Dropbox, OneDrive, Google Drive, local storage). TabSSH never talks to any cloud service directly.</li>
+            <li><strong>Sync content is end-to-end encrypted</strong> with AES-256-GCM (PBKDF2 100,000 iterations). The storage provider only ever sees encrypted blobs.</li>
+            <li><strong>Cloud host import (DigitalOcean / Hetzner / Linode / Vultr) is opt-in only</strong> — you provide an explicit token; tokens live in the Android Keystore, never in the database.</li>
+            <li><strong>No auto-discovery</strong> of AWS / GCP / Azure / any cloud — by design.</li>
+            <li>Runs perfectly on de-Googled ROMs (LineageOS, GrapheneOS, /e/OS, CalyxOS).</li>
+          </ul>
+
           <h2>Open Source Transparency</h2>
           <p>TabSSH is completely open source, which means:</p>
           <ul>
@@ -100,7 +110,7 @@
         <hr style="margin: var(--space-12) 0; border: none; height: 1px; background-color: var(--border);">
 
         <div style="text-align: center; color: var(--text-secondary); font-size: var(--font-size-sm);">
-          <p><strong>Last Updated:</strong> January 15, 2024</p>
+          <p><strong>Last Updated:</strong> April 28, 2026</p>
           <p>This policy is effective immediately and applies to all versions of TabSSH.</p>
         </div>
       </div>
@@ -111,7 +121,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <p>&copy; 2024 TabSSH. Open-source software under MIT License.</p>
+        <p>&copy; 2024-2026 TabSSH. Open-source software under MIT License.</p>
       </div>
     </div>
   </footer>

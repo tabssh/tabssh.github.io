@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>themes - TabSSH Documentation</title>
+  <title>Themes &amp; Customisation - TabSSH Documentation</title>
+  <meta name="description" content="TabSSH ships 23 built-in terminal themes plus a GUI theme editor. JSON import/export, per-host overrides, color tags, and a customisable on-screen keyboard.">
   <link rel="icon" type="image/png" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/main.css">
-  
+
   <script>
     (function() {
       const isDarkStored = localStorage.getItem('theme') === 'dark';
       const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
-      
-      if (shouldUseDark) {
-        document.documentElement.classList.add('dark');
-      }
+      if (shouldUseDark) document.documentElement.classList.add('dark');
     })();
   </script>
 </head>
@@ -34,6 +35,14 @@
           <li><a href="../download.html">Download</a></li>
           <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="../docs.html">Docs</a></li>
+            <li><a href="../download.html">Download</a></li>
+            <li><a href="https://github.com/TabSSH/android" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
       </div>
     </nav>
   </header>
@@ -41,11 +50,89 @@
   <main>
     <div style="padding: var(--space-12) 0;">
       <div class="container container-md">
-        <h1>themes</h1>
-        <p>This documentation page is coming soon. For now, check out our comprehensive <a href="features.html">Features Overview</a> or <a href="getting-started.html">Getting Started</a> guide.</p>
-        <div style="margin-top: var(--space-8);">
-          <a href="../docs.html" class="btn btn-primary">Back to Docs</a>
-          <a href="features.html" class="btn btn-secondary">Features Overview</a>
+        <h1>Themes &amp; Customisation</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          23 built-in terminal themes, a real GUI theme editor, JSON import/export, per-host overrides, color tags, and a customisable 1–5 row on-screen keyboard.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🎨 The 23 Built-in Themes</h2>
+            <p>Defined in <code>BuiltInThemes.kt</code>:</p>
+            <ul>
+              <li><strong>System (3):</strong> System Default, System Dark, System Light</li>
+              <li><strong>Classic (12):</strong> Dracula, Solarized Dark, Solarized Light, Nord, One Dark, Monokai, Gruvbox Dark, Gruvbox Light, Tomorrow Night, GitHub Light, Atom One Dark, Material Dark</li>
+              <li><strong>Modern (8):</strong> Tokyo Night, Tokyo Night Light, Catppuccin, Rosé Pine, Everforest, Kanagawa, Night Owl, Cobalt2</li>
+            </ul>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary);">
+              All themes ship with a 16-color palette (8 normal + 8 bright), foreground, background, cursor, and selection colors. WCAG-AA contrast checks pass on all dark themes.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>✏️ GUI Theme Editor (Wave 2.4)</h2>
+            <p><code>ThemeEditorActivity</code> — make your own themes without writing JSON.</p>
+            <ul>
+              <li>Color picker for each of the 16 ANSI colors plus FG / BG / cursor / selection</li>
+              <li>Live preview pane shows your colors against typical terminal output</li>
+              <li>Name and save — appears alongside the built-ins</li>
+              <li>Duplicate a built-in theme to use as a starting point</li>
+              <li>Optionally export the theme as JSON for sharing</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📦 JSON Import / Export</h2>
+            <ul>
+              <li><strong>Import:</strong> menu → <strong>Import Theme</strong> → pick a <code>.json</code> file. TabSSH validates it (structure + color format) and adds it to your theme list.</li>
+              <li><strong>Export:</strong> long-press a theme → <strong>Export</strong>. Choose where to save via SAF.</li>
+              <li>Compatible with the format used by other terminal emulators that ship JSON theme bundles.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🌗 App Theme (Light / Dark / System)</h2>
+            <ul>
+              <li>Settings → General → <strong>App theme</strong>: <em>Dark</em>, <em>Light</em>, or <em>Follow system</em>.</li>
+              <li>Live switching — no restart required (uses <code>AppCompatDelegate.setDefaultNightMode</code>).</li>
+              <li>Material Design 3 with proper DayNight colors (<code>values-night/colors.xml</code>).</li>
+              <li>This is the app chrome (toolbars, list backgrounds, menus). The <strong>terminal theme</strong> is independent.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🎯 Per-Host Theme Override</h2>
+            <ul>
+              <li>From a connection's edit screen, pick a specific terminal theme. Overrides the global default.</li>
+              <li>Useful for visually distinguishing prod / staging / lab — set "Tokyo Night" for prod, "Solarized Light" for lab, etc.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🏷️ Color Tags Per Host (Wave 3.1)</h2>
+            <p>A separate, lighter-weight visual cue than picking a whole theme.</p>
+            <ul>
+              <li>Each connection profile has a <code>color_tag</code> field — an ARGB int.</li>
+              <li>Pick from a palette in the connection edit screen.</li>
+              <li>Surfaces in the connection list and tab strip — instantly tells you which host you're on.</li>
+              <li>Independent from group color (which colors a whole folder of hosts).</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>⌨️ Customisable On-Screen Keyboard</h2>
+            <ul>
+              <li>1 to 5 extra keyboard rows above the standard Android IME.</li>
+              <li>Pick which keys go on which row in Settings → Keyboard customisation.</li>
+              <li>Modifier keys (Ctrl, Alt, Esc) can be sticky or one-shot.</li>
+              <li>Useful presets for tmux, screen, vim, emacs.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="../docs.html" class="btn btn-primary">Back to Documentation</a>
+          <a href="features.html" class="btn btn-secondary">All Features →</a>
         </div>
       </div>
     </div>

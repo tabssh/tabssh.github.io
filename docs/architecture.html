@@ -67,37 +67,62 @@
             <ul>
               <li><strong>Model:</strong> Data layer with Repository pattern</li>
               <li><strong>View:</strong> Activities, Fragments, custom Views</li>
-              <li><strong>ViewModel:</strong> Business logic with LiveData</li>
+              <li><strong>ViewModel:</strong> Business logic with LiveData / Flow</li>
             </ul>
-            
+
             <h3>Modular Structure</h3>
-            <pre><code>app/src/main/java/com/tabssh/
-├── ui/          # User interface components
-├── ssh/         # SSH connectivity
-├── terminal/    # Terminal emulation
-├── crypto/      # Key management
-├── storage/     # Data persistence
-├── themes/      # Theme system
-├── accessibility/ # Accessibility features
-└── network/     # Network utilities</code></pre>
+            <pre><code>app/src/main/java/io/github/tabssh/
+├── ui/             # Activities, fragments, adapters, dialogs, views
+├── ssh/            # SSH auth, connection, forwarding, config parsing
+├── terminal/       # Termux-based emulator + custom keyboard
+├── crypto/         # Key parsing, generation, storage
+├── storage/        # Room database (v23) + entities + DAOs
+├── themes/         # 23 built-in themes + parser + validator
+├── sync/           # SAF-based universal cloud sync
+├── sftp/           # File transfer manager + remote file editor
+├── services/       # SSH foreground service
+├── protocols/      # Mosh, X11, Telnet
+├── hypervisor/     # Proxmox / XCP-ng / Xen Orchestra / VMware
+├── cloud/          # DigitalOcean / Hetzner / Linode / Vultr import
+├── backup/         # Encrypted ZIP export/import
+├── accessibility/  # TalkBack, contrast, navigation
+├── network/        # Security, proxy, detection
+└── utils/          # Logging (with ANR watchdog), performance, helpers</code></pre>
           </div>
 
           <div class="card">
             <h2>🔐 Security Architecture</h2>
             <h3>Credential Storage</h3>
             <ul>
-              <li><strong>Android Keystore:</strong> Hardware-backed encryption</li>
-              <li><strong>Storage Levels:</strong> Configurable security policies</li>
-              <li><strong>Biometric Auth:</strong> Fingerprint/face unlock</li>
-              <li><strong>Secure Memory:</strong> Sensitive data cleared immediately</li>
+              <li><strong>Android Keystore:</strong> hardware-backed key storage on supported devices</li>
+              <li><strong>AES-256-GCM:</strong> all stored credentials encrypted at rest</li>
+              <li><strong>Biometric Auth:</strong> fingerprint/face unlock for credential access</li>
+              <li><strong>PIN code lock:</strong> separate PIN-only app lock (Wave 3.2)</li>
+              <li><strong>Screenshot protection:</strong> FLAG_SECURE on sensitive activities</li>
+              <li><strong>Cloud tokens off-DB:</strong> imported-cloud provider tokens (DO/Hetzner/Linode/Vultr) live in Keystore under <code>cloud_token_${id}</code> — never in the SQLite database</li>
             </ul>
-            
+
             <h3>Key Management</h3>
             <ul>
-              <li>OpenSSH, RSA, PKCS#8, PuTTY format support</li>
-              <li>Auto-detection of key formats</li>
-              <li>QR code import capability</li>
-              <li>Secure generation using Android crypto providers</li>
+              <li>OpenSSH (modern), PEM (PKCS#1), PKCS#8, PuTTY v2/v3 format support</li>
+              <li>Automatic format detection</li>
+              <li>RSA, ECDSA, Ed25519, DSA</li>
+              <li>OpenSSH user certificate auth (Wave 2.2 — <code>stored_keys.certificate</code>)</li>
+              <li>Secure in-app generation via Android crypto providers + BouncyCastle 1.77</li>
+            </ul>
+
+            <h3>Sync Encryption</h3>
+            <ul>
+              <li>AES-256-GCM with PBKDF2 (100,000 iterations) for the SAF sync file</li>
+              <li>Custom <code>TABSSH_SYNC_V2</code> format with embedded salt + IV</li>
+              <li>3-way merge with conflict UI (most apps just do last-write-wins)</li>
+            </ul>
+
+            <h3>Crash + ANR Capture</h3>
+            <ul>
+              <li>Daemon-thread ANR watchdog logs main-thread freezes &gt;5s with full stack trace</li>
+              <li>Global uncaught-exception handler writes crash + opens <code>CrashReportActivity</code> on next launch</li>
+              <li>Auto-on for debug builds, opt-in for release builds (Settings → Logging)</li>
             </ul>
           </div>
 

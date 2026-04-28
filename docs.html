@@ -109,19 +109,20 @@
 
         <div style="text-align: center; margin-top: var(--space-16);">
           <h2>What's New in TabSSH</h2>
-          <div class="card" style="max-width: 600px; margin: var(--space-8) auto 0;">
-            <h3>Version 1.0.0 - Initial Release</h3>
+          <div class="card" style="max-width: 720px; margin: var(--space-8) auto 0;">
+            <h3>Recent waves shipped (post-v1.0.0 baseline)</h3>
             <ul style="text-align: left; font-size: var(--font-size-sm);">
-              <li>🗂️ True tabbed interface for multiple sessions</li>
-              <li>📁 Built-in SFTP file manager with dual-pane view</li>
-              <li>🔐 Advanced SSH key management (RSA, ECDSA, Ed25519)</li>
-              <li>🌐 Local, remote, and dynamic port forwarding</li>
-              <li>🎨 12 built-in themes with accessibility compliance</li>
-              <li>🛡️ Hardware-backed encryption and biometric auth</li>
-              <li>⚙️ Full SSH config import with ProxyJump support</li>
-              <li>♿ Complete accessibility and screen reader support</li>
+              <li><strong>Wave 1:</strong> Per-connection env vars, SSH agent forwarding, remote file editor in SFTP, chmod editing, SCP fallback, find/search in scrollback, bulk import (CSV/JSON/PuTTY)</li>
+              <li><strong>Wave 2:</strong> OpenSSH user certificate auth, Telnet protocol, GUI theme editor, Workspaces (named tab groups), command palette (Ctrl+K), quick switcher (Ctrl+J), broadcast input, split-view multi-pane, history palette (Ctrl+R)</li>
+              <li><strong>Wave 3:</strong> Per-host color tags, PIN-code app lock, background tunnels, browser-open URL handling, what's-new screen</li>
+              <li><strong>Wave 4:</strong> 24-bit color rendering, foldable book-mode + tablet sw720dp layouts, cluster command live result streaming</li>
+              <li><strong>Wave 5:</strong> Cloud host import (DigitalOcean / Hetzner / Linode / Vultr), 3-way merge with conflict UI for sync</li>
+              <li><strong>Wave 6:</strong> SSH config export (round-trip), bulk delete + import wizards</li>
+              <li><strong>Wave 7:</strong> VM serial console via hypervisor API (no VM network needed), full Xen Orchestra REST + WebSocket integration</li>
+              <li><strong>Wave 9.2:</strong> Mosh native binaries cross-compiled per Android ABI, monthly auto-refresh workflow, embedded terminfo fallbacks</li>
+              <li><strong>Hardening:</strong> ANR watchdog + crash reporter (debug builds auto-on, release opt-in), centralised host-key dialog, working theme switching, 23 built-in themes, build-aware debug logging</li>
             </ul>
-            
+
             <div style="margin-top: var(--space-6);">
               <a href="https://github.com/TabSSH/android/releases" class="btn btn-primary">View Release Notes</a>
             </div>
@@ -179,7 +180,7 @@
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2024 TabSSH. <a href="license.html">Website: MIT License</a> | <a href="https://github.com/TabSSH/android/blob/main/LICENSE.md">App License</a></p>
+        <p>&copy; 2024-2026 TabSSH. <a href="license.html">Website: MIT License</a> | <a href="https://github.com/TabSSH/android/blob/main/LICENSE.md">App License</a></p>
       </div>
     </div>
   </footer>

@@ -90,109 +90,196 @@
           </header>
 
           <div class="download-grid" style="margin-bottom: var(--space-16)">
-            <div class="download-option">
+            <div class="download-option" data-release-section="stable">
               <h2>Latest Release <span class="badge">Stable</span></h2>
-              <p>
-                Download the latest stable version directly from GitHub Releases
-                with verified signatures.
-              </p>
 
-              <div style="margin: var(--space-4) 0">
-                <div
-                  class="latest-version"
-                  style="
-                    display: flex;
-                    align-items: center;
-                    gap: var(--space-3);
-                    margin-bottom: var(--space-3);
-                  "
-                >
-                  <strong>Latest Version:</strong>
-                  <span class="badge version-badge">v1.0.0</span>
+              <div data-empty-state>
+                <div class="alert alert-info">
+                  <strong>No stable release yet.</strong> The latest TabSSH builds are pre-release — see <strong>Development</strong> below.
                 </div>
               </div>
 
-              <div class="alert alert-info">
-                <strong>Release Naming:</strong> Files follow the pattern
-                <code>tabssh-{arch}.apk</code> where arch is your device
-                architecture.
-              </div>
+              <div data-real-content hidden>
+                <p>
+                  Download the latest stable version directly from GitHub Releases
+                  with verified signatures.
+                </p>
 
-              <div style="margin: var(--space-6) 0">
-                <h4>Choose Your Architecture:</h4>
-                <div
-                  style="
-                    display: grid;
-                    gap: var(--space-3);
-                    margin-top: var(--space-3);
-                  "
-                >
-                  <a
-                    href="#"
-                    data-arch="arm64"
-                    class="download-link btn btn-primary"
-                    download
+                <div style="margin: var(--space-4) 0">
+                  <div
+                    class="latest-version"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      flex-wrap: wrap;
+                      gap: var(--space-3);
+                      margin-bottom: var(--space-3);
+                    "
                   >
-                    📱 ARM64 (Most Android devices)
-                  </a>
-                  <a
-                    href="#"
-                    data-arch="arm"
-                    class="download-link btn btn-secondary"
-                    download
+                    <strong>Latest Version:</strong>
+                    <span class="badge version-badge"></span>
+                    <span class="release-date" style="font-size: var(--font-size-sm); color: var(--text-secondary);"></span>
+                  </div>
+                </div>
+
+                <div class="alert alert-info">
+                  <strong>Release Naming:</strong> Files follow the pattern
+                  <code>tabssh-{arch}.apk</code> where arch is your device
+                  architecture.
+                </div>
+
+                <div style="margin: var(--space-6) 0">
+                  <h4>Choose Your Architecture:</h4>
+                  <div
+                    style="
+                      display: grid;
+                      gap: var(--space-3);
+                      margin-top: var(--space-3);
+                    "
                   >
-                    📱 ARM (Older Android devices)
-                  </a>
-                  <a
-                    href="#"
-                    data-arch="x86_64"
-                    class="download-link btn btn-secondary"
-                    download
+                    <a
+                      href="#"
+                      data-arch="arm64-v8a"
+                      class="download-link btn btn-primary"
+                      download
+                    >
+                      📱 ARM64 (Most Android devices)
+                    </a>
+                    <a
+                      href="#"
+                      data-arch="armeabi-v7a"
+                      class="download-link btn btn-secondary"
+                      download
+                    >
+                      📱 ARM v7 (Older Android devices)
+                    </a>
+                    <a
+                      href="#"
+                      data-arch="x86_64"
+                      class="download-link btn btn-secondary"
+                      download
+                    >
+                      💻 x86_64 (Android x86 emulators)
+                    </a>
+                  </div>
+                </div>
+
+                <div class="alert alert-warning">
+                  <strong>Installation:</strong> Enable "Install from unknown
+                  sources" in Android settings. Most users should choose ARM64.
+                </div>
+
+                <details style="margin-top: var(--space-4)">
+                  <summary
+                    style="
+                      cursor: pointer;
+                      font-weight: var(--font-weight-medium);
+                    "
                   >
-                    💻 x86_64 (Android x86 emulators)
-                  </a>
+                    How to Check Your Architecture
+                  </summary>
+                  <div
+                    style="
+                      margin-top: var(--space-3);
+                      font-size: var(--font-size-sm);
+                    "
+                  >
+                    <p><strong>Not sure which version to download?</strong></p>
+                    <ul>
+                      <li>
+                        <strong>ARM64:</strong> Most modern Android devices
+                        (2015+)
+                      </li>
+                      <li>
+                        <strong>ARM v7:</strong> Older Android devices (pre-2015)
+                      </li>
+                      <li>
+                        <strong>x86_64:</strong> Android emulators or specialized
+                        x86 devices
+                      </li>
+                    </ul>
+                    <p>
+                      When in doubt, try ARM64 first - it works on most devices.
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="download-option" data-release-section="dev">
+              <h2>Development <span class="badge">Pre-release</span></h2>
+
+              <div data-empty-state>
+                <div class="alert alert-info">
+                  No development builds currently published.
                 </div>
               </div>
 
-              <div class="alert alert-warning">
-                <strong>Installation:</strong> Enable "Install from unknown
-                sources" in Android settings. Most users should choose ARM64.
-              </div>
+              <div data-real-content hidden>
+                <p>
+                  Latest in-development TabSSH build. May be unstable or
+                  incomplete — useful if you want the newest features and can
+                  tolerate bugs.
+                </p>
 
-              <details style="margin-top: var(--space-4)">
-                <summary
-                  style="
-                    cursor: pointer;
-                    font-weight: var(--font-weight-medium);
-                  "
-                >
-                  How to Check Your Architecture
-                </summary>
-                <div
-                  style="
-                    margin-top: var(--space-3);
-                    font-size: var(--font-size-sm);
-                  "
-                >
-                  <p><strong>Not sure which version to download?</strong></p>
-                  <ul>
-                    <li>
-                      <strong>ARM64:</strong> Most modern Android devices
-                      (2015+)
-                    </li>
-                    <li>
-                      <strong>ARM:</strong> Older Android devices (pre-2015)
-                    </li>
-                    <li>
-                      <strong>x86_64:</strong> Android emulators or specialized
-                      x86 devices
-                    </li>
-                  </ul>
-                  <p>
-                    When in doubt, try ARM64 first - it works on most devices.
-                  </p>
+                <div style="margin: var(--space-4) 0">
+                  <div
+                    class="latest-version"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      flex-wrap: wrap;
+                      gap: var(--space-3);
+                      margin-bottom: var(--space-3);
+                    "
+                  >
+                    <strong>Build:</strong>
+                    <span class="badge version-badge"></span>
+                    <span class="release-date" style="font-size: var(--font-size-sm); color: var(--text-secondary);"></span>
+                  </div>
                 </div>
-              </details>
+
+                <div style="margin: var(--space-6) 0">
+                  <h4>Choose Your Architecture:</h4>
+                  <div
+                    style="
+                      display: grid;
+                      gap: var(--space-3);
+                      margin-top: var(--space-3);
+                    "
+                  >
+                    <a
+                      href="#"
+                      data-arch="arm64-v8a"
+                      class="download-link btn btn-primary"
+                      download
+                    >
+                      📱 ARM64 (Most Android devices)
+                    </a>
+                    <a
+                      href="#"
+                      data-arch="armeabi-v7a"
+                      class="download-link btn btn-secondary"
+                      download
+                    >
+                      📱 ARM v7 (Older Android devices)
+                    </a>
+                    <a
+                      href="#"
+                      data-arch="x86_64"
+                      class="download-link btn btn-secondary"
+                      download
+                    >
+                      💻 x86_64 (Android x86 emulators)
+                    </a>
+                  </div>
+                </div>
+
+                <div class="alert alert-warning">
+                  <strong>Pre-release:</strong> These builds may have bugs or
+                  incomplete features. Use the stable release for production.
+                </div>
+              </div>
             </div>
 
             <div class="download-option">
@@ -379,7 +466,7 @@
 
         <div class="footer-bottom">
           <p>
-            &copy; 2024 TabSSH.
+            &copy; 2024-2026 TabSSH.
             <a href="license.html">Website: MIT License</a> |
             <a href="https://github.com/TabSSH/android/blob/main/LICENSE.md"
               >App License</a
