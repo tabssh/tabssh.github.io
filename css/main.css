@@ -203,6 +203,15 @@ img {
   display: block;
 }
 
+/* Horizontal rule — global. Footer/section dividers all use the same line.
+   Override per-context via a more specific selector if ever needed. */
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--space-8) 0;
+  width: 100%;
+}
+
 /* Containers */
 .container {
   max-width: 1200px;
@@ -215,18 +224,47 @@ img {
 .container-lg { max-width: 1024px; }
 .container-xl { max-width: 1200px; }
 
-/* Header */
+/* Header — `.site-header` is a semantic wrapper.
+   The sticky bar is `.navbar` so the tagline below it scrolls away with the
+   page rather than eating sticky real estate. */
 .site-header {
+  /* no styles — wrapper only */
+}
+
+.navbar {
   background-color: var(--bg-primary);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 1000;
   backdrop-filter: blur(10px);
+  padding: var(--space-4) 0;
 }
 
-.navbar {
+/* Site tagline — sits below the navbar on every page, scrolls with content. */
+.site-tagline {
   padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg-primary);
+}
+
+.site-tagline p {
+  margin: 0;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 480px) {
+  .site-tagline {
+    padding: var(--space-3) 0;
+  }
+  .site-tagline p {
+    font-size: var(--font-size-xs);
+  }
 }
 
 .navbar .container {
@@ -599,12 +637,6 @@ img {
 .site-footer {
   background-color: var(--bg-secondary);
   padding: var(--space-12) 0 var(--space-8);
-}
-
-.site-footer hr {
-  border: 0;
-  border-top: 1px solid var(--border);
-  margin: var(--space-8) 0;
 }
 
 .footer-content {
