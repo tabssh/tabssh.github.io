@@ -348,7 +348,13 @@ img {
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
-  white-space: nowrap;
+  /* Allow long button labels (e.g. "📦 Universal APK (all architectures, larger file)")
+     to wrap. `white-space: nowrap` here was forcing grid columns to be at least
+     as wide as the longest button, which overflowed the phone viewport. */
+  white-space: normal;
+  text-align: center;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .btn:hover {
@@ -509,16 +515,30 @@ img {
 /* Grids */
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: var(--space-8);
   margin-bottom: var(--space-16);
 }
 
 .download-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: var(--space-6);
   margin-bottom: var(--space-16);
+}
+
+/* Grid items default to min-width: auto, which is min-content — that lets a
+   long unbreakable child (button label, code snippet) push the column wider
+   than the viewport. Force grid items to be allowed to shrink so column
+   widths are bounded by the parent, not by content. The attribute selector
+   catches the many inline `style="display: grid; …"` declarations sprinkled
+   throughout the HTML so this fix doesn't have to be duplicated per-call-site. */
+.features-grid > *,
+.download-grid > *,
+.footer-content > *,
+[style*="display: grid"] > *,
+[style*="display:grid"]  > * {
+  min-width: 0;
 }
 
 /* Badges */
