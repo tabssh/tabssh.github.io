@@ -129,30 +129,42 @@
 
                 <div class="alert alert-info">
                   <strong>Release Naming:</strong> Files follow the pattern
-                  <code>tabssh-{arch}.apk</code> where arch is your device
-                  architecture.
+                  <code>tabssh-android-{arch}.apk</code> where arch is one of
+                  <code>arm64</code>, <code>arm</code>, <code>amd64</code>,
+                  <code>x86</code>, or <code>universal</code> (bundles every
+                  ABI in one file).
                 </div>
 
                 <div style="margin: var(--space-6) 0">
-                  <h4>Choose Your Architecture:</h4>
-                  <div
-                    style="
-                      display: grid;
-                      gap: var(--space-3);
-                      margin-top: var(--space-3);
-                    "
-                  >
+                  <h4>Recommended — works on any Android device:</h4>
+                  <div style="display: grid; gap: var(--space-3); margin-top: var(--space-3);">
                     <a
                       href="#"
-                      data-arch="arm64-v8a"
+                      data-arch="universal"
                       class="download-link btn btn-primary"
+                      download
+                    >
+                      📦 Universal APK (all architectures, larger file)
+                    </a>
+                  </div>
+                  <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-top: var(--space-2);">
+                    Bigger download, but works everywhere — pick this if you're
+                    not sure of your device architecture or if you switch devices.
+                  </p>
+
+                  <h4 style="margin-top: var(--space-5);">Smaller, architecture-specific builds:</h4>
+                  <div style="display: grid; gap: var(--space-3); margin-top: var(--space-3);">
+                    <a
+                      href="#"
+                      data-arch="arm64"
+                      class="download-link btn btn-secondary"
                       download
                     >
                       📱 ARM64 (Most Android devices)
                     </a>
                     <a
                       href="#"
-                      data-arch="armeabi-v7a"
+                      data-arch="arm"
                       class="download-link btn btn-secondary"
                       download
                     >
@@ -160,7 +172,7 @@
                     </a>
                     <a
                       href="#"
-                      data-arch="x86_64"
+                      data-arch="amd64"
                       class="download-link btn btn-secondary"
                       download
                     >
@@ -171,7 +183,8 @@
 
                 <div class="alert alert-warning">
                   <strong>Installation:</strong> Enable "Install from unknown
-                  sources" in Android settings. Most users should choose ARM64.
+                  sources" in Android settings. If unsure, the universal APK
+                  always works.
                 </div>
 
                 <details style="margin-top: var(--space-4)">
@@ -189,11 +202,13 @@
                       font-size: var(--font-size-sm);
                     "
                   >
-                    <p><strong>Not sure which version to download?</strong></p>
+                    <p><strong>Not sure which build to pick?</strong></p>
                     <ul>
                       <li>
-                        <strong>ARM64:</strong> Most modern Android devices
-                        (2015+)
+                        <strong>Universal:</strong> Works on every Android device. Larger file (~3-4× the per-arch size) but zero guesswork.
+                      </li>
+                      <li>
+                        <strong>ARM64:</strong> Most modern Android devices (2015+)
                       </li>
                       <li>
                         <strong>ARM v7:</strong> Older Android devices (pre-2015)
@@ -204,7 +219,7 @@
                       </li>
                     </ul>
                     <p>
-                      When in doubt, try ARM64 first - it works on most devices.
+                      When in doubt, grab Universal — disk space is the only cost.
                     </p>
                   </div>
                 </details>
@@ -245,7 +260,19 @@
                 </div>
 
                 <div style="margin: var(--space-6) 0">
-                  <h4>Choose Your Architecture:</h4>
+                  <h4>Recommended — works on any Android device:</h4>
+                  <div style="display: grid; gap: var(--space-3); margin-top: var(--space-3);">
+                    <a
+                      href="#"
+                      data-arch="universal"
+                      class="download-link btn btn-primary"
+                      download
+                    >
+                      📦 Universal APK (all architectures, larger file)
+                    </a>
+                  </div>
+
+                  <h4 style="margin-top: var(--space-5);">Smaller, architecture-specific builds:</h4>
                   <div
                     style="
                       display: grid;
@@ -255,15 +282,15 @@
                   >
                     <a
                       href="#"
-                      data-arch="arm64-v8a"
-                      class="download-link btn btn-primary"
+                      data-arch="arm64"
+                      class="download-link btn btn-secondary"
                       download
                     >
                       📱 ARM64 (Most Android devices)
                     </a>
                     <a
                       href="#"
-                      data-arch="armeabi-v7a"
+                      data-arch="arm"
                       class="download-link btn btn-secondary"
                       download
                     >
@@ -271,7 +298,7 @@
                     </a>
                     <a
                       href="#"
-                      data-arch="x86_64"
+                      data-arch="amd64"
                       class="download-link btn btn-secondary"
                       download
                     >

@@ -111,34 +111,82 @@
     console.log('Mobile menu initialized');
   }
 
+  // Unified asset naming schema: tabssh-{platform}-{arch}[-dev][.ext]
+  //
+  // Android arch tags (matching the desktop simplification):
+  //   arm64 / arm / amd64 / x86 / universal
+  // (canonically: arm64-v8a → arm64, armeabi-v7a → arm, x86_64 → amd64.)
+  //
+  // No version suffix in the filename — the GitHub release tag carries
+  // the version, and the asset URL is uniquely scoped per release.
+  //
+  // Built-by-workflow filename forms:
+  //   • Stable (release.yml):       tabssh-android-{arch}.apk
+  //   • Development (dev workflow): tabssh-android-{arch}-dev.apk
+  //
+  // F-Droid distribution: F-Droid clones the source and builds on its
+  // own infra. We don't upload our F-Droid-flavored APK to GH releases.
+  // The `-fdroid` filter in `isApp` below is defensive — historical
+  // releases (pre-2026-04) included `tabssh-android-{arch}-fdroid.apk`
+  // assets and we skip those.
+  //
+  // Older releases (pre-2026-04 unification) also used
+  // `tabssh-{arch}-dev.apk`, `tabssh-{arch}.apk`, and
+  // `tabssh-android-{arch}-{version}.apk` — all three are still accepted
+  // by the regex below so historical releases on the page still resolve.
+  const ANDROID_ARCH_ALIASES = {
+    'universal': ['universal'],
+    'arm64':     ['arm64', 'arm64-v8a'],         // legacy alias accepted
+    'arm':       ['arm', 'armeabi-v7a'],         // legacy alias accepted
+    'amd64':     ['amd64', 'x86_64'],            // legacy alias accepted
+    'x86':       ['x86'],
+  };
+
   // Each platform has its own GitHub repo and asset-naming convention.
   // We fetch both, classify into stable/dev, and populate the matching
   // [data-release-section="..."] containers in download.html. Adding a third
   // platform later is just another entry in this array — no other JS edits.
   const PLATFORMS = [
     {
-      // Android APKs from TabSSH/android. Excludes the monthly mosh-1.4.0
-      // releases (those have no tabssh-*.apk assets, so they fail isApp).
+      // Android APKs from TabSSH/android. F-Droid variants are filtered out
+      // here so they don't double-up the per-arch buttons (F-Droid has its
+      // own distribution channel — see download.html "Coming Soon").
       repo: 'TabSSH/android',
       sectionPrefix: 'mobile',
-      isApp: (asset) => /^tabssh-.*\.apk$/i.test(asset.name),
-      assetRegex: (arch) =>
-        new RegExp(`^tabssh-${escapeRegex(arch)}(-dev)?\\.apk$`, 'i'),
+      isApp: (asset) =>
+        /\.apk$/i.test(asset.name) && !/-fdroid/i.test(asset.name),
+      assetRegex: (arch) => {
+        const aliases = ANDROID_ARCH_ALIASES[arch] || [arch];
+        const aliasGroup = aliases.map(escapeRegex).join('|');
+        // Matches both unified and legacy forms:
+        //   tabssh-android-{alias}-dev.apk                (current dev)
+        //   tabssh-android-{alias}-{version}.apk          (current stable, with version)
+        //   tabssh-{alias}-dev.apk                        (legacy dev pre-2026-04)
+        //   tabssh-{alias}.apk                            (legacy local-build pre-2026-04)
+        // Anchored so e.g. arm doesn't accidentally match arm64.
+        return new RegExp(
+          `^tabssh-(android-)?(${aliasGroup})(-dev|-[\\d].*)?\\.apk$`,
+          'i'
+        );
+      },
     },
     {
-      // Desktop binaries from tabssh/desktop. Asset names are
-      // tabssh-{os}-{arch} with optional .exe on Windows. The app-asset
-      // regex pins to the supported OS list so unrelated artifacts (a
-      // signed source tarball, a checksum file) don't accidentally count
-      // a release as an "app release".
+      // Desktop binaries from tabssh/desktop. Filename convention mirrors
+      // the Android dev workflow — no version suffix in the filename, the
+      // version lives in the release tag/title:
+      //   • Stable (release.yml):     tabssh-{platform}-{arch}[.exe]
+      //   • Development (dev.yml):    tabssh-{platform}-{arch}-dev[.exe]
+      // The app-asset predicate pins to the supported OS list so unrelated
+      // artifacts (source tarball, checksum file) don't count as an "app
+      // release".
       repo: 'tabssh/desktop',
       sectionPrefix: 'desktop',
       isApp: (asset) =>
-        /^tabssh-(linux|macos|windows|freebsd|openbsd|netbsd)-(amd64|arm64)(\.exe)?$/i.test(
+        /^tabssh-(linux|macos|windows|freebsd|openbsd|netbsd)-(amd64|arm64)(-dev)?(\.exe)?$/i.test(
           asset.name
         ),
       assetRegex: (arch) =>
-        new RegExp(`^tabssh-${escapeRegex(arch)}(\\.exe)?$`, 'i'),
+        new RegExp(`^tabssh-${escapeRegex(arch)}(-dev)?(\\.exe)?$`, 'i'),
     },
   ];
 

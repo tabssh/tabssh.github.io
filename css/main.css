@@ -69,6 +69,13 @@ html {
   scroll-behavior: smooth;
 }
 
+html, body {
+  /* Mobile-first: never let content force the whole page to scroll horizontally.
+     Wide content (pre/code, tables, .scroll-x) gets its own internal scroll. */
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 body {
   font-family: var(--font-family-sans);
   font-size: var(--font-size-base);
@@ -78,6 +85,12 @@ body {
   transition: color 0.2s ease, background-color 0.2s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Long unbreakable strings (URLs, file paths) wrap rather than overflow */
+p, li, td, th, dd, dt, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Typography */
@@ -133,7 +146,7 @@ li {
   margin-bottom: var(--space-2);
 }
 
-/* Code */
+/* Code — inline is allowed to wrap so URLs/long identifiers don't blow out the line */
 code {
   font-family: var(--font-family-mono);
   font-size: 0.875em;
@@ -141,8 +154,11 @@ code {
   padding: var(--space-1) var(--space-2);
   border-radius: 4px;
   border: 1px solid var(--border);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
+/* Block code: scroll horizontally inside its box; never push the page wider */
 pre {
   font-family: var(--font-family-mono);
   background-color: var(--bg-secondary);
@@ -150,13 +166,34 @@ pre {
   border-radius: 8px;
   border: 1px solid var(--border);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin-bottom: var(--space-4);
+  max-width: 100%;
+  /* Keep code on one line — let the user scroll horizontally instead of wrapping */
+  white-space: pre;
 }
 
 pre code {
   background: none;
   border: none;
   padding: 0;
+  /* Inside <pre> we want preformatted, not the inline-code wrap behaviour above */
+  overflow-wrap: normal;
+  word-break: normal;
+  white-space: pre;
+}
+
+/* Reusable horizontal-scroll wrapper for wide content (tab strips, tables, etc) */
+.scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Constrain media so no image/video forces the page wider on mobile */
+img, video, iframe, svg {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Images */
@@ -685,45 +722,90 @@ img {
   color: var(--primary-500);
 }
 
-/* Responsive Design */
+/* Responsive Design — mobile-first refinements */
 @media (max-width: 768px) {
   .navbar .container {
     position: relative;
   }
-  
+
   .navbar-nav {
     display: none;
   }
-  
+
   .mobile-menu-toggle {
     display: block;
   }
-  
+
   .hero {
     padding: var(--space-12) 0;
   }
-  
+
   .hero .container {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
-  
+
   .hero-image {
     order: -1;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
     gap: var(--space-6);
   }
-  
+
   .download-grid {
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
-  
+
   .footer-content {
     grid-template-columns: 1fr;
     gap: var(--space-6);
+  }
+
+  /* Inline two-column grids in docs.html cards (the mobile/desktop link splits)
+     — collapse to single column on phones for readable line lengths. */
+  .card > div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Very small phones — tighten container padding + headline sizes so nothing
+   sticks out and bullet lists keep a usable line length. */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 var(--space-3);
+  }
+
+  h1 { font-size: var(--font-size-3xl); }
+  h2 { font-size: var(--font-size-2xl); }
+  h3 { font-size: var(--font-size-xl); }
+
+  .hero {
+    padding: var(--space-10) 0;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+  }
+
+  .feature-icon {
+    font-size: 2.25rem;
+  }
+
+  .card,
+  .feature-card,
+  .download-option {
+    padding: var(--space-4);
+  }
+
+  /* Buttons in `.hero-actions` should stretch on tiny screens for easier tap targets */
+  .hero-actions .btn {
+    flex: 1 1 auto;
   }
 }
