@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSH Config Import / Export - TabSSH Documentation</title>
+  <meta name="description" content="Import your existing ~/.ssh/config into TabSSH, export back out, or bulk-import from CSV / JSON / PuTTY. Full ProxyJump and IdentityFile support.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      if (shouldUseDark) document.documentElement.classList.add('dark');
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>SSH Config Import / Export</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Bring your existing <code>~/.ssh/config</code> in, push your TabSSH connections back out, or bulk-import from spreadsheets and PuTTY.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>📥 Import ~/.ssh/config</h2>
+            <p>Already have a curated SSH config? TabSSH parses it directly.</p>
+            <ul>
+              <li><strong>Desktop:</strong> reads <code>~/.ssh/config</code> in place — no import step. Edit it with <code>vim</code> as you always have, TabSSH picks up changes on next launch.</li>
+              <li><strong>Mobile:</strong> get the <code>~/.ssh/config</code> file onto the device (SAF, sync app, paste). In TabSSH → menu → <strong>Import SSH Config</strong>. TabSSH shows a preview of every <code>Host</code> stanza; tick the ones you want and tap Import.</li>
+            </ul>
+            <p>Supported directives include:</p>
+            <ul>
+              <li><code>Host</code> + host patterns / wildcards</li>
+              <li><code>HostName</code>, <code>Port</code>, <code>User</code></li>
+              <li><code>IdentityFile</code> — paired with already-imported keys by name</li>
+              <li><code>ProxyJump</code> — cascading jump hosts</li>
+              <li><code>ProxyCommand</code> — for exotic tunnel setups</li>
+              <li><code>Compression</code>, <code>ServerAliveInterval</code>, <code>ForwardX11</code>, <code>ForwardAgent</code></li>
+              <li>Per-host port-forwarding directives</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📤 Export to SSH Config (Wave 6.1)</h2>
+            <p>Round-trip your TabSSH connections back to a usable <code>~/.ssh/config</code>.</p>
+            <ul>
+              <li><strong>Menu → Export SSH Config</strong> — generates a config file.</li>
+              <li>Pick where to save via the system file picker (any SAF location).</li>
+              <li>Generated config is human-readable and identical in shape to what you'd hand-write.</li>
+              <li>Useful for bootstrapping a new laptop or sharing your host list with a colleague.</li>
+              <li>Note: passwords and private keys are never exported — only the metadata your CLI <code>ssh</code> needs.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🗂️ Bulk Import (Wave 1, 6.4 / 6.5)</h2>
+            <p>For migrating from another tool, or just provisioning a lot of hosts at once.</p>
+            <ul>
+              <li><strong>CSV</strong> — columns: name, host, port, username, auth_type, …</li>
+              <li><strong>JSON</strong> — array of connection objects with the same fields as the database entity</li>
+              <li><strong>PuTTY .ppk lists</strong> — exported from PuTTY's session list</li>
+              <li>Preview screen lets you map columns / fields and skip duplicates before committing.</li>
+              <li>Companion: bulk delete (Wave 6.2) and bulk-edit dialog for multi-host updates.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📦 Encrypted ZIP Backup</h2>
+            <p>For full-fidelity backups (including credentials), TabSSH ships its own encrypted backup format.</p>
+            <ul>
+              <li>Menu → <strong>Export Backup</strong> — produces <code>tabssh_backup_YYYYMMDD_HHMMSS.zip</code>.</li>
+              <li>Optional password — produces an AES-256-GCM encrypted ZIP if set.</li>
+              <li>Includes connections, SSH keys, themes, host keys, settings.</li>
+              <li>Menu → <strong>Import Backup</strong> to restore on the same or another device.</li>
+              <li>For "always sync between phones," use <a href="/security/">SAF cloud sync</a> instead — it handles 3-way merge and conflict resolution.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="/docs/" class="btn btn-primary">Back to Documentation</a>
+          <a href="/docs/security/" class="btn btn-secondary">Security →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

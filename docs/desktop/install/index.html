@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop: Getting Started - TabSSH Documentation</title>
+  <meta name="description" content="Install and run TabSSH Desktop — a single static Rust binary for Linux, macOS, Windows, and BSD.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Desktop: Getting Started <span class="platform-pill desktop-only">💻 Desktop</span></h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-4);">
+          Download the binary, run it. There is no installer.
+        </p>
+        <div class="alert alert-warning" style="margin-bottom: var(--space-8);">
+          <strong>Desktop is in active development.</strong> Most features are planned but not yet shipped — see <a href="https://github.com/tabssh/desktop">tabssh/desktop</a> for current status.
+        </div>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>📥 Download</h2>
+            <p>From the <a href="/download/">download page</a>, pick the binary that matches your OS + arch:</p>
+            <ul>
+              <li><code>tabssh-linux-amd64</code> / <code>tabssh-linux-arm64</code></li>
+              <li><code>tabssh-macos-arm64</code> (Apple Silicon) / <code>tabssh-macos-amd64</code> (Intel)</li>
+              <li><code>tabssh-windows-amd64.exe</code> / <code>tabssh-windows-arm64.exe</code></li>
+              <li><code>tabssh-freebsd-*</code> / <code>tabssh-openbsd-*</code> / <code>tabssh-netbsd-amd64</code></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🐧 Linux / macOS / BSD</h2>
+            <pre><code>chmod +x tabssh-linux-amd64
+mv tabssh-linux-amd64 ~/.local/bin/tabssh
+tabssh</code></pre>
+            <p>That's it. The binary is statically linked — no glibc / libc dep, no runtime, no installer. ~15 MB on disk.</p>
+          </div>
+
+          <div class="card">
+            <h2>🪟 Windows</h2>
+            <p>Drop <code>tabssh-windows-amd64.exe</code> anywhere on your <code>%PATH%</code> and run.</p>
+            <p>Native Credential Manager integration is planned. WinGet (<code>winget install tabssh</code>) coming with v0.1.</p>
+          </div>
+
+          <div class="card">
+            <h2>📂 First Run</h2>
+            <ul>
+              <li>TabSSH reads <code>~/.ssh/config</code>, <code>~/.ssh/known_hosts</code>, and any keys in <code>~/.ssh/</code> directly — no import step.</li>
+              <li>Add a host on the command line (<code>vim ~/.ssh/config</code>), see it in TabSSH on next launch.</li>
+              <li>Or launch a one-off straight from the shell: <code>tabssh user@host</code>.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🔁 Differences from mobile</h2>
+            <ul>
+              <li>No host import step — <code>~/.ssh/config</code> is the source of truth.</li>
+              <li>Credentials stored in the OS keychain (macOS Keychain / Windows Credential Manager / Linux Secret Service), not Android Keystore.</li>
+              <li>No biometric / PIN app lock — relies on your OS lock screen.</li>
+              <li>Real keyboard shortcuts: Ctrl+Tab, Ctrl+W, Ctrl+T, Ctrl+K (palette), Ctrl+J (switcher), Ctrl+R (history).</li>
+              <li>Multi-window instead of split-view-on-one-screen.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="/docs/" class="btn btn-primary">Back to Documentation</a>
+          <a href="/docs/desktop/basic-usage/" class="btn btn-secondary">Desktop Basic Usage →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

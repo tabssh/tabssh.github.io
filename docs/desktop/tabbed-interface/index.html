@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop: Tabbed Interface - TabSSH Documentation</title>
+  <meta name="description" content="TabSSH Desktop's tabbed interface — multi-window, real Ctrl+Tab / Ctrl+W shortcuts, command palette ergonomics.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Desktop: Tabbed Interface <span class="platform-pill desktop-only">💻 Desktop</span></h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-4);">
+          Real browser-style tabs across one or many windows. Real keyboard shortcuts.
+        </p>
+        <div class="alert alert-warning" style="margin-bottom: var(--space-8);">
+          <strong>Desktop is in active development.</strong> See <a href="https://github.com/tabssh/desktop">tabssh/desktop</a> for current status — some shortcuts below are wired, others are planned.
+        </div>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🪟 Multi-Window Tabs</h2>
+            <ul>
+              <li>Each window has its own tab strip.</li>
+              <li><strong>Ctrl+N</strong> opens a new window; useful for separating prod / staging visually onto different displays.</li>
+              <li>Tabs can be dragged between windows (planned).</li>
+              <li>Closing the last tab in a window doesn't kill TabSSH — the window collapses to the tray.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>⌨️ Tab Shortcuts</h2>
+            <ul>
+              <li><strong>Ctrl+T</strong> — new tab (opens Quick Connect dialog)</li>
+              <li><strong>Ctrl+W</strong> — close current tab</li>
+              <li><strong>Ctrl+Tab</strong> / <strong>Ctrl+Shift+Tab</strong> — cycle forward / backward</li>
+              <li><strong>Ctrl+1..9</strong> — jump to tab N</li>
+              <li><strong>Ctrl+Shift+T</strong> — reopen the last closed tab</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🎯 Command Palette &amp; Switchers</h2>
+            <ul>
+              <li><strong>Ctrl+K</strong> — command palette: fuzzy-search across saved hosts (from <code>~/.ssh/config</code>), snippets, identities, workspaces. Hit Enter to launch.</li>
+              <li><strong>Ctrl+J</strong> — quick switcher: only currently-open tabs.</li>
+              <li><strong>Ctrl+R</strong> — history palette: recent connections with timestamps.</li>
+              <li>Same UX as the mobile palettes, with hardware-keyboard ergonomics.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🧷 Workspaces</h2>
+            <ul>
+              <li>Save the current set of open tabs as a named workspace.</li>
+              <li>Restore in one click — connections fan out with a small inter-host stagger so you don't slam every host at once.</li>
+              <li>Workspaces shared with mobile via the encrypted sync blob (when sync ships on desktop).</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📡 Broadcast Input &amp; Cluster Commands</h2>
+            <ul>
+              <li>Pick multiple tabs, type once, send to all.</li>
+              <li>Cluster commands: pick hosts from <code>~/.ssh/config</code>, run a single command, get live result streaming.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="/docs/" class="btn btn-primary">Back to Documentation</a>
+          <a href="/docs/desktop/sftp/" class="btn btn-secondary">Desktop SFTP →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

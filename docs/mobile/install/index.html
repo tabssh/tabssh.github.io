@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installation Guide - TabSSH Documentation</title>
+  <meta name="description" content="Complete installation guide for TabSSH Android SSH client with step-by-step instructions for all installation methods.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">
+          ☰
+        </button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Complete Installation Guide</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Step-by-step instructions for installing TabSSH on your Android device.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <!-- GitHub Releases (Primary) -->
+          <div class="card">
+            <h2>🚀 GitHub Releases (Recommended)</h2>
+            <p>Download directly from GitHub with verified signatures and multiple architectures.</p>
+            
+            <h3>Step 1: Choose Your Architecture</h3>
+            <p>Most users should choose ARM64. Here's how to determine your device:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin: var(--space-4) 0;">
+              <div style="background-color: var(--bg-secondary); padding: var(--space-4); border-radius: 8px;">
+                <h4>📱 ARM64</h4>
+                <ul style="font-size: var(--font-size-sm); margin: 0;">
+                  <li>Most Android phones (2015+)</li>
+                  <li>Samsung Galaxy S6+</li>
+                  <li>Google Pixel (all models)</li>
+                  <li>OnePlus devices</li>
+                </ul>
+              </div>
+              
+              <div style="background-color: var(--bg-secondary); padding: var(--space-4); border-radius: 8px;">
+                <h4>📱 ARM v7</h4>
+                <ul style="font-size: var(--font-size-sm); margin: 0;">
+                  <li>Older Android devices</li>
+                  <li>Pre-2015 smartphones</li>
+                  <li>Some budget devices</li>
+                </ul>
+              </div>
+              
+              <div style="background-color: var(--bg-secondary); padding: var(--space-4); border-radius: 8px;">
+                <h4>💻 x86_64</h4>
+                <ul style="font-size: var(--font-size-sm); margin: 0;">
+                  <li>Android emulators</li>
+                  <li>Android Studio AVD</li>
+                  <li>Intel-based tablets</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3>Step 2: Download and Install</h3>
+            <ol>
+              <li><strong>Visit:</strong> <a href="/download/">Download page</a></li>
+              <li><strong>Select:</strong> Choose your architecture (ARM64 recommended)</li>
+              <li><strong>Download:</strong> File named <code>tabssh-android-{arch}.apk</code> for stable, or <code>tabssh-android-{arch}-dev.apk</code> for development builds (arch = <code>arm64</code> / <code>arm</code> / <code>amd64</code> / <code>x86</code> / <code>universal</code>)</li>
+              <li><strong>Enable:</strong> Settings → Security → Install unknown apps → Enable for browser</li>
+              <li><strong>Install:</strong> Tap downloaded file and confirm installation</li>
+              <li><strong>Launch:</strong> Open TabSSH from app drawer</li>
+            </ol>
+
+            <div class="alert alert-info">
+              <strong>Security:</strong> All APKs are signed and checksummed. Verify on the GitHub releases page (<code>checksums-dev.sha256</code> ships alongside dev builds).
+            </div>
+            <div class="alert alert-warning" style="margin-top: var(--space-3);">
+              <strong>Upgrading from a different signing key?</strong> Uninstall the old APK first — Android refuses installs that change signing certificate.
+            </div>
+          </div>
+
+          <!-- Future Methods -->
+          <div class="card fdroid-coming-soon">
+            <h2>🏪 F-Droid (Coming Soon)</h2>
+            <p>Package: <code>io.github.tabssh</code></p>
+            <p>F-Droid submission in progress for automatic updates and verified open-source builds.</p>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary);">
+              <strong>No Play Store.</strong> TabSSH won't be on Google Play — F-Droid + GitHub Releases keep the app free of Play Services dependencies and work on de-Googled ROMs.
+            </p>
+          </div>
+
+          <!-- Troubleshooting -->
+          <div class="card">
+            <h2>🔧 Common Issues</h2>
+            
+            <h3>"App not installed"</h3>
+            <ul>
+              <li>Enable "Unknown sources" in Android settings</li>
+              <li>Check available storage (50MB minimum)</li>
+              <li>Try ARM64 if ARM doesn't work</li>
+            </ul>
+
+            <h3>App won't open</h3>
+            <ul>
+              <li>Restart device after installation</li>
+              <li>Clear app cache in Android settings</li>
+              <li>Ensure Android 7.0+ compatibility</li>
+            </ul>
+
+            <div class="alert alert-warning">
+              <strong>Still having issues?</strong> Check <a href="/docs/mobile/troubleshooting/">troubleshooting guide</a> or ask for help in <a href="https://github.com/tabssh/android/discussions">discussions</a>.
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <div class="hero-actions">
+            <a href="/download/" class="btn btn-primary">Download TabSSH</a>
+            <a href="/docs/mobile/getting-started/" class="btn btn-secondary">Getting Started</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

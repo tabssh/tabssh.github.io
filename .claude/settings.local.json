@@ -18,7 +18,9 @@
       "Bash(if ! grep -q \"mobile-menu-toggle\" \"$file\")",
       "Bash(then)",
       "Bash(echo:*)",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(perl -i -0pe 's|href=\"https://github\\\\.com/tabssh/android\"\\\\s*\\\\n\\\\s*target=\"_blank\"\\\\s*\\\\n\\\\s*rel=\"noopener\"\\\\s*\\\\n\\\\s*>GitHub<|href=\"https://github.com/tabssh\"\\\\n                target=\"_blank\"\\\\n                rel=\"noopener\"\\\\n                >GitHub<|g' download/index.html)",
+      "Bash(python3 *)"
     ],
     "deny": [],
     "ask": []

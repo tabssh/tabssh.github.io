@@ -8,32 +8,54 @@ Visit: [https://tabssh.github.io](https://tabssh.github.io)
 
 ## 🏗️ Structure
 
-This is a static HTML/CSS/JS site hosted on GitHub Pages:
+This is a static HTML/CSS/JS site hosted on GitHub Pages. URLs are clean
+(no `.html` extensions) — every page is `name/index.html`. Old `.html`
+paths still work via redirect stubs.
 
 ```
-├── index.html          # Homepage
-├── download.html       # Download page  
-├── docs.html          # Documentation landing
-├── contributing.html   # Contributing guide
-├── privacy.html       # Privacy policy
-├── security.html      # Security information
-├── 404.html           # Custom 404 page
-├── docs/              # Documentation pages
-│   ├── getting-started.html
-│   ├── features.html
-│   ├── architecture.html
-│   └── [other docs]
-├── css/
-│   └── main.css       # All styles
-├── js/
-│   └── main.js        # Theme switcher & interactions
-├── images/            # Local asset copies
-│   ├── logo.png       # TabSSH logo
-│   ├── android.png    # App screenshot
-│   ├── opengraph.png  # Social media preview
-│   └── twitter.png    # Twitter card image
-└── .nojekyll          # GitHub Pages static mode
+├── index.html              # Homepage (/)
+├── 404.html                # Custom 404 page
+├── download/index.html     # /download/
+├── docs/index.html         # /docs/  (categorized landing)
+├── privacy/index.html      # /privacy/
+├── security/index.html     # /security/
+├── contributing/index.html # /contributing/
+├── license/index.html      # /license/
+├── docs/
+│   ├── features/           # /docs/features/         (universal)
+│   ├── first-connection/   # /docs/first-connection/ (universal)
+│   ├── ssh-keys/           # /docs/ssh-keys/         (universal)
+│   ├── ssh-config/         # /docs/ssh-config/       (universal)
+│   ├── port-forwarding/    # /docs/port-forwarding/  (universal)
+│   ├── themes/             # /docs/themes/           (universal)
+│   ├── security/           # /docs/security/         (best practices)
+│   ├── mobile/             # /docs/mobile/<topic>/   (Android-specific)
+│   │   ├── install/
+│   │   ├── getting-started/
+│   │   ├── basic-usage/
+│   │   ├── tabbed-interface/
+│   │   ├── sftp/
+│   │   └── troubleshooting/
+│   └── desktop/            # /docs/desktop/<topic>/  (desktop-specific)
+│       ├── install/
+│       ├── basic-usage/
+│       ├── tabbed-interface/
+│       ├── sftp/
+│       └── troubleshooting/
+├── css/main.css            # All styles
+├── js/main.js              # Release fetcher, mobile menu, etc.
+├── images/                 # logo.png, android.png, opengraph.png, twitter.png
+└── .nojekyll               # GitHub Pages static mode (no Jekyll build)
 ```
+
+**Audience:** the `docs/` tree is for **users** of the TabSSH apps. Source
+code, architecture diagrams, and contributor guides live in the app
+repositories — [tabssh/android](https://github.com/TabSSH/android) and
+[tabssh/desktop](https://github.com/tabssh/desktop) — not here.
+
+**Internal links** are root-relative (`/docs/foo/`) so files can move
+without breaking. `.html` redirect stubs at the old paths keep external
+inbound links working.
 
 ## ✨ Features
 

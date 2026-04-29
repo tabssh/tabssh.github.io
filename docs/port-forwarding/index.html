@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Port Forwarding - TabSSH Documentation</title>
+  <meta name="description" content="Local, remote, and dynamic SOCKS port forwarding in TabSSH. Saved per-host rules, background tunnels, and ProxyJump cascading.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      if (shouldUseDark) document.documentElement.classList.add('dark');
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Port Forwarding</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Local, remote, and dynamic SOCKS forwarding — same flags as the <code>ssh</code> CLI, with a touch UI and persistent rules.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>📥 Local Forwarding (-L)</h2>
+            <p>Forward a port on your phone to a port on the remote (or anywhere reachable from the remote).</p>
+            <p><strong>Equivalent CLI:</strong> <code>ssh -L 8080:localhost:80 user@host</code></p>
+            <ul>
+              <li>Useful when the remote service is firewalled or only listens on <code>127.0.0.1</code>.</li>
+              <li>Type the local port, the remote target host:port, and TabSSH does the rest.</li>
+              <li>Open <code>http://localhost:8080</code> in your phone's browser to hit the forwarded service.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📤 Remote Forwarding (-R)</h2>
+            <p>The reverse: a port on the remote forwards back to your phone (or anywhere reachable from it).</p>
+            <p><strong>Equivalent CLI:</strong> <code>ssh -R 8080:localhost:8080 user@host</code></p>
+            <ul>
+              <li>Useful for exposing a development server you're running on your phone to a remote debugging audience.</li>
+              <li>Note: most servers require <code>GatewayPorts yes</code> in <code>sshd_config</code> to bind a -R forward to non-loopback.</li>
+              <li>Bind-to-all-interfaces option available where supported.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🌐 Dynamic / SOCKS (-D)</h2>
+            <p>Turns the SSH session into a SOCKS5 proxy.</p>
+            <p><strong>Equivalent CLI:</strong> <code>ssh -D 1080 user@host</code></p>
+            <ul>
+              <li>Point Firefox / Chrome / a SOCKS-aware app at <code>localhost:1080</code> and all its traffic tunnels through your remote.</li>
+              <li>Effectively a personal jump-host VPN.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>💾 Saved Rules per Host</h2>
+            <ul>
+              <li>Each connection profile keeps its own list of port-forwarding rules.</li>
+              <li>Rules auto-apply when you connect.</li>
+              <li>Toggle individual rules on/off without deleting them.</li>
+              <li>Edit rules from the connection edit screen, or per-tab from the toolbar menu while connected.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🪂 Background Tunnels (Wave 3.3)</h2>
+            <ul>
+              <li>Port forwards no longer need a live terminal session — you can have <em>just</em> the forwards running, no shell.</li>
+              <li>Useful for "always-on" SOCKS proxies or persistent local-port mappings.</li>
+              <li>Foreground-service notification keeps the tunnel up; tap to stop.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🪜 Jump Hosts / ProxyJump</h2>
+            <ul>
+              <li>TabSSH supports cascading jump hosts (the SSH <code>-J</code> / <code>ProxyJump</code> directive).</li>
+              <li>Configure on a connection profile: jump host hostname, port, username, auth.</li>
+              <li>The session opens by tunneling through the jump host first, transparently.</li>
+              <li>Imported <code>~/.ssh/config</code> entries with <code>ProxyJump</code> are honoured automatically.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="/docs/" class="btn btn-primary">Back to Documentation</a>
+          <a href="/docs/ssh-config/" class="btn btn-secondary">SSH Config →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

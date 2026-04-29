@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features Overview - TabSSH Documentation</title>
+  <meta name="description" content="Comprehensive overview of TabSSH features including tabbed interface, SFTP support, SSH key management, and more.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <script>
+    (function() {
+      const isDarkStored = localStorage.getItem('theme') === 'dark';
+      const isDarkSystem = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldUseDark = isDarkStored || (!localStorage.getItem('theme') && isDarkSystem);
+      
+      if (shouldUseDark) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">
+          ☰
+        </button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>TabSSH Features</h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-8);">
+          Enterprise-grade SSH functionality designed for Android devices.
+        </p>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🗂️ Tabbed Interface</h2>
+            <ul>
+              <li>Browser-style tabs for multiple SSH sessions</li>
+              <li>Visual connection status indicators</li>
+              <li>Drag and drop to reorder tabs</li>
+              <li>Session persistence across app restarts</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📁 SFTP File Manager</h2>
+            <ul>
+              <li>Dual-pane file browser — side-by-side local + remote panes (<code>SFTPActivity</code>)</li>
+              <li>Multi-file selection for batch upload / download</li>
+              <li>Resume interrupted transfers, recursive folder transfer</li>
+              <li>Tap a file to open it in the in-app text editor (<code>RemoteFileEditorActivity</code>, Wave 1.7) and save back</li>
+              <li>Edit file permissions with the chmod editor (Wave 1.8)</li>
+              <li>SCP fallback when SFTP is unavailable (Wave 1.9)</li>
+              <li>Per-transfer progress notifications with cancellation</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🔐 SSH Key Management</h2>
+            <ul>
+              <li>RSA (2048/3072/4096), ECDSA (P-256/384/521), Ed25519, DSA</li>
+              <li>Universal parser: OpenSSH (modern), PEM, PKCS#8, PuTTY v2/v3</li>
+              <li>Generate keys in-app with passphrase protection</li>
+              <li>OpenSSH user certificate (`*-cert.pub`) auth (Wave 2.2)</li>
+              <li>SHA-256 fingerprint display</li>
+              <li>Hardware-backed Android Keystore storage with biometric unlock</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🌐 Port Forwarding</h2>
+            <ul>
+              <li>Local (-L), Remote (-R), Dynamic (-D / SOCKS) forwarding</li>
+              <li>Multiple concurrent tunnels per session</li>
+              <li>Bind-to-all-interfaces option</li>
+              <li>Background tunnels — survive without an active terminal session (Wave 3.3)</li>
+              <li>Saved rules per host</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>⚙️ SSH Configuration</h2>
+            <ul>
+              <li>Full ~/.ssh/config import — ProxyJump, IdentityFile, host patterns, advanced directives</li>
+              <li>Round-trip export back to ssh_config (Wave 6.1)</li>
+              <li>Per-connection env vars (Wave 1.2) and post-connect script</li>
+              <li>Bulk import: CSV, JSON, PuTTY .ppk lists</li>
+              <li>Bulk edit dialog for multi-host updates</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📡 Mosh, X11, Telnet</h2>
+            <ul>
+              <li>Mosh — native <code>mosh-client</code> binaries cross-compiled per Android ABI; survives connection drops + roams across networks (Wave 9.2)</li>
+              <li>X11 forwarding — full <code>X11ForwardingManager</code> server + client for graphical apps (Wave 7)</li>
+              <li>Telnet (RFC 854) for legacy gear: switches, routers, console servers (Wave 2.3)</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🌐 Hypervisor Management</h2>
+            <ul>
+              <li>Proxmox VE — full VM control via REST API</li>
+              <li>XCP-ng — XML-RPC; XenServer compatible</li>
+              <li>Xen Orchestra — REST API plus live WebSocket updates (state changes appear in real time)</li>
+              <li>VMware ESXi / vCenter — VM list and lifecycle</li>
+              <li><strong>VM serial console via hypervisor</strong> — connect to VMs that have no network or are mid-OS-install (Wave 7)</li>
+              <li>Power, snapshot, backup, pool/host operations</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>☁️ Cloud Sync (No Google Required)</h2>
+            <ul>
+              <li>Storage Access Framework — pick any installed provider (Google Drive, Dropbox, OneDrive, Nextcloud, local storage)</li>
+              <li>AES-256-GCM with PBKDF2 key derivation (100k iterations)</li>
+              <li>3-way merge with conflict UI</li>
+              <li>Per-entity sync toggles</li>
+              <li>Triggers: manual, on launch, on change, scheduled (15min–24h)</li>
+              <li>WiFi-only toggle, GZIP compression</li>
+              <li><strong>Zero Google services dependency</strong> — runs on de-Googled ROMs</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🔌 Cloud Host Import (Opt-in)</h2>
+            <ul>
+              <li>Pull droplets and instances from DigitalOcean, Hetzner, Linode, Vultr</li>
+              <li>Tokens encrypted in Keystore (alias <code>cloud_token_${id}</code>) — never stored in the database</li>
+              <li>Mass-convert pulled inventory into TabSSH connection profiles</li>
+              <li>Explicit token only — no auto-discovery, no telemetry</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📋 Snippets, Identities, Workspaces</h2>
+            <ul>
+              <li><strong>Snippets:</strong> command library with categories, tags, and prompt-style variables: <code>{name}</code>, <code>{?name}</code>, <code>{?name:default}</code>, <code>{?name|hint}</code></li>
+              <li><strong>Identities:</strong> reusable credential profiles linked to multiple hosts</li>
+              <li><strong>Workspaces (Wave 2.5):</strong> save the set of currently-open tabs as a named workspace; one tap re-opens them all with a 400ms inter-host stagger</li>
+              <li><strong>Cluster broadcast:</strong> type one keystroke into many sessions at once</li>
+              <li>All sync via SAF if you want them across devices</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>🎨 Themes & Customisation</h2>
+            <ul>
+              <li><strong>23 built-in terminal themes</strong> — Dracula, Nord, Solarized (Dark/Light), Gruvbox (Dark/Light), Monokai, Tomorrow Night, GitHub Light, Atom One Dark, Material Dark, Tokyo Night (Dark/Light), Catppuccin, Rosé Pine, Everforest, Kanagawa, Night Owl, Cobalt2, Tomorrow Night, One Dark — plus 3 system themes</li>
+              <li>Built-in GUI theme editor (Wave 2.4) — no JSON wrangling required</li>
+              <li>Per-host color tags (Wave 3.1) for marking prod/staging/lab</li>
+              <li>JSON theme import/export</li>
+              <li>Material Design 3 with DayNight (light/dark/system follow)</li>
+              <li>Customisable 1-5 row on-screen keyboard with full key remapping</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>📊 Performance Monitor</h2>
+            <ul>
+              <li>Built-in dashboard with CPU / RAM / disk / network / load metrics</li>
+              <li>Configurable polling interval, charted via MPAndroidChart</li>
+              <li>Background SSH for metrics (no interactive session needed)</li>
+              <li>Persists last-monitored host between launches</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2>♿ Accessibility</h2>
+            <ul>
+              <li>WCAG 2.1 AA compliance throughout</li>
+              <li>TalkBack support across all activities</li>
+              <li>High-contrast modes and large-text support</li>
+              <li>Volume keys → font size, pinch-zoom, configurable scrollback</li>
+              <li>Voice-typing affordance via Android STT keyboard (Wave 4.f)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="/docs/" class="btn btn-primary">Back to Documentation</a>
+          <a href="https://github.com/tabssh" class="btn btn-secondary">View Source on GitHub</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

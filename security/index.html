@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security - TabSSH</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="Learn about TabSSH's security features, best practices, and how we protect your SSH connections and credentials on Android.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">
+          ☰
+        </button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <header style="text-align: center; margin-bottom: var(--space-12);">
+          <h1>Security</h1>
+          <p style="font-size: var(--font-size-lg); color: var(--text-secondary);">
+            Built with security as a foundation. Learn how TabSSH protects your connections and credentials.
+          </p>
+        </header>
+
+        <div style="max-width: 70ch; margin: 0 auto;">
+          <h2>🔐 Security Features</h2>
+
+          <div class="card">
+            <h3>Two Clients, Same Stance</h3>
+            <p>The threat model and the user-facing security guarantees are identical
+               across mobile and desktop. The implementation mechanisms differ where
+               the OS provides better primitives.</p>
+            <ul>
+              <li><strong>Mobile:</strong> Android Keystore + Biometric/PIN + FLAG_SECURE</li>
+              <li><strong>Desktop:</strong> OS Keychain + system lock + panic-handler crash capture</li>
+              <li><strong>Both:</strong> AES-256-GCM stored credentials, host-key TOFU + MITM detection, OpenSSH user certs (Wave 2.2 / desktop port pending), MIT license, zero telemetry, zero analytics.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Hardware-Backed Encryption</h3>
+            <ul>
+              <li><strong>Android Keystore:</strong> hardware-backed key storage on supported devices</li>
+              <li><strong>Secure Element:</strong> keys stored in secure hardware where available</li>
+              <li><strong>AES-256-GCM:</strong> all stored credentials encrypted at rest</li>
+              <li><strong>Biometric Protection:</strong> fingerprint/face unlock for credential access</li>
+              <li><strong>PIN Code App Lock:</strong> separate PIN-only lock if you'd rather skip biometrics</li>
+              <li><strong>Auto-lock:</strong> configurable inactivity timeout</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>SSH Protocol Security</h3>
+            <ul>
+              <li><strong>Modern algorithms:</strong> JSch 2.27 (mwiede fork) — rsa-sha2-256/512, OpenSSH 9.x compatible</li>
+              <li><strong>Host key TOFU:</strong> first-connect fingerprint capture, MITM detection on subsequent connects</li>
+              <li><strong>Known-hosts UI:</strong> review and revoke trusted host keys</li>
+              <li><strong>Multiple key types:</strong> RSA (2048/3072/4096), ECDSA (P-256/384/521), Ed25519, DSA</li>
+              <li><strong>OpenSSH user certificates</strong> (Wave 2.2): full <code>*-cert.pub</code> certificate auth — not X.509</li>
+              <li><strong>Custom SSH ciphers/MACs</strong>: modern defaults shipped, backend supports overrides</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Application Security</h3>
+            <ul>
+              <li><strong>Screenshot protection:</strong> FLAG_SECURE on sensitive activities (passwords, key import, PIN entry)</li>
+              <li><strong>Cloud-import token isolation:</strong> DigitalOcean / Hetzner / Linode / Vultr API tokens encrypted in Keystore under <code>cloud_token_${id}</code> — never in the SQLite database</li>
+              <li><strong>Sync encryption:</strong> AES-256-GCM with PBKDF2 (100,000 iterations) over the Storage Access Framework — your storage provider only ever sees encrypted blobs</li>
+              <li><strong>Crash + ANR capture:</strong> daemon-thread watchdog logs main-thread freezes; uncaught exception handler captures stack traces. Auto-on for debug builds, opt-in for release builds.</li>
+              <li><strong>No telemetry:</strong> zero analytics SDKs, zero crash-reporter SaaS, zero remote logging</li>
+            </ul>
+          </div>
+
+          <h2>🛡️ Best Practices</h2>
+          <ul>
+            <li><strong>Use SSH Keys:</strong> Prefer key authentication over passwords</li>
+            <li><strong>Verify Host Keys:</strong> Always verify fingerprints on first connection</li>
+            <li><strong>Keep Updated:</strong> Update TabSSH regularly for security patches</li>
+            <li><strong>Strong Passphrases:</strong> Protect SSH keys with strong passphrases</li>
+          </ul>
+
+          <h2>🚨 Security Issues</h2>
+          <p>Found a security vulnerability? Please report it responsibly:</p>
+          <ul>
+            <li><strong>GitHub Security:</strong> Use GitHub's private vulnerability reporting</li>
+            <li><strong>No Public Issues:</strong> Don't create public issues for security bugs</li>
+            <li><strong>Provide Details:</strong> Include reproduction steps and impact assessment</li>
+          </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <h2>Questions About Security?</h2>
+          <p>Security is complex. If you have questions or concerns, we're here to help.</p>
+          
+          <div class="hero-actions" style="justify-content: center; margin-top: var(--space-6);">
+            <a href="https://github.com/tabssh/android/discussions" class="btn btn-primary">Mobile Discussions</a>
+            <a href="https://github.com/tabssh/desktop/discussions" class="btn btn-primary">Desktop Discussions</a>
+            <a href="/docs/" class="btn btn-secondary">Documentation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-brand">
+        <h3>TabSSH</h3>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
