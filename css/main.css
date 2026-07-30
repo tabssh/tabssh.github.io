@@ -494,6 +494,11 @@ hr {
   color: var(--success);
   border: 1px solid rgba(158, 206, 106, 0.35);
 }
+.platform-pill.web-only {
+  background: rgba(224, 175, 104, 0.15);
+  color: var(--warning);
+  border: 1px solid rgba(224, 175, 104, 0.35);
+}
 /* "both" pills are the default — don't render a noisy pill on every card */
 .platform-pill.both { display: none; }
 

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web: Deploy &amp; Admin Guide - TabSSH Documentation</title>
+  <meta name="description" content="Deploy TabSSH Web with Docker, create the first admin account, and manage users, organizations, and sync — self-hosted on your own server.">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a href="/">
+            <img src="/images/logo.png" alt="TabSSH" class="logo">
+            <span class="brand-text">TabSSH</span>
+          </a>
+        </div>
+        <ul class="navbar-nav">
+          <li><a href="/docs/">Docs</a></li>
+          <li><a href="/download/">Download</a></li>
+          <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" aria-label="Open mobile menu">☰</button>
+        <nav class="mobile-nav">
+          <ul>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="https://github.com/tabssh" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+    </nav>
+    <div class="site-tagline">
+      <div class="container">
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, BSD, and the web. Open-source and privacy-focused.</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div style="padding: var(--space-12) 0;">
+      <div class="container container-md">
+        <h1>Web: Deploy &amp; Admin Guide <span class="platform-pill web-only">🌐 Web</span></h1>
+        <p style="font-size: var(--font-size-lg); margin-bottom: var(--space-4);">
+          Run TabSSH on your own server. One <code>docker run</code>, and the full app is live in a browser.
+        </p>
+        <div class="alert alert-info" style="margin-bottom: var(--space-8);">
+          Web is the self-hosted sibling of the Android and Desktop apps — same accounts, same sync format, same 23 themes. See <a href="https://github.com/tabssh/web">tabssh/web</a> on GitHub for current status.
+        </div>
+
+        <div style="display: grid; gap: var(--space-8);">
+          <div class="card">
+            <h2>🐳 Deploy with Docker</h2>
+            <p>Recommended for every OS. Persistent volumes keep config and encrypted data across restarts.</p>
+            <pre><code>docker run -d \
+  --name tabssh-web \
+  -p 8080:8080 \
+  -v tabssh-config:/config/tabssh \
+  -v tabssh-data:/data/tabssh \
+  ghcr.io/tabssh/web:latest</code></pre>
+            <p>Or with Docker Compose:</p>
+            <pre><code>docker compose -f docker/docker-compose.yml up -d</code></pre>
+            <p style="font-size: var(--font-size-sm); color: var(--text-secondary);">
+              Put a reverse proxy (Caddy, nginx, Traefik) with TLS in front for anything reachable outside your LAN — TabSSH Web does not terminate TLS itself.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2>📦 Standalone Binary</h2>
+            <p>Prefer no Docker? Download a precompiled binary from the <a href="https://github.com/tabssh/web/releases">releases page</a> and run it directly:</p>
+            <pre><code>./tabssh --config /etc/tabssh/tabssh/server.yml</code></pre>
+          </div>
+
+          <div class="card" id="usage">
+            <h2>👤 First Run &amp; Admin Panel</h2>
+            <ul>
+              <li>Open <code>http://your-server:8080</code> — the first account created becomes the instance admin.</li>
+              <li>The admin panel covers instance settings, user &amp; org management, and per-user quotas.</li>
+              <li>Add a host the same way as mobile/desktop: manually, via SSH config paste, or bulk import (CSV, JSON, PuTTY <code>.reg</code>, Terraform <code>.tf</code>).</li>
+              <li>Every feature is also available over the API — Swagger UI at <code>/server/docs/swagger</code>, GraphiQL at <code>/server/docs/graphql</code>.</li>
+            </ul>
+          </div>
+
+          <div class="card" id="orgs">
+            <h2>👥 Multi-User &amp; Organizations</h2>
+            <ul>
+              <li>Each user gets an isolated vault and isolated sync storage — one instance can safely serve a whole team.</li>
+              <li>Create an organization to share a vault across members with role-based access — a self-hosted alternative to Termius/Termix team plans.</li>
+              <li>Sync between devices uses a server-blind, E2E-encrypted endpoint (<code>TABSSH_SYNC_V2</code>): the passphrase never leaves the client, so the server operator cannot read stored credentials.</li>
+              <li>Pair a phone or desktop to this instance with the built-in QR pairing broker — a short-lived rendezvous code, no credentials transmitted in the clear.</li>
+            </ul>
+          </div>
+
+          <div class="card" id="troubleshooting">
+            <h2>🛠️ Troubleshooting</h2>
+            <ul>
+              <li><strong>Container won't start:</strong> check <code>docker logs tabssh-web</code>; most often a volume permission mismatch or a port already in use.</li>
+              <li><strong>Health check:</strong> hit <code>/server/healthz</code> on the running instance to confirm the server process is up.</li>
+              <li><strong>Can't reach it remotely:</strong> confirm the reverse proxy is forwarding to port 8080 and that any firewall/security group allows the proxy's port.</li>
+              <li><strong>Sync not showing on another device:</strong> verify the pairing code hasn't expired (they're short-lived by design) and re-pair.</li>
+              <li>Still stuck? Open an issue on <a href="https://github.com/tabssh/web/issues">tabssh/web</a>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: var(--space-12);">
+          <a href="/docs/" class="btn btn-primary">Back to Documentation</a>
+          <a href="/download/#web" class="btn btn-secondary">Download for Web →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <hr>
+
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/download/">Download</a></li>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/docs/features/">Features</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://github.com/tabssh">GitHub Org</a></li>
+            <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
+            <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="https://github.com/tabssh/web">Web Repo</a></li>
+            <li><a href="/contributing/">Contributing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/security/">Security</a></li>
+            <li><a href="/license/">License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024-2026 <a href="https://github.com/tabssh">TabSSH</a>, <a href="https://github.com/casjaysdev">CasjaysDev</a>, and <a href="https://github.com/casjay">Jason M. Hempstead</a>.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TabSSH - Modern SSH Client for Android &amp; Desktop</title>
+  <title>TabSSH - Modern SSH Client for Android, Desktop &amp; Web</title>
 
   <!-- SEO Meta Tags -->
-  <meta name="description" content="TabSSH is an open-source SSH client family for Android, Linux, macOS, Windows, and BSD — with a tabbed interface, SFTP, hypervisor management, and 23 themes shared across mobile and desktop.">
-  <meta name="keywords" content="SSH, Android, Linux, macOS, Windows, BSD, terminal, open source, mobile, desktop, secure, tabssh, SFTP, port forwarding, mosh">
+  <meta name="description" content="TabSSH is an open-source SSH client family for Android, Linux, macOS, Windows, BSD, and the web — with a tabbed interface, SFTP, hypervisor management, and 23 themes shared across mobile, desktop, and self-hosted web.">
+  <meta name="keywords" content="SSH, Android, Linux, macOS, Windows, BSD, web, terminal, open source, mobile, desktop, self-hosted, secure, tabssh, SFTP, port forwarding, mosh">
   <meta name="author" content="TabSSH Team">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="TabSSH - Modern SSH Client for Android &amp; Desktop">
-  <meta property="og:description" content="Open-source SSH client with tabbed interface, SFTP, hypervisor management. For Android (mobile) and Linux/macOS/Windows/BSD (desktop).">
+  <meta property="og:title" content="TabSSH - Modern SSH Client for Android, Desktop &amp; Web">
+  <meta property="og:description" content="Open-source SSH client with tabbed interface, SFTP, hypervisor management. For Android (mobile), Linux/macOS/Windows/BSD (desktop), and self-hosted web.">
   <meta property="og:image" content="https://raw.githubusercontent.com/tabssh/assets/main/icons/opengraph.png">
   <meta property="og:url" content="https://tabssh.github.io">
   <meta property="og:type" content="website">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TabSSH - Modern SSH Client for Android &amp; Desktop">
-  <meta name="twitter:description" content="Open-source SSH client for Android, Linux, macOS, Windows, and BSD">
+  <meta name="twitter:title" content="TabSSH - Modern SSH Client for Android, Desktop &amp; Web">
+  <meta name="twitter:description" content="Open-source SSH client for Android, Linux, macOS, Windows, BSD, and the web">
   <meta name="twitter:image" content="https://raw.githubusercontent.com/tabssh/assets/main/icons/twitter.png">
   
   <!-- Favicons -->
@@ -66,7 +66,7 @@
     </nav>
     <div class="site-tagline">
       <div class="container">
-        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, BSD, and the web. Open-source and privacy-focused.</p>
       </div>
     </div>
   </header>
@@ -79,9 +79,10 @@
         <div class="hero-content">
           <h1 class="hero-title">Modern SSH Client</h1>
           <p class="hero-subtitle">
-            Open-source, secure, and beautiful — for your phone <em>and</em> your laptop.
-            TabSSH brings true browser-style tabs, full VT100 terminal emulation, and
-            hypervisor management to Android, Linux, macOS, Windows, and BSD.
+            Open-source, secure, and beautiful — on your phone, your laptop,
+            <em>and</em> in your browser. TabSSH brings true browser-style tabs,
+            full VT100 terminal emulation, and hypervisor management to Android,
+            Linux, macOS, Windows, BSD, and any self-hosted web instance.
           </p>
           <div class="hero-actions">
             <a href="/download/" class="btn btn-primary btn-lg">Download Now</a>
@@ -227,6 +228,18 @@
             <h3>System Tray + Auto-Launch <span class="platform-pill desktop-only">💻 Desktop</span></h3>
             <p>Connect on login, manage your tabs from the tray, never lose a session to an app close. (Coming with v0.1.)</p>
           </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <h3>Self-Hosted Browser Access <span class="platform-pill web-only">🌐 Web</span></h3>
+            <p>The full TabSSH app in any modern browser — installable as a PWA. Deploy with one <code>docker run</code>, no client software required. A server-blind, E2E-encrypted sync endpoint for the mobile and desktop apps comes built in.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Multi-User Orgs & Team Vaults <span class="platform-pill web-only">🌐 Web</span></h3>
+            <p>Per-user isolated vaults, org accounts with membership roles, and org-scoped shared vaults — a self-hosted alternative to Termius and Termix for teams that don't want their SSH credentials in someone else's cloud.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -257,6 +270,18 @@
             </div>
             <p style="font-size: var(--font-size-sm); margin-top: var(--space-2); color: var(--text-secondary);">
               amd64 + arm64 builds · <a href="https://github.com/tabssh/desktop/releases">all releases</a>
+            </p>
+          </div>
+
+          <div class="download-option">
+            <h3>🌐 Web</h3>
+            <p>Self-host on any Docker host. Full TabSSH in a browser, plus sync + pairing endpoints for the mobile and desktop apps.</p>
+            <span class="badge">Self-Hosted</span>
+            <div style="margin-top: var(--space-4);">
+              <a href="/download/#web" class="btn btn-primary">Deploy for Web</a>
+            </div>
+            <p style="font-size: var(--font-size-sm); margin-top: var(--space-2); color: var(--text-secondary);">
+              <code>docker run ghcr.io/tabssh/web</code> · <a href="https://github.com/tabssh/web/releases">all releases</a>
             </p>
           </div>
         </div>
@@ -291,6 +316,15 @@
               <li>Memory safety: Rust compile-time guarantees</li>
               <li>OpenSSH user certificates (when shipped)</li>
             </ul>
+
+            <h4 style="margin-top: var(--space-4);">🌐 Web</h4>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>Server-blind E2E encrypted sync (<code>TABSSH_SYNC_V2</code>) — passphrase never leaves the client</li>
+              <li>Per-user isolated vaults + org-scoped shared vaults</li>
+              <li>Same host key TOFU + MITM detection</li>
+              <li>Auto-lock with idle TTL, clipboard auto-clear, memory zeroing</li>
+              <li>Short-lived rendezvous device pairing broker for QR pairing</li>
+            </ul>
           </div>
 
           <div class="card">
@@ -314,6 +348,15 @@
               <li>Telnet + SFTP + port forwarding (when shipped)</li>
               <li>Native X11 forwarding via <code>x11rb</code></li>
               <li><code>ssh2-config</code> for <code>~/.ssh/config</code> round-trip</li>
+            </ul>
+
+            <h4 style="margin-top: var(--space-4);">🌐 Web</h4>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>Server-hosted SSH 2.0 + Telnet sessions, streamed to the browser</li>
+              <li>SFTP with resume, rename, chmod, delete, remote text editor</li>
+              <li>Local / remote / dynamic SOCKS5 tunnels (server-hosted)</li>
+              <li>Console access: serial, VNC (RFB 3.8), SPICE as tabs</li>
+              <li>Full REST + GraphQL API for every feature</li>
             </ul>
           </div>
 
@@ -339,31 +382,45 @@
               <li>Native font rendering at any size</li>
               <li>Same 23 themes — JSON format shared with mobile</li>
             </ul>
+
+            <h4 style="margin-top: var(--space-4);">🌐 Web</h4>
+            <ul style="font-size: var(--font-size-sm); margin: 0; padding-left: var(--space-4);">
+              <li>Mobile-responsive UI, installable PWA</li>
+              <li>WCAG 2.1 AA accessibility, full keyboard navigation</li>
+              <li>Same 23 themes — byte-compatible with mobile and desktop</li>
+              <li>Admin panel: settings, user/org management, quotas</li>
+              <li>Multi-host dashboard with live performance metrics</li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Two Clients section -->
+    <!-- Three Clients section -->
     <section class="features" style="background-color: var(--bg-secondary);">
       <div class="container">
-        <h2 class="section-title">Two Clients, One Design Language</h2>
+        <h2 class="section-title">Three Clients, One Design Language</h2>
         <div style="max-width: 800px; margin: 0 auto;">
           <p style="font-size: var(--font-size-lg);">
-            TabSSH ships as two separate apps — an Android client built in Kotlin
-            and a desktop client built in Rust. They share the same data model
-            (encrypted sync blobs are interchangeable), the same theme JSON
-            format, and the same security stance — but each is built for its
-            platform's strengths.
+            TabSSH ships as three separate apps — an Android client built in
+            Kotlin, a desktop client built in Rust, and a self-hosted web
+            server built in Go. They share the same data model (encrypted
+            sync blobs are interchangeable), the same theme JSON format, and
+            the same security stance — but each is built for its platform's
+            strengths.
           </p>
           <p>
             <strong>Mobile</strong> ships first and is feature-complete for SSH,
             SFTP, hypervisor management, and 23 built-in themes.
             <strong>Desktop</strong> is in active development —
             <a href="https://github.com/tabssh/desktop">tabssh/desktop</a>
-            on GitHub for current status. The encrypted sync format is
-            designed so a profile pair-imported on mobile becomes available on
-            desktop automatically.
+            on GitHub for current status. <strong>Web</strong> adds a hosting
+            role on top of the same client experience: a server-blind
+            E2E-encrypted sync endpoint and device-pairing broker for the
+            native apps — see <a href="https://github.com/tabssh/web">tabssh/web</a>
+            for current status. The encrypted sync format is designed so a
+            profile pair-imported on mobile becomes available on desktop and
+            web automatically.
           </p>
         </div>
       </div>
@@ -409,6 +466,7 @@
             <li><a href="https://github.com/tabssh">GitHub Org</a></li>
             <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
             <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="https://github.com/tabssh/web">Web Repo</a></li>
             <li><a href="/contributing/">Contributing</a></li>
           </ul>
         </div>

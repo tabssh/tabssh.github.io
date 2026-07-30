@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Download TabSSH - Mobile &amp; Desktop</title>
+    <title>Download TabSSH - Mobile, Desktop &amp; Web</title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Download TabSSH for Android (APK) and Desktop (Linux/macOS/Windows/BSD). Stable releases and pre-release development builds for every architecture."
+      content="Download TabSSH for Android (APK), Desktop (Linux/macOS/Windows/BSD), and self-hosted Web (Docker). Stable releases and pre-release development builds for every architecture."
     />
     <meta
       name="keywords"
-      content="SSH, Android, Linux, macOS, Windows, BSD, terminal, download, APK, open source, mobile, desktop"
+      content="SSH, Android, Linux, macOS, Windows, BSD, web, docker, terminal, download, APK, open source, mobile, desktop, self-hosted"
     />
 
     <!-- Favicons -->
@@ -73,7 +73,7 @@
       </nav>
     <div class="site-tagline">
       <div class="container">
-        <p>Modern SSH client family for Android, Linux, macOS, Windows, and BSD. Open-source and privacy-focused.</p>
+        <p>Modern SSH client family for Android, Linux, macOS, Windows, BSD, and the web. Open-source and privacy-focused.</p>
       </div>
     </div>
     </header>
@@ -90,7 +90,7 @@
                 color: var(--text-secondary);
               "
             >
-              Get the latest version of TabSSH for your Android device
+              Get the latest version of TabSSH for Android, Desktop, or self-hosted Web
             </p>
           </header>
 
@@ -477,6 +477,46 @@
             </div>
           </div>
 
+          <h2 id="web" style="margin-top: var(--space-12); margin-bottom: var(--space-2);">🌐 Web (Self-Hosted)</h2>
+          <p style="color: var(--text-secondary); margin-bottom: var(--space-6);">
+            Run TabSSH on your own server or NAS. Full app in the browser, plus a server-blind E2E-encrypted sync endpoint and device-pairing broker for the Android and Desktop apps. Single Go binary or Docker image — any OS Docker runs on.
+          </p>
+
+          <div class="card" style="margin-bottom: var(--space-12);">
+            <h3>🐳 Docker (Recommended)</h3>
+            <p>
+              Pull and run the published image. Persistent volumes keep your config and encrypted data across restarts.
+            </p>
+            <pre><code>docker run -d \
+  --name tabssh-web \
+  -p 8080:8080 \
+  -v tabssh-config:/config/tabssh \
+  -v tabssh-data:/data/tabssh \
+  ghcr.io/tabssh/web:latest</code></pre>
+            <p>Or with Docker Compose:</p>
+            <pre><code>docker compose -f docker/docker-compose.yml up -d</code></pre>
+            <div class="alert alert-info" style="margin-top: var(--space-4);">
+              Open <code>http://your-server:8080</code>, create the first admin account, and add your first host.
+            </div>
+
+            <h3 style="margin-top: var(--space-8);">📦 Standalone Binary</h3>
+            <p>
+              Prefer running without Docker? Precompiled binaries for Linux, macOS, and Windows are on the release page:
+            </p>
+            <pre><code>./tabssh --config /etc/tabssh/tabssh/server.yml</code></pre>
+            <div style="margin-top: var(--space-4);">
+              <a href="https://github.com/tabssh/web/releases" class="btn btn-primary">
+                🌐 Web Releases
+              </a>
+            </div>
+
+            <h3 style="margin-top: var(--space-8);">🖥️ CLI Client</h3>
+            <p style="font-size: var(--font-size-sm);">
+              A companion CLI talks to any running instance's API:
+            </p>
+            <pre><code>go install github.com/tabssh/web/src/cmd/tabssh-cli@latest</code></pre>
+          </div>
+
           <div class="card" style="margin-bottom: var(--space-12);">
             <h2>All Releases</h2>
             <p>
@@ -489,6 +529,9 @@
               </a>
               <a href="https://github.com/tabssh/desktop/releases" class="btn btn-primary">
                 💻 Desktop Releases
+              </a>
+              <a href="https://github.com/tabssh/web/releases" class="btn btn-primary">
+                🌐 Web Releases
               </a>
             </div>
 
@@ -641,8 +684,30 @@
               </div>
             </div>
 
+            <h3 style="margin-top: var(--space-8);">🌐 Web</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); margin-top: var(--space-3);">
+              <div>
+                <h4>Server</h4>
+                <ul style="font-size: var(--font-size-sm)">
+                  <li>Any OS with Docker support (recommended)</li>
+                  <li>x86_64 or arm64 host</li>
+                  <li>Persistent storage for config + encrypted data volumes</li>
+                  <li>Reverse proxy with TLS recommended for production</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>Client browser</h4>
+                <ul style="font-size: var(--font-size-sm)">
+                  <li>Any modern browser: Firefox, Chrome, Safari, Edge</li>
+                  <li>Mobile-responsive UI, installable as a PWA</li>
+                  <li>No plugins or extensions required</li>
+                </ul>
+              </div>
+            </div>
+
             <p style="font-size: var(--font-size-sm); color: var(--text-secondary); margin-top: var(--space-6);">
-              <strong>Both platforms:</strong> zero telemetry, zero analytics, no Google Play Services dependency on Android. Open source under MIT.
+              <strong>All three:</strong> zero telemetry, zero analytics, no Google Play Services dependency on Android. Open source under MIT.
             </p>
           </div>
 
@@ -690,6 +755,7 @@
             <li><a href="https://github.com/tabssh">GitHub Org</a></li>
             <li><a href="https://github.com/tabssh/android">Android Repo</a></li>
             <li><a href="https://github.com/tabssh/desktop">Desktop Repo</a></li>
+            <li><a href="https://github.com/tabssh/web">Web Repo</a></li>
             <li><a href="/contributing/">Contributing</a></li>
           </ul>
         </div>
